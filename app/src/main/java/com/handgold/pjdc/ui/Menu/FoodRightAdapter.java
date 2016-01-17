@@ -9,6 +9,8 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.*;
+
+import com.bumptech.glide.Glide;
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 
@@ -88,10 +90,11 @@ public class FoodRightAdapter  extends BaseAdapter {
 
         showSubOper(viewholder, menu.getCount(), OPER_NONE);
 
-        int[] picIds = new int[]{R.drawable.meishi1, R.drawable.meishi2, R.drawable.meishi4,
-                R.drawable.meishi5, R.drawable.meishi6, R.drawable.fijiredflower, R.drawable.fijitribe};
-        int id = new Random().nextInt(7);
-        viewholder.menuNameIv.setImageResource(picIds[id]);
+
+        Glide.with(mContext)
+                .load(menu.getImgUrl())
+                .placeholder(R.drawable.fijitribe)
+                .into(viewholder.menuNameIv);
 
         viewholder.menuNameTitle.setText(menu.getName());
         viewholder.menuNamePrice.setText("¥" + menu.getPrice());

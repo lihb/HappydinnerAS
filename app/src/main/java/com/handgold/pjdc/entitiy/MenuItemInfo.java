@@ -37,7 +37,7 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
 //    private int cooked; // 0--未上菜；1-－已上菜
 
     // 菜品所属分类
-    private int type;
+//    private int type;
 
     // 该菜品被点了几份
     public int count = 0 ;
@@ -77,9 +77,8 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
         if (!imgUrl.equals(menu.imgUrl)) return false;
         if (!info.equals(menu.info)) return false;
         if (!videoUrl.equals(menu.videoUrl)) return false;*/
-        if (!name.equals(menu.name)) return false;
+        return name.equals(menu.name);
 
-        return true;
     }
 
     @Override
@@ -94,7 +93,7 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
         return result;
     }
 
-    public MenuItemInfo(String name, String imgUrl, String videoUrl, float price, String info, float discount, int cooked, int type, String restaurantName) {
+    public MenuItemInfo(String name, String imgUrl, String videoUrl, float price, String info, float discount/*, int cooked, int type, String restaurantName*/) {
         this.name = name;
         this.imgUrl = imgUrl;
         this.videoUrl = videoUrl;
@@ -102,7 +101,7 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
         this.info = info;
         this.discount = discount;
 //        this.cooked = cooked;
-        this.type = type;
+//        this.type = type;
 //        this.restaurantName = restaurantName;
     }
 
@@ -171,13 +170,13 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
 //        this.cooked = cooked;
 //    }
 //
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
+//    public int getType() {
+//        return type;
+//    }
+//
+//    public void setType(int type) {
+//        this.type = type;
+//    }
 
     public int getCount() {
         return count;

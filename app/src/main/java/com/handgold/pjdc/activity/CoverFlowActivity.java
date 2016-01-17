@@ -15,6 +15,7 @@ import com.handgold.pjdc.entitiy.CoverFlowEntity;
 import com.handgold.pjdc.entitiy.GameInfo;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.MenuListEntity;
+import com.handgold.pjdc.entitiy.MenuType;
 import com.handgold.pjdc.entitiy.MovieInfo;
 import com.handgold.pjdc.ui.CoverFlowAdapter;
 
@@ -98,15 +99,15 @@ public class CoverFlowActivity extends BaseActivity {
         Configuration config = getResources().getConfiguration();
         int smallestScreenWidth = config.smallestScreenWidthDp;
         int screenWidthDp = config.screenWidthDp;
-        Log.i("smallest width = " ,""+ smallestScreenWidth);
-        Log.i("screenWidthDp width = " ,""+ screenWidthDp);
+        Log.i("smallest width = ", "" + smallestScreenWidth);
+        Log.i("screenWidthDp width = ", "" + screenWidthDp);
     }
 
     private void initMenuData() {
 
 //
         ServiceGenerator.createService(ApiManager.class)
-                .getMenuList("2222")
+                .getMenuList(((ApplicationEx) getApplication()).deviceid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<MenuListEntity>() {
@@ -124,11 +125,12 @@ public class CoverFlowActivity extends BaseActivity {
                     @Override
                     public void onNext(MenuListEntity menuListEntity) {
                         Log.i("lihb test", "onNext");
-                        if(menuListEntity.result_code == 0) {
+                        if (menuListEntity.result_code == 0) {
                             Log.i("lihb test", "onNext in if()");
+                            ((ApplicationEx) getApplication()).setInternalActivityParam("allMenuList", menuListEntity.menulist);
 
                             for (int i = 0; i < menuListEntity.menulist.size(); i++) {
-                                ApiManager.MenuType menuType = menuListEntity.menulist.get(i);
+                                MenuType menuType = menuListEntity.menulist.get(i);
                                 Log.i("lihb test", menuType.typename);
                                 for (int j = 0; j < menuType.items.size(); j++) {
                                     MenuItemInfo info = menuType.items.get(j);
@@ -136,131 +138,13 @@ public class CoverFlowActivity extends BaseActivity {
                                 }
                             }
 
-
                         }
                     }
                 });
 
-        List<MenuItemInfo> menuList = new ArrayList<MenuItemInfo>();
-        for (int i = 0; i < 30; i++) {
-            MenuItemInfo menu = new MenuItemInfo("菜品" + (i+1), null, null, 15.0f + i, "菜品简介" + (i+1), 1, 0, (i / 6) + 1, "大丰收");
-            menuList.add(menu);
-
-        }
-
-        /**
-         * 比较器：给menu按照type排序用
-         */
-        Comparator<MenuItemInfo> comparator = new Comparator<MenuItemInfo>() {
-            @Override
-            public int compare(MenuItemInfo lhs, MenuItemInfo rhs) {
-
-                return lhs.getType() - rhs.getType();
-            }
-        };
-        Collections.sort(menuList, comparator);
-
-        List<MenuItemInfo> tmpList = new ArrayList<MenuItemInfo>();
-
-        int oldKey = menuList.get(0).getType();
-
-        for (int i = 0; i < menuList.size(); i++) {
-            MenuItemInfo menuItemData = menuList.get(i);
-            int newKey = menuItemData.getType();
-            if (newKey == oldKey) {
-                tmpList.add(menuItemData);
-            } else {
-                sortedMenuMap.put(oldKey, tmpList);
-                tmpList = new ArrayList<MenuItemInfo>();
-                tmpList.add(menuItemData);
-                oldKey = newKey;
-            }
-        }
-        sortedMenuMap.put(oldKey, tmpList); // 处理最后一组数据
-
-        ((ApplicationEx) getApplication()).setInternalActivityParam("allMenuList", sortedMenuMap);
-    }
-
-    private void initGameData() {
-        List<GameInfo> gameInfoList = new ArrayList<GameInfo>();
-        for (int i = 0; i < 30; i++) {
-            GameInfo gameInfo = new GameInfo("游戏" + (i+1), "http://www.dddd.com", (i / 6 + 1));
-            gameInfoList.add(gameInfo);
-
-        }
-        /**
-         * 比较器：给menu按照type排序用
-         */
-        Comparator<GameInfo> comparator = new Comparator<GameInfo>() {
-            @Override
-            public int compare(GameInfo lhs, GameInfo rhs) {
-
-                return lhs.getType() - rhs.getType();
-            }
-        };
-        Collections.sort(gameInfoList, comparator);
-
-        List<GameInfo> tmpList = new ArrayList<GameInfo>();
-
-        int oldKey = gameInfoList.get(0).getType();
-
-        for (int i = 0; i < gameInfoList.size(); i++) {
-            GameInfo gameItemData = gameInfoList.get(i);
-            int newKey = gameItemData.getType();
-            if (newKey == oldKey) {
-                tmpList.add(gameItemData);
-            } else {
-                sortedGameMap.put(oldKey, tmpList);
-                tmpList = new ArrayList<GameInfo>();
-                tmpList.add(gameItemData);
-                oldKey = newKey;
-            }
-        }
-        sortedGameMap.put(oldKey, tmpList); // 处理最后一组数据
-
-        ((ApplicationEx) getApplication()).setInternalActivityParam("allGameList", sortedGameMap);
     }
 
 
-    private void initMovieData() {
-        List<MovieInfo> movieInfoList = new ArrayList<MovieInfo>();
-        for (int i = 0; i < 30; i++) {
-            MovieInfo movieInfo = new MovieInfo("电影" + (i+1), "http://www.dddd.com", (i / 6 + 1));
-            movieInfoList.add(movieInfo);
-
-        }
-        /**
-         * 比较器：给menu按照type排序用
-         */
-        Comparator<MovieInfo> comparator = new Comparator<MovieInfo>() {
-            @Override
-            public int compare(MovieInfo lhs, MovieInfo rhs) {
-
-                return lhs.getType() - rhs.getType();
-            }
-        };
-        Collections.sort(movieInfoList, comparator);
-
-        List<MovieInfo> tmpList = new ArrayList<MovieInfo>();
-
-        int oldKey = movieInfoList.get(0).getType();
-
-        for (int i = 0; i < movieInfoList.size(); i++) {
-            MovieInfo movieItemData = movieInfoList.get(i);
-            int newKey = movieItemData.getType();
-            if (newKey == oldKey) {
-                tmpList.add(movieItemData);
-            } else {
-                sortedMovieMap.put(oldKey, tmpList);
-                tmpList = new ArrayList<MovieInfo>();
-                tmpList.add(movieItemData);
-                oldKey = newKey;
-            }
-        }
-        sortedMovieMap.put(oldKey, tmpList); // 处理最后一组数据
-
-        ((ApplicationEx) getApplication()).setInternalActivityParam("allMovieList", sortedMovieMap);
-    }
 
 
     @Override

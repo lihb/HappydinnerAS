@@ -19,6 +19,7 @@ import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.MenuTypeEnum;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
+import com.handgold.pjdc.entitiy.MenuType;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class FoodLeftFragment extends Fragment {
     RelativeLayout relativeFoodLeft;
     @InjectView(R.id.linearlayout_recommend)
     LinearLayout linearlayoutRecommend;
-    private SortedMap<Integer, List<MenuItemInfo>> sortedMap;
+    private ArrayList<MenuType> allMenuList;
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mTransaction;
@@ -72,13 +73,16 @@ public class FoodLeftFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mFragmentManager = getFragmentManager();
-        sortedMap = (SortedMap) ((ApplicationEx) getActivity().getApplication()).receiveInternalActivityParam("allMenuList");
+        allMenuList = (ArrayList) ((ApplicationEx) getActivity().getApplication()).receiveInternalActivityParam("allMenuList");
         linearlayoutDrink.setOnClickListener(mOnclickListener);
         linearlayoutSnack.setOnClickListener(mOnclickListener);
         linearlayoutFood.setOnClickListener(mOnclickListener);
-        linearlayoutSetmeal.setOnClickListener(mOnclickListener);
+//        linearlayoutSetmeal.setOnClickListener(mOnclickListener);
         linearlayoutRecommend.setOnClickListener(mOnclickListener);
         linearlayoutRecommend.setSelected(true);
+        // 去除 套餐 选项
+        linearlayoutSetmeal.setVisibility(View.GONE);
+        linearlayoutSetmeal.setEnabled(false);
 
         TranslateAnimation transAnim = new TranslateAnimation(TranslateAnimation.RELATIVE_TO_SELF, -1.0f, TranslateAnimation.RELATIVE_TO_SELF, 0.0f,
                 TranslateAnimation.RELATIVE_TO_SELF, 0.0f,TranslateAnimation.RELATIVE_TO_SELF, 0.0f);
@@ -96,7 +100,7 @@ public class FoodLeftFragment extends Fragment {
         LayoutAnimationController lac = new LayoutAnimationController(set, 0.5f);
         relativeFoodLeft.setLayoutAnimation(lac);
         //需和TypeEnum的顺序保持一致
-        mLinearLayoutArray = new LinearLayout[]{null, linearlayoutDrink,linearlayoutSnack, linearlayoutFood, linearlayoutSetmeal,linearlayoutRecommend,};
+        mLinearLayoutArray = new LinearLayout[]{null, linearlayoutDrink, linearlayoutSnack, linearlayoutFood, /*linearlayoutSetmeal,*/linearlayoutRecommend,};
     }
 
     private View.OnClickListener mOnclickListener = new View.OnClickListener() {
@@ -106,29 +110,29 @@ public class FoodLeftFragment extends Fragment {
             ArrayList<MenuItemInfo> dataList = new ArrayList<>();
             if (v == linearlayoutDrink) {
                 dataList.clear();
-                List<MenuItemInfo> collection = sortedMap.get(MenuTypeEnum.DRINK.ordinal());
+                List<MenuItemInfo> collection = allMenuList.get(1).items;
                 dataList.addAll(collection);
                 setSelectType(MenuTypeEnum.DRINK.ordinal());
 
             } else if (v == linearlayoutSnack) {
                 dataList.clear();
-                List<MenuItemInfo> collection = sortedMap.get(MenuTypeEnum.SNACK.ordinal());
+                List<MenuItemInfo> collection = allMenuList.get(2).items;
                 dataList.addAll(collection);
                 setSelectType(MenuTypeEnum.SNACK.ordinal());
             } else if (v == linearlayoutFood) {
                 dataList.clear();
-                List<MenuItemInfo> collection = sortedMap.get(MenuTypeEnum.PRI_FOOD.ordinal());
+                List<MenuItemInfo> collection = allMenuList.get(3).items;
                 dataList.addAll(collection);
                 setSelectType(MenuTypeEnum.PRI_FOOD.ordinal());
-            } else if (v == linearlayoutSetmeal) {
+            } /*else if (v == linearlayoutSetmeal) {
                 dataList.clear();
                 List<MenuItemInfo> collection = sortedMap.get(MenuTypeEnum.MEALSET.ordinal());
                 dataList.addAll(collection);
                 setSelectType(MenuTypeEnum.MEALSET.ordinal());
-            }
+            }*/
             else if (v == linearlayoutRecommend) {
                 dataList.clear();
-                List<MenuItemInfo> collection = sortedMap.get(MenuTypeEnum.RECOMMEND.ordinal());
+                List<MenuItemInfo> collection = allMenuList.get(0).items;
                 dataList.addAll(collection);
                 setSelectType(MenuTypeEnum.RECOMMEND.ordinal());
             }

@@ -9,6 +9,7 @@ import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.MenuTypeEnum;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
+import com.handgold.pjdc.entitiy.MenuType;
 import com.handgold.pjdc.ui.Menu.FoodLeftFragment;
 import com.handgold.pjdc.ui.Menu.FoodRightFragment;
 import com.handgold.pjdc.ui.VideoPlayerFragment;
@@ -26,7 +27,7 @@ import java.util.SortedMap;
  */
 public class FoodShowActivity extends FragmentActivity {
 
-    private SortedMap<Integer, List<MenuItemInfo>> sortedMap;
+    private ArrayList<MenuType> allMenuList;
 
     private HeadView headView;
 
@@ -59,7 +60,7 @@ public class FoodShowActivity extends FragmentActivity {
         initView();
 
         // 获取菜品数据
-        sortedMap = (SortedMap) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allMenuList");
+        allMenuList = (ArrayList<MenuType>) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allMenuList");
 
         initFragment();
 
@@ -94,7 +95,7 @@ public class FoodShowActivity extends FragmentActivity {
             Bundle bundle = new Bundle();
             ArrayList<MenuItemInfo> dataList = new ArrayList<MenuItemInfo>();
             //初始化右边fragment的数据
-            dataList.addAll(sortedMap.get(MenuTypeEnum.RECOMMEND.ordinal()));
+            dataList.addAll(allMenuList.get(0).items);
             bundle.putParcelableArrayList("dataList", dataList);
             foodRightFragment = new FoodRightFragment();
             foodRightFragment.setArguments(bundle);
