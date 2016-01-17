@@ -2,6 +2,7 @@ package com.handgold.pjdc.ui.widget;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,8 +143,11 @@ public class PopupMenuDetailView extends RelativeLayout {
                 if (mVideoController == null) {
                     mVideoController = new VideoController();
                     mVideoController.setVideoView(mVideoView);
-                    Uri uri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.produce);
-//                    Uri uri2 = Uri.parse(mMenuData.getVideoUrl());
+//                    Uri uri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.produce);
+                    if (TextUtils.isEmpty(mMenuData.video)) {
+                        return;
+                    }
+                    Uri uri = Uri.parse(mMenuData.getVideo());
                     mVideoController.setUri(uri);
                     mVideoController.setOnVideoControllerListener(mOnVideoControllerListener);
                     mVideoController.play(0);
@@ -242,8 +246,11 @@ public class PopupMenuDetailView extends RelativeLayout {
         if (mVideoController == null) {
             mVideoController = new VideoController();
             mVideoController.setVideoView(mVideoView);
-            Uri uri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.produce);
-//                    Uri uri2 = Uri.parse(mMenuData.getVideoUrl());
+//            Uri uri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.produce);
+            if (TextUtils.isEmpty(mMenuData.video)) {
+                return;
+            }
+            Uri uri = Uri.parse(mMenuData.video);
             mVideoController.setUri(uri);
             mVideoController.setOnVideoControllerListener(mOnVideoControllerListener);
             mVideoController.play(0);

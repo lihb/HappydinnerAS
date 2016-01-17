@@ -13,25 +13,25 @@ import android.os.Parcelable;
  discount					float			折扣信息
 
  */
-public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
+public class MenuItemInfo implements Parcelable, Cloneable {
 
     // 菜品名称
-    private String name;
+    public String name;
 
     // 菜品介绍图片
-    private String imgUrl;
+    public String imgUrl;
 
     // 菜品介绍视频
-    private String videoUrl;
+    public String video;
 
     // 菜品价格
     private float price;
 
     // 菜品介绍
-    private String info;
+    public String info;
 
     // 菜品优惠信息
-    private float discount = 1;
+    public float discount = 1;
 
     // 菜品是否被厨房处理,未上菜和已上菜
 //    private int cooked; // 0--未上菜；1-－已上菜
@@ -76,7 +76,7 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
         if (type != menu.type) return false;
         if (!imgUrl.equals(menu.imgUrl)) return false;
         if (!info.equals(menu.info)) return false;
-        if (!videoUrl.equals(menu.videoUrl)) return false;*/
+        if (!video.equals(menu.video)) return false;*/
         return name.equals(menu.name);
 
     }
@@ -85,7 +85,7 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
     public int hashCode() {
         int result = name.hashCode();
       /*  result = 31 * result + imgUrl.hashCode();
-        result = 31 * result + videoUrl.hashCode();
+        result = 31 * result + video.hashCode();
         result = 31 * result + (price != +0.0f ? Float.floatToIntBits(price) : 0);
         result = 31 * result + info.hashCode();
         result = 31 * result + (discount != +0.0f ? Float.floatToIntBits(discount) : 0);
@@ -93,10 +93,10 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
         return result;
     }
 
-    public MenuItemInfo(String name, String imgUrl, String videoUrl, float price, String info, float discount/*, int cooked, int type, String restaurantName*/) {
+    public MenuItemInfo(String name, String imgUrl, String video, float price, String info, float discount/*, int cooked, int type, String restaurantName*/) {
         this.name = name;
         this.imgUrl = imgUrl;
-        this.videoUrl = videoUrl;
+        this.video = video;
         this.price = price;
         this.info = info;
         this.discount = discount;
@@ -130,12 +130,12 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
         this.imgUrl = imgUrl;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getVideo() {
+        return video;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setVideo(String video) {
+        this.video = video;
     }
 
     public float getPrice() {
@@ -203,7 +203,7 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(imgUrl);
-        dest.writeString(videoUrl);
+        dest.writeString(video);
         dest.writeFloat(price);
         dest.writeString(info);
         dest.writeFloat(discount);
@@ -217,7 +217,7 @@ public class MenuItemInfo  extends BaseEntity implements Parcelable, Cloneable{
         public MenuItemInfo createFromParcel(Parcel source) {
             MenuItemInfo menu = new MenuItemInfo(source.readString());
             menu.setImgUrl(source.readString());
-            menu.setVideoUrl(source.readString());
+            menu.setVideo(source.readString());
             menu.setPrice(source.readFloat());
             menu.setInfo(source.readString());
             menu.setDiscount(source.readFloat());

@@ -124,9 +124,9 @@ public class PopupGameVideoView extends RelativeLayout {
                 if (mVideoController == null) {
                     mVideoController = new VideoController();
                     mVideoController.setVideoView(mVideoView);
-                    Uri uri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.produce);
-//                    Uri uri2 = Uri.parse(mMenuData.getVideoUrl());
-                    mVideoController.setUri(uri);
+//                    Uri uri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.produce);
+//                    Uri uri = Uri.parse(mMenuData.getVideo());
+//                    mVideoController.setUri(uri);
                     mVideoController.setOnVideoControllerListener(mOnVideoControllerListener);
                     mVideoController.play(0);
                 } else {
@@ -211,9 +211,9 @@ public class PopupGameVideoView extends RelativeLayout {
         if (mVideoController == null) {
             mVideoController = new VideoController();
             mVideoController.setVideoView(mVideoView);
-            Uri uri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.produce);
-//                    Uri uri2 = Uri.parse(mMenuData.getVideoUrl());
-            mVideoController.setUri(uri);
+//            Uri uri = Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.produce);
+//                    Uri uri2 = Uri.parse(mMenuData.getVideo());
+//            mVideoController.setUri(uri);
             mVideoController.setOnVideoControllerListener(mOnVideoControllerListener);
             mVideoController.play(0);
         }

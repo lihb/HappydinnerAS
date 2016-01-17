@@ -202,8 +202,8 @@ public class OrderRightFragment extends android.support.v4.app.Fragment {
             if (flagToAdapter == VideoListActivity.VIDEOLISTACTIVITY) {
                 MenuItemInfo menu = (MenuItemInfo) itemData;
                 Intent intent = new Intent(mContext, VideoPlayer2Activity.class);
-                menu.setVideoUrl("http://download.cloud.189.cn/v5/downloadFile.action?downloadRequest=1_266BEB5F2F53474145C6EBE33E9A75D592251F2581CFE66ED934BC80674F070BA6790DA91C37DD2867779B6A435B6E040ED7928D6EFEB456A463C8E6238E8DA431473E7443FCC8025B64223A6700BF64EDD9FFDFEEA7447A59FC024F4CE7979319CFCCF6F79641E0E10945F7D23B60F7557901BF94E0BF88DFACD44EF40A4A4D0E77B882");
-                intent.putExtra("videoUrl", menu.getVideoUrl());
+                menu.setVideo("http://download.cloud.189.cn/v5/downloadFile.action?downloadRequest=1_266BEB5F2F53474145C6EBE33E9A75D592251F2581CFE66ED934BC80674F070BA6790DA91C37DD2867779B6A435B6E040ED7928D6EFEB456A463C8E6238E8DA431473E7443FCC8025B64223A6700BF64EDD9FFDFEEA7447A59FC024F4CE7979319CFCCF6F79641E0E10945F7D23B60F7557901BF94E0BF88DFACD44EF40A4A4D0E77B882");
+                intent.putExtra("videoUrl", menu.getVideo());
                 intent.putExtra("fileName", menu.getName());
                 mContext.startActivity(intent);
             }
