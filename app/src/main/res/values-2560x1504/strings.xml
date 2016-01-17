@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="get_wechat_link_fail">获取微信支付链接失败</string>
+</resources>

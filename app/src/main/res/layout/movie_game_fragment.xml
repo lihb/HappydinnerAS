@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        >
+    <GridView
+            android:id="@+id/movie_game_gv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="@dimen/fragment_movie_game_right_margin"
+            android:layout_marginLeft="@dimen/fragment_movie_game_left_margin"
+            android:numColumns="4"
+            android:verticalSpacing="@dimen/horizontal_spacing"
+            android:horizontalSpacing="@dimen/vertical_spacing"
+            android:columnWidth="@dimen/fragment_movie_game_right_item_width"
+            android:gravity="center"
+            android:scrollbars="none"
+            >
+    </GridView>
+
+</RelativeLayout>

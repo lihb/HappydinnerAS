@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/call_service_bottom_margin"
+            android:paddingBottom="@dimen/call_service_bottom_margin"
+            android:paddingLeft="@dimen/movie_game_viewpager_top_margin"
+    >
+        <TextView
+                android:id="@+id/order_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="菜名"
+                android:textColor="#000000"
+                android:textSize="@dimen/menu_info_text_size"
+        />
+
+        <TextView
+                android:id="@+id/order_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text=""
+                android:textColor="#ff6000"
+                android:textSize="@dimen/menu_info_text_size"
+        />
+
+        <ImageView
+                android:id="@+id/order_item_add"
+                android:layout_width="@dimen/menu_oper_size"
+                android:layout_height="@dimen/menu_oper_size"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_18"
+                android:src="@drawable/cart_button_add"
+        />
+
+        <TextView
+                android:id="@+id/order_item_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/order_item_add"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/food_left_item_marging_top"
+                android:layout_marginLeft="@dimen/food_left_item_marging_top"
+                android:text="1"
+                android:textColor="#000000"
+                android:textSize="@dimen/menu_info_text_size"
+        />
+
+        <ImageView
+                android:id="@+id/order_item_sub"
+                android:layout_width="@dimen/menu_oper_size"
+                android:layout_height="@dimen/menu_oper_size"
+                android:layout_toLeftOf="@id/order_item_count"
+                android:layout_centerVertical="true"
+                android:src="@drawable/cart_button_exclude"
+        />
+    </RelativeLayout>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/header_left_margin"
+            android:background="#eeeeee"
+    />
+</RelativeLayout>
+

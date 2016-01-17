@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+        >
+    <RelativeLayout
+            android:id="@+id/pay_price_rl"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/pay_icon_width"
+            android:paddingLeft="@dimen/header_left_margin"
+            android:layout_marginTop="@dimen/content_title_height"
+            android:layout_gravity="center"
+            >
+        <TextView
+                android:id="@+id/pay_choice_tv"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="微信支付"
+                android:textSize="@dimen/pay_title_text_size"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/white"
+                />
+
+        <TextView
+                android:id="@+id/pay_price_tv"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="金额：50元"
+                android:textSize="@dimen/pay_text_size"
+                android:paddingRight="@dimen/header_right_margin"
+                android:layout_alignParentRight="true"
+                android:textColor="#ff6000"
+                />
+        <View
+                style="@style/list_line"
+                android:layout_width="fill_parent"
+                android:layout_alignParentBottom="true"
+                />
+
+    </RelativeLayout>
+
+    <LinearLayout
+            android:id="@+id/pay_info_ll"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/header_left_margin"
+            android:paddingRight="@dimen/header_left_margin"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/pay_info_ll_top_margin"
+            android:layout_marginLeft="@dimen/pay_info_ll_left_margin"
+            >
+        <LinearLayout
+                android:id="@+id/pay_info_step1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+
+                android:layout_weight="1"
+                >
+            <ImageView
+                    android:id="@+id/pay_info_step1_img"
+                    android:layout_width="@dimen/pay_step1_pic_width"
+                    android:layout_height="@dimen/qr_icon_size"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/pay_instruction"
+                    />
+            <TextView
+                    android:id="@+id/pay_info_step1_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/menu_oper_size"
+                    android:layout_marginLeft="@dimen/order_item_height"
+                    android:textSize="@dimen/movie_game_viewpager_top_margin"
+                    android:text="1.打开手机微信\n  点击扫一扫功能"
+                    />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/pay_info_step2"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                >
+            <ImageView
+                    android:id="@+id/pay_info_step2_img"
+                    android:layout_width="@dimen/qr_icon_size"
+                    android:layout_height="@dimen/qr_icon_size"
+                    android:scaleType="fitXY"
+                    />
+            <TextView
+                    android:id="@+id/pay_info_step2_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/movie_game_viewpager_top_margin"
+                    android:layout_marginTop="@dimen/menu_oper_size"
+                    android:layout_marginLeft="@dimen/call_service_bottom_margin"
+                    android:text="2.扫描该二维码，成功后\n      按照提示输入密码"
+                    />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

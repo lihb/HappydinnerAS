@@ -1,0 +1,54 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!-- 头部样式-->
+    <style name="header">
+        <item name="android:layout_height">@dimen/head_height</item>
+        <!--<item name="android:background">@drawable/header_bg</item>-->
+        <item name="android:layout_width">fill_parent</item>
+    </style>
+
+    <!-- 头部文字标题的样式_大-->
+    <style name="header_title_text_large">
+        <item name="android:textSize">@dimen/head_text_size</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <!-- 头部文字标题的样式_正常-->
+    <style name="header_title_text_normal">
+        <item name="android:textSize">@dimen/head_text_size</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- list 分割线样式(只用于ListView) -->
+    <style name="list_divider">
+        <item name="android:divider">@color/list_divider</item>
+        <item name="android:dividerHeight">0.6dip</item>
+    </style>
+    <!-- list 分割线样式 (用于View)-->
+    <style name="list_line">
+        <item name="android:background">@color/list_divider</item>
+        <item name="android:layout_height">0.6dip</item>
+    </style>
+    <!-- 群动态文件之间的分割线样式 -->
+    <style name="group_dynamic_file_divider">
+        <item name="android:layout_height">0.6dip</item>
+        <item name="android:background">#1a000000</item>
+    </style>
+
+    <!-- 使用方法
+    <View
+                    style="@style/list_line"
+                    android:layout_width="fill_parent" />
+    -->
+
+</resources>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:XCRoundRectImageView="http://schemas.android.com/apk/res/com.handgold.pjdc"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:foreground="@drawable/cover_selector"
+             android:clickable="true">
+
+    <RelativeLayout
+            android:id="@+id/coverflow_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.handgold.pjdc.ui.widget.XCRoundRectImageView
+                android:id="@+id/image_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                XCRoundRectImageView:xcr_border_color="#FFFFFF"
+                XCRoundRectImageView:xcr_border_overlay="false"
+                XCRoundRectImageView:xcr_border_width="0dp"
+                XCRoundRectImageView:xcr_border_radius="0"
+                XCRoundRectImageView:xcr_drawable_radius="10"
+                />
+
+        <ImageView
+                android:id="@+id/image_type"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/icon_map"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                />
+        <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/image_type"
+                android:layout_marginTop="35dp"
+                android:text="当前位置"
+                android:textSize="30dp"
+                android:textColor="#ffffff"
+                />
+        <TextView
+                android:id="@+id/text_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/text_title"
+                android:layout_alignBottom="@id/text_title"
+                android:layout_marginLeft="20dp"
+                android:text="广州市白云区云城东路505号万达广场"
+                android:textSize="25dp"
+                android:textColor="#c0ffffff"
+                />
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="610dp"
+                android:layout_below="@+id/text_title"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                >
+            <com.handgold.pjdc.ui.widget.XCRoundRectImageView
+                    android:id="@+id/map_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="610dp"
+                    XCRoundRectImageView:xcr_border_color="#FFFFFF"
+                    XCRoundRectImageView:xcr_border_overlay="false"
+                    XCRoundRectImageView:xcr_border_width="0dp"
+                    XCRoundRectImageView:xcr_border_radius="0"
+                    XCRoundRectImageView:xcr_drawable_radius="10"
+                    android:src="@drawable/wanda_loc_map"
+                    />
+            <RelativeLayout
+                    android:id="@+id/loc_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="140dp"
+                    android:layout_marginRight="290dp"
+                    >
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/pin_1"
+                        />
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/pin_2"
+                        android:layout_centerInParent="true"
+                        />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

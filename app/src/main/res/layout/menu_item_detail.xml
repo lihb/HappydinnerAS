@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:XCRoundRectImageView="http://schemas.android.com/apk/res/com.handgold.pjdc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fragment_food_right_item_height"
+        >
+
+    <com.handgold.pjdc.ui.widget.XCRoundRectImageView
+            android:id="@+id/menu_name_iv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fragment_food_right_item_height"
+
+            XCRoundRectImageView:xcr_border_color="#FFFFFF"
+            XCRoundRectImageView:xcr_border_overlay="false"
+            XCRoundRectImageView:xcr_border_width="0dp"
+            XCRoundRectImageView:xcr_border_radius="0"
+            XCRoundRectImageView:xcr_drawable_radius="10"
+            />
+    <LinearLayout
+            android:id="@+id/linearLayout_operation_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="@dimen/menu_item_margin"
+            >
+
+        <RelativeLayout
+                android:id="@+id/relative_operation"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/menu_oper_size"
+                android:background="@drawable/button_exclude_bg2"
+                android:padding="2dp"
+                >
+            <ImageView
+                    android:id="@+id/imagview_sub"
+                    android:layout_width="@dimen/menu_oper_size"
+                    android:layout_height="@dimen/menu_oper_size"
+                    android:src="@drawable/sub_icon_selector"
+                    />
+
+            <TextView
+                    android:id="@+id/text_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/imagview_sub"
+                    android:layout_marginRight="@dimen/menu_oper_text_margin"
+                    android:layout_marginLeft="@dimen/menu_oper_text_margin"
+                    android:layout_marginTop="@dimen/menu_oper_text_margin"
+                    android:text="10"
+                    android:textColor="#ffffff"
+                    android:enabled="false"
+
+                    />
+
+            <ImageView
+                    android:id="@+id/imagview_add"
+                    android:layout_width="@dimen/menu_oper_size"
+                    android:layout_height="@dimen/menu_oper_size"
+                    android:src="@drawable/add_icon_selector"
+                    android:layout_toRightOf="@+id/text_count"
+
+                    />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/menu_detail_linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="@dimen/menu_item_margin"
+            >
+        <TextView
+                android:id="@+id/menu_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="菜品介绍"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/menu_info_text_size"
+                android:padding="@dimen/menu_item_text_padding_mini"
+                android:gravity="center"
+                android:background="@drawable/info"
+                />
+    </LinearLayout>
+    <TextView
+            android:id="@+id/menu_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="小炒肉"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/fragment_food_left_text_size"
+            android:layout_marginTop="@dimen/menu_item_margin"
+            android:layout_marginLeft="@dimen/menu_item_margin"
+            android:enabled="false"
+            android:padding="@dimen/menu_item_text_padding"
+            android:background="@drawable/menu_name_price_bg"
+            />
+
+    <TextView
+            android:id="@+id/menu_name_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="20"
+            android:textColor="#ffd818"
+            android:textSize="@dimen/fragment_food_left_text_size"
+            android:layout_marginTop="@dimen/menu_item_margin"
+            android:layout_marginRight="@dimen/menu_item_margin"
+            android:enabled="false"
+            android:padding="@dimen/menu_item_text_padding"
+            android:background="@drawable/menu_name_price_bg"
+            />
+</RelativeLayout>

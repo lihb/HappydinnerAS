@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        >
+    <RelativeLayout
+            android:id="@+id/order_right_rl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20dp"
+            >
+
+        <ImageView
+                android:id="@+id/order_menu_name_iv"
+                android:layout_width="160dp"
+                android:layout_height="120dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/meishi1"
+                android:padding="2dp"
+                />
+        <TextView
+                android:id="@+id/order_menu_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_toRightOf="@id/order_menu_name_iv"
+                android:textColor="@color/menu_title"
+                android:textSize="25dp"
+                android:text="天妇罗"
+                />
+        <TextView
+                android:id="@+id/order_menu_materias_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/order_menu_name_iv"
+                android:layout_below="@id/order_menu_name_tv"
+                android:textColor="@color/white"
+                android:text="原料：虾、猪肉"
+                />
+        <TextView
+                android:id="@+id/order_menu_price_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/order_menu_name_iv"
+                android:layout_below="@id/order_menu_materias_tv"
+                android:textColor="@color/white"
+                android:text="售价：15"
+                />
+
+    </RelativeLayout>
+    <LinearLayout
+            android:id="@+id/order_menu_count_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            >
+        <TextView
+                android:id="@+id/menu_count_sub_tv1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:background="@drawable/icon_button"
+                android:textColor="@color/blue_light"
+                android:text=" － "
+                />
+        <TextView
+                android:id="@+id/menu_count_confirm_tv1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="13dp"
+                android:textColor="@color/blue_light"
+                android:text="  1 "
+                />
+        <TextView
+                android:id="@+id/menu_count_add_tv1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:background="@drawable/icon_button"
+                android:textColor="@color/blue_light"
+                android:text=" ＋ "
+                />
+
+    </LinearLayout>
+</RelativeLayout>

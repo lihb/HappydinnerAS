@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/header_root_container"
+             style="@style/header"
+             android:clickable="true"
+        >
+
+    <LinearLayout
+            android:id="@+id/header_default_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:id="@+id/cloud_head"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+            <RelativeLayout
+                    android:id="@+id/head_left_rlyt"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="5"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/header_left_margin">
+
+                <ImageView
+                        android:id="@+id/head_left"
+                        android:layout_width="@dimen/head_back_icon_size"
+                        android:layout_height="@dimen/head_back_icon_size"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/back_selector"/>
+
+                <TextView
+                        android:id="@+id/head_left_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/head_left"
+                        android:textSize="@dimen/head_text_size"
+                        tools:text="返回"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/white"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/head_title_rlyt"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:gravity="center">
+
+                <TextView
+                        android:id="@+id/head_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/head_text_size"
+                        android:textColor="@color/white"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        tools:text="自助下单"
+                        android:visibility="gone"
+                        />
+
+                <ImageView
+                        android:id="@+id/head_title_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shopmall"
+                        />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/header_right_margin">
+
+                <!--
+                                <RelativeLayout
+                                    android:id="@+id/head_transfer_rlyt"
+                                    android:layout_width="45dip"
+                                    android:layout_height="fill_parent" >
+
+                                    <ImageView
+                                        android:id="@+id/head_transfer_iv"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="fill_parent"
+                                        android:layout_centerVertical="true"
+                                        android:scaleType="center"
+                                        android:src="@drawable/head_transfer_selector" />
+
+                                    <LinearLayout
+                                        android:id="@+id/head_transfer_msg_llyt"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginTop="5dip"
+                                        android:background="@drawable/transfer_running_task_bg"
+                                        android:gravity="center"
+                                        android:visibility="gone" >
+
+                                        <TextView
+                                            android:id="@+id/head_transfer_msg_tv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:textColor="#ffffff"
+                                            android:textSize="10dip" />
+                                    </LinearLayout>
+                                </RelativeLayout>
+                -->
+
+                <!-- <FrameLayout
+                     android:id="@+id/head_right_flyt"
+                     android:layout_width="45dip"
+                     android:layout_height="fill_parent"
+                     android:layout_toRightOf="@id/head_title_rlyt"
+                         >
+
+                     <ImageView
+                         android:id="@+id/head_right_bg"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_gravity="center"
+                         android:scaleType="center"
+                         android:src="@drawable/circle"
+                         android:visibility="gone" />
+
+                     <ImageView
+                         android:id="@+id/head_right"
+                         android:layout_width="fill_parent"
+                         android:layout_height="fill_parent"
+                         android:layout_gravity="center"
+                         android:scaleType="center"
+                         android:src="@drawable/header_more_selector" />
+                 </FrameLayout>-->
+
+                <LinearLayout
+                        android:id="@+id/head_right_tv_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical|right"
+                        android:visibility="gone"
+                        >
+
+                    <TextView
+                            android:id="@+id/head_right_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/head_text_size"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/food_text_selector"
+                            android:text="完成"/>
+                </LinearLayout>
+
+                <!--<ImageView
+                    android:id="@+id/head_right_new_msg_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dip"
+                    android:src="@drawable/new_msg_icon"
+                    android:visibility="gone" />-->
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+                android:id="@+id/head_bottom_line"
+                android:layout_width="fill_parent"
+                android:layout_height="0.1dp"
+                android:background="#e5e5e5"/>
+    </LinearLayout>
+
+</FrameLayout>

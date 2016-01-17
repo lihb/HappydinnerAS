@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        >
+    <GridView
+            android:id="@+id/food_right_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/menu_gridview_vertical_sapcing"
+            android:layout_marginRight="@dimen/fragment_food_right_margin"
+            android:numColumns="3"
+            android:verticalSpacing="@dimen/menu_gridview_vertical_sapcing"
+            android:horizontalSpacing="@dimen/menu_gridview_horizontal_sapcing"
+            android:columnWidth="@dimen/fragment_food_right_item_width"
+            android:gravity="center"
+            android:scrollbars="none"
+            >
+    </GridView>
+
+</RelativeLayout>

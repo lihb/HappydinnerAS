@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- happy dinner begin-->
+    <color name="background">#362121</color>
+    <color name="menu_title">#ff9600</color>
+
+    <!-- happy dinner begin-->
+
+    <color name="black">#505050</color>
+    <color name="white_half">#99ffffff</color>
+    <color name="white_thirtypercent">#4cffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#999999</color>
+    <color name="blue">#2c90c4</color>
+    <color name="blue_light">#3b8fe5</color>
+    <color name="orange">#FF6600</color>
+    <color name="red">#ff0000</color>
+    <color name="deep_black">#000000</color>
+    <color name="half_black">#80000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_half">#4d0b446e</color>
+    
+    <color name="clr_dialog_color">#5C9FD6</color>
+    <color name="clr_btn_tx_color">#505050</color>
+    <color name="clr_top_tx_color">#999999</color>
+    <color name="clr_warn_tx_color">#ff0000</color>
+    
+    <color name="menu_clicked_color">#e0ded4</color><!-- #969696 -->
+    <color name="fm_menu_unclicked_color">#27292a</color>
+    <color name="menu_unclicked_color">#1E1E1E</color>
+    <color name="menu_selected_color">#95D1ED</color>
+    
+    <color name="page_bg">#f8f8f8</color>
+    <color name="page_bg_gray">#22222C</color>
+    <color name="win_bar_bg">#5ab7e3</color>
+    <color name="more_menu_selected_color">#4d4d4d</color>
+    <color name="left_menu_list_item_normal">#0035363e</color>
+    <color name="left_menu_list_item_press">#803e3f48</color>
+    <color name="msg_item_press_clr">#dee1e4</color>
+    <color name="list_divider">#50dee1e4</color>
+    <color name="group_list_divider">#dee1e4</color>
+
+    <!-- 首页区域 -->
+    <color name="clr_main_orange_icon">#ea9311</color>
+    <color name="clr_main_orange_icon_hover">#efa330</color>
+    <color name="clr_main_blue_icon">#4ba1ed</color>
+    <color name="clr_main_blue_icon_hover">#69b0f5</color>
+    <color name="clr_topbar_title_text">#7089a0</color>
+
+    <!-- 弹出窗体选项颜色 -->
+    <color name="clr_window_backgroud">#cfe8f5</color>
+    <color name="clr_window_edge_line">#b7d3e3</color>
+    <color name="clr_window_list_item_text">#28ADD6</color><!-- #2b84ce -->
+    <color name="clr_window_list_item_normal">#cfe8f5</color>
+    <color name="clr_window_list_item_press">#7089a0</color>
+    <color name="clr_window_list_item_line">#aad0e3</color>
+    <color name="clr_window_bottom_background">#ddedf5</color>
+    <color name="clr_window_bottom_edge_line">#b7d3e3</color>
+    <color name="clr_window_item_btn_normal">#2b84ce</color>
+    <color name="clr_window_item_btn_press">#50a1e5</color>
+    <color name="clr_window_edit_text">#000000</color><!-- #bdbdbd -->
+    <color name="clr_window_more_line">#2b84ce</color>
+    <color name="clr_window_regist_item_normal">#bf7c7cc0</color>
+    <color name="clr_window_regist_item_press">#b5b6f1</color>
+
+    <!-- 文件列表颜色 -->
+    <color name="clr_list_item_name_normal">#5d6062</color>
+    <color name="clr_list_item_name_press">#487fa4</color>
+    <color name="clr_list_item_time">#9babba</color>
+    <color name="clr_list_item_size">#7e99a7</color>
+    <color name="clr_list_item_normal">#00000000</color>
+    <color name="clr_list_item_press">#e9f6fb</color>
+    <color name="clr_list_item_line">#d4dbe2</color>
+
+    <!-- 添加联系人 -->
+    <color name="clr_share_search_hint">#b6bdc1</color>
+    <color name="clr_share_contacts_name">#2590c7</color>
+    <color name="clr_share_contacts_number">#787878</color>
+    <color name="clr_contacts_name">#556a75</color>
+    <color name="clr_contacts_update_time">#7e99a7</color>
+
+    <!-- 设置 -->
+    <color name="clr_setting_btn_text">#333333</color>
+    <color name="clr_setting_about_text">#2c90c4</color>
+    <color name="clr_setting_other_text">#556a75</color>
+    <color name="clr_setting_logout_normal">#d56441</color>
+    <color name="clr_setting_logout_press">#c0512f</color>
+    <color name="clr_btn_blue_lit">#dbf0fb</color>
+    <color name="clr_btn_blue_lit_hover">#b6e3fc</color>
+    <color name="clr_btn_blue_lit_more">#ddecf4</color>
+    <color name="clr_btn_blue_lit_more_hover">#e9f3f9</color>
+
+    <!-- 绑定微博-->
+    <color name="clr_bind_item_normal">#acdffc</color>
+    <color name="clr_bind_item_press">#d5f0ff</color>
+    
+    <!-- 联系人备份还原-->
+    <color name="clr_contacts_btn_normal">#d2edfc</color>
+    <color name="clr_contacts_btn_press">#b7e3fc</color>
+    
+    <color name="clr_music_name_text">#0157a1</color>
+    <color name="clr_music_singer_text">#4591d2</color>
+    <color name="clr_music_list_name">#ffffff</color>
+    <color name="clr_music_list_name_press">#184d7a</color>
+    <color name="clr_music_list_singer">#e3e3e3</color>
+    <color name="clr_music_list_singer_press">#184d7a</color>
+    <color name="clr_music_list_item_normal">#7089a2</color>
+    <color name="clr_music_list_item_press">#b3c0ce</color>
+    <color name="clr_music_list_line">#466886</color>
+    <color name="clr_music_list_name_normal">#7089a2</color>
+    
+    <!-- 兑换空间卡-->
+    <color name="ok_btn_press">#f0ad38</color>
+    <color name="ok_btn_normal">#f68e1e</color>
+    
+    <!-- 登录-->
+    <color name="quick_login_button_pressed">#2487cb</color>
+    <color name="quick_login_button_disabled">#d4d9dd</color>
+    <color name="quick_login_button_normal">#e5f3fc</color>
+    <color name="quick_login_button_text_pressed">#ffffff</color>
+    <color name="quick_login_button_text_disabled">#c0c4c7</color>
+    <color name="quick_login_button_text_normal">#2287cb</color>
+   
+    
+    <!-- 二维码 -->
+    <color name="bg_color">#EDEDED</color>
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="help_button_view">#ffcccccc</color>
+    <color name="help_view">#ff404040</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="result_image_border">#ffffffff</color>
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c000ff00</color>
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="sbc_header_text">#ff808080</color>
+    <color name="sbc_header_view">#ffffffff</color>
+    <color name="sbc_list_item">#fffff0e0</color>
+    <color name="sbc_layout_view">#ffffffff</color>
+    <color name="sbc_page_number_text">#ff000000</color>
+    <color name="sbc_snippet_text">#ff4b4b4b</color>
+    <color name="share_text">#ff000000</color>
+    <color name="share_view">#ffffffff</color>
+    <color name="status_view">#50000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="header">#58567D</color>
+    <color name="grgray">#686868</color>
+    
+    <!-- 友盟应用推荐 -->
+    <color name="tab_normal">#205ca0</color>
+    <color name="tab_selected">#2387cb</color>
+    <color name="btn_unclicked">#559ACF</color>
+    <color name="btn_clicked">#5FADE8</color>
+    
+    <color name="music_play_text">#a7a8b4</color>
+    <color name="music_play_list_line">#3c3f46</color>
+    
+    <color name="file_list_item_normal">#f5f5f5</color>
+    <color name="file_list_item_pressed">#dee1e4</color>
+    
+    <color name="group_list_item_normal">#f5f5f5</color>
+    <color name="group_list_item_pressed">#dee1e4</color>
+    <!-- 相册备份 -->
+    <color name="item_clicked">#e5e5e5</color>
+    
+    <color name="private_zoom_btn_normal">#3b8fe5</color>
+    <color name="private_zoom_btn_press">#6aaff6</color>
+    
+    <!-- 云游广场分享 -->
+    <color name="share_item_pressed">#dee1e4</color>
+    
+    <!-- popwin按钮背景-->
+    <color name="pop_win_button_bg">#4a8dcd</color>
+    <!-- 私密空间 -->
+     <color name= "button_hint">#cccccc</color>
+     <color name= "text_color">#333333</color>
+     <color name= "editText_color_hint">#999999</color>
+     
+
+    <!-- 条目被点击 -->
+    <color name="clicked">#d1d1d1</color>
+    <color name="unclicked">#ffffff</color>
+    <!--我的分享  -->
+	<color name= "share_tab_textColor_selected">#ffffff</color>
+	<color name="share_tab_textColor_unselected">#3b8fe5</color>
+	<color name="line_background">#0d000000</color>
+    <!-- CommonDialog背景 -->
+    <color name= "common_dialog_bg">#4d000000</color>
+    <!-- 左侧滑退出登录按钮 -->
+    <color name="menu_logout_normal">#ebf4fc</color>
+    <color name="menu_logout_pressed">#eef3f7</color>
+
+    <!-- 订单页面 -->
+    <color name="left_backgroud">#362121</color>
+    <color name="right_background">#0c0c0c</color>
+    <color name="left_prompt_text">#ff5959</color>
+    <color name="left_button_background">#ff9600</color>
+    <color name="button_settlement">#2ec45e</color>
+
+</resources>

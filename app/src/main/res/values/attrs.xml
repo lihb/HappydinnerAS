@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="XCRoundRectImageView">
+        <attr name="xcr_border_width" format="dimension" />
+        <attr name="xcr_border_color" format="color" />
+        <attr name="xcr_border_overlay" format="boolean" />
+        <attr name="xcr_border_radius" format="float" />
+        <attr name="xcr_drawable_radius" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundedImageView">
+        <attr name="corner_loc" format="integer" />
+        <attr name="corner_radius" format="integer" />
+    </declare-styleable>
+</resources>

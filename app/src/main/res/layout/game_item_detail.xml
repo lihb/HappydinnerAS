@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:RoundedImageView="http://schemas.android.com/apk/res/com.handgold.pjdc"
+        android:layout_width="300dp"
+        android:layout_height="540dp">
+    <com.handgold.pjdc.ui.widget.RoundedImageView
+            android:id="@+id/game_iv"
+            android:layout_width="300dp"
+            android:layout_height="260dp"
+            android:scaleType="fitXY"
+            RoundedImageView:corner_loc="3"
+            RoundedImageView:corner_radius="16"
+            android:src="@drawable/meishi1"
+            />
+    <TextView
+            android:id="@+id/game_name_text"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:layout_below="@id/game_iv"
+            android:text="开心消消乐"
+            android:textSize="25dp"
+            android:textColor="#ccffffff"
+            android:background="@drawable/game_name_even_view_bg"
+            />
+</RelativeLayout>

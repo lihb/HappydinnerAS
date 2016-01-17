@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:XCRoundRectImageView="http://schemas.android.com/apk/res/com.handgold.pjdc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <com.handgold.pjdc.ui.widget.XCRoundRectImageView
+            android:id="@+id/image_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            XCRoundRectImageView:xcr_border_color="#FFFFFF"
+            XCRoundRectImageView:xcr_border_overlay="false"
+            XCRoundRectImageView:xcr_border_width="0dp"
+            XCRoundRectImageView:xcr_border_radius="0"
+            XCRoundRectImageView:xcr_drawable_radius="10"
+            android:src="@drawable/map_bg"
+            />
+
+    <ImageView
+            android:id="@+id/image_type"
+            android:layout_width="@dimen/loc_img_width"
+            android:layout_height="@dimen/loc_img_height"
+            android:src="@drawable/icon_map"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            />
+    <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/image_type"
+            android:layout_marginTop="35dp"
+            android:text="当前位置"
+            android:textSize="@dimen/loc_title_text_size"
+            android:textColor="#ffffff"
+            />
+    <TextView
+            android:id="@+id/text_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/text_title"
+            android:layout_alignBottom="@id/text_title"
+            android:layout_marginLeft="20dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text=""
+            android:textSize="@dimen/loc_title_desc_size"
+            android:textColor="#c0ffffff"
+            />
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/baidumapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/text_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true" />
+
+</RelativeLayout>

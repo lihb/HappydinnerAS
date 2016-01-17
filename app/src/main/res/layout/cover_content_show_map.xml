@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:XCRoundRectImageView="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="610dp">
+        <com.handgold.pjdc.ui.widget.XCRoundRectImageView
+                android:id="@+id/map_iv"
+                android:layout_width="match_parent"
+                android:layout_height="610dp"
+                XCRoundRectImageView:xcr_border_color="#FFFFFF"
+                XCRoundRectImageView:xcr_border_overlay="false"
+                XCRoundRectImageView:xcr_border_width="0dp"
+                XCRoundRectImageView:xcr_border_radius="0"
+                XCRoundRectImageView:xcr_drawable_radius="10"
+                android:src="@drawable/wanda_loc_map"
+                />
+            <RelativeLayout
+                    android:id="@+id/loc_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="140dp"
+                    android:layout_marginRight="290dp"
+                    >
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/pin_1"
+                            />
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/pin_2"
+                            android:layout_centerInParent="true"
+                            />
+
+            </RelativeLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

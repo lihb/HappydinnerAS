@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.handgold.pjdc.ui.widget.OrderShowView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/order_show_view_bg"
+        >
+        <RelativeLayout
+                android:id="@+id/relative_order_top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/content_title_height"
+                android:orientation="horizontal"
+                android:background="@drawable/order_top_view_bg"
+                >
+
+                <TextView
+                        android:id="@+id/text_order_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/movie_game_viewpager_top_margin"
+                        android:text="我点的菜"
+                        android:textSize="@dimen/fragment_food_left_text_size"
+                        android:textColor="#97857b"
+                        android:layout_centerVertical="true"
+                        />
+
+                <TextView
+                        android:id="@+id/text_order_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/menu_oper_text_margin"
+                        android:layout_toRightOf="@+id/text_order_desc"
+                        android:text="8"
+                        android:textSize="@dimen/fragment_food_left_text_size"
+                        android:gravity="center"
+                        android:textColor="#ffffff"
+                        android:background="@drawable/order_count_text_bg"
+                        />
+
+                <TextView
+                        android:id="@+id/text_order_del_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/dot_ll_bottom_margin"
+                        android:text="清空全部"
+                        android:textSize="@dimen/fragment_food_left_text_size"
+                        android:textColor="#97857b"
+                        android:layout_centerVertical="true"
+                        />
+        </RelativeLayout>
+
+        <ListView
+                android:id="@+id/order_show_lv"
+                android:layout_gravity="center"
+                android:layout_below="@+id/relative_order_top"
+                android:layout_above="@+id/linearlayout_order_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="#00000000"
+                android:divider="@null"
+                android:listSelector="@android:color/transparent"
+                >
+        </ListView>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_above="@+id/linearlayout_order_bottom"
+                android:background="#eeeeee"
+                />
+        <RelativeLayout
+                android:id="@+id/linearlayout_order_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/content_title_height"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                >
+                <TextView
+                        android:id="@+id/text_order_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dot_ll_bottom_margin"
+                        android:text="取消"
+                        android:textSize="@dimen/fragment_food_left_text_size"
+                        android:textColor="#000000"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        />
+
+                <TextView
+                        android:id="@+id/text_order_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="总计："
+                        android:textSize="@dimen/loc_title_text_size"
+                        android:textColor="#ff6000"
+                        android:gravity="center_vertical"
+                        />
+
+                <TextView
+                        android:id="@+id/text_order_now"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:paddingRight="@dimen/popup_menu_desc_bottom_margin"
+                        android:paddingLeft="@dimen/popup_menu_desc_bottom_margin"
+                        android:gravity="center"
+                        android:text="立刻下单"
+                        android:textSize="@dimen/fragment_food_left_text_size"
+                        android:textColor="#ffffff"
+                        android:background="@color/button_settlement"
+                        />
+
+        </RelativeLayout>
+
+</com.handgold.pjdc.ui.widget.OrderShowView>

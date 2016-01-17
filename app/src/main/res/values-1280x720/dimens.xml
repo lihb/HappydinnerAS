@@ -1,0 +1,165 @@
+<resources>
+    <!-- 红米note 分辨率1280x720 -->
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- 首页背景图片大小-->
+    <dimen name="cover_width">320dp</dimen>
+    <dimen name="cover_height">200dp</dimen>
+
+    <!-- 首页展示项目图片大小-->
+    <dimen name="sample_item_width">100dp</dimen>
+    <dimen name="sample_item_height">120dp</dimen>
+
+    <!-- 首页类型图标大小-->
+    <dimen name="cover_icon_width">50dp</dimen>
+    <dimen name="cover_icon_height">50dp</dimen>
+
+    <!-- 电影、支付页面，左边fragment的宽度-->
+    <dimen name="left_fragment_width">120dp</dimen>
+
+    <!-- 头部 -->
+    <dimen name="head_height">40dp</dimen>
+
+    <!-- 头部左边边距-->
+    <dimen name="header_left_margin">12dip</dimen>
+    <!-- 头部右边边距-->
+    <dimen name="header_right_margin">12dip</dimen>
+
+    <!-- 支付页面图片大小-->
+    <dimen name="pay_icon_width">40dp</dimen>
+    <dimen name="pay_icon_height">40dp</dimen>
+
+
+    <!-- 支付页面副标题字体大小 -->
+    <dimen name="pay_title_text_size">15dp</dimen>
+
+    <!-- 支付页面字体大小 -->
+    <dimen name="pay_text_size">12dp</dimen>
+
+    <!-- 订单弹窗view的宽高 -->
+    <dimen name="order_view_width">340dp</dimen>
+    <dimen name="order_view_height">320dp</dimen>
+
+    <!-- 菜品详情view的宽高 -->
+    <dimen name="detail_view_width">240dp</dimen>
+    <dimen name="detail_view_height">280dp</dimen>
+
+    <!-- 支付完成后弹窗view的宽高 -->
+    <dimen name="pay_view_width">266dp</dimen>
+    <dimen name="pay_view_height">200dp</dimen>
+
+    <!-- 游戏页面广告视频的宽高 -->
+    <dimen name="game_view_width">550dp</dimen>
+    <dimen name="game_view_height">550dp</dimen>
+
+    <!--购物车左边、底部margin-->
+    <dimen name="cartview_left_margin">12dp</dimen>
+    <dimen name="cartview_bottom_margin">12dp</dimen>
+
+    <!--地理位置界面，左上角图标宽高-->
+    <dimen name="loc_img_width">66dp</dimen>
+    <dimen name="loc_img_height">66dp</dimen>
+
+    <!--地理位置界面，标题字体大小-->
+    <dimen name="loc_title_text_size">20dp</dimen>
+    <!--地理位置界面，地址字体大小-->
+    <dimen name="loc_title_desc_size">16dp</dimen>
+
+
+
+    <!--电影、游戏页面，类别的字体大小-->
+    <dimen name="content_title_text_size">16dp</dimen>
+
+    <!--电影、游戏页面，类别item的宽高-->
+    <dimen name="content_title_width">30dp</dimen>
+    <dimen name="content_title_height">30dp</dimen>
+
+    <dimen name="horizontal_spacing">12dp</dimen>
+    <dimen name="vertical_spacing">12dp</dimen>
+
+    <!--游戏展示页面，gridview的item的宽高-->
+    <dimen name="game_item_width">72dp</dimen>
+    <dimen name="game_item_height">72dp</dimen>
+
+    <!--电影、游戏页面，类别栏距离左右两侧的margin-->
+    <dimen name="movie_game_tab_margin">130dp</dimen>
+
+    <!--电影、游戏展示页面，gridview的距离左右两侧的margin-->
+    <dimen name="fragment_movie_game_right_margin">110dp</dimen>
+    <dimen name="fragment_movie_game_left_margin">110dp</dimen>
+
+    <!--电影展示页面，gridview的宽度-->
+    <dimen name="fragment_movie_game_right_item_width">80dp</dimen>
+
+    <!--菜品页面，左侧item的图标宽高-->
+    <dimen name="fragment_food_left_icon_size">26dp</dimen>
+    <!--菜品页面，左侧item栏位的高度-->
+    <dimen name="fragment_food_left_item_height">33dp</dimen>
+    <!--菜品页面，左侧item栏位的padding-->
+    <dimen name="fragment_food_left_item_padding">12dp</dimen>
+    <!--菜品页面，左侧item栏位的字体大小-->
+    <dimen name="fragment_food_left_text_size">16dp</dimen>
+    <!--菜品页面，右侧gridview距离页面右侧是margin -->
+    <dimen name="fragment_food_right_margin">20dp</dimen>
+    <!--菜品页面，右侧gridview的item的宽度-->
+    <dimen name="fragment_food_right_item_width">140dp</dimen>
+    <!--菜品页面，gridview的item的高度-->
+    <dimen name="fragment_food_right_item_height">150dp</dimen>
+
+    <!--菜品页面，左侧top marging-->
+    <dimen name="food_left_item_marging_top">6dp</dimen>
+    <!--菜品介绍，字体大小-->
+    <dimen name="menu_info_text_size">10dp</dimen>
+    <dimen name="cart_view_size">20dp</dimen>
+
+    <dimen name="head_text_size">20dp</dimen>
+    <dimen name="head_back_icon_size">26dp</dimen>
+
+    <dimen name="movie_item_width">70dp</dimen>
+    <dimen name="movie_item_height">85dp</dimen>
+
+    <dimen name="content_title_ll_top_margin">15dp</dimen>
+    <dimen name="movie_game_viewpager_top_margin">8dp</dimen>
+
+    <dimen name="call_service_icon_width">115dp</dimen>
+    <dimen name="call_service_icon_height">55dp</dimen>
+
+    <dimen name="call_service_bottom_margin">6dp</dimen>
+    <dimen name="dot_ll_bottom_margin">15dp</dimen>
+
+    <dimen name="menu_gridview_vertical_sapcing">8dp</dimen>
+    <dimen name="menu_gridview_horizontal_sapcing">8dp</dimen>
+
+
+    <dimen name="menu_item_margin">8dp</dimen>
+    <dimen name="menu_item_text_padding">2dp</dimen>
+    <dimen name="menu_item_text_padding_mini">1dp</dimen>
+
+    <dimen name="menu_oper_size">25dp</dimen>
+    <dimen name="menu_oper_text_margin">2dp</dimen>
+    <dimen name="menu_oper_bg_width">122dp</dimen>
+
+    <dimen name="shop_cart_view_size">65dp</dimen>
+
+    <dimen name="cart_icon_size">15dp</dimen>
+
+    <dimen name="shopcart_content_top_marging">8dp</dimen>
+
+    <dimen name="popup_top_height">124dp</dimen>
+
+    <dimen name="popup_close_icon_size">30dp</dimen>
+
+    <dimen name="popup_menu_desc_bottom_margin">18dp</dimen>
+
+    <dimen name="order_item_height">26dp</dimen>
+    <dimen name="margin_18">9dp</dimen>
+
+    <dimen name="qr_icon_size">100dp</dimen>
+    <dimen name="pay_step1_pic_width">150dp</dimen>
+    <dimen name="pay_info_ll_left_margin">50dp</dimen>
+    <dimen name="pay_info_ll_top_margin">57dp</dimen>
+
+    <!-- 红米note 分辨率1280x720 -->
+</resources>

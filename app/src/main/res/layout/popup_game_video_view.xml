@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.handgold.pjdc.ui.widget.PopupGameVideoView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:RoundedImageView="http://schemas.android.com/apk/res/com.handgold.pjdc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:id="@+id/relative_popup_top"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+                >
+            <FrameLayout
+                    android:id="@+id/popup_videoview_framelayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_centerInParent="true"
+                    android:fitsSystemWindows="false"
+                    android:foregroundGravity="clip_horizontal|clip_vertical">
+
+                <com.handgold.pjdc.ui.widget.PopupVideoView
+                        android:id="@+id/popup_videoview"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        />
+            </FrameLayout>
+                <com.handgold.pjdc.ui.widget.RoundedImageView
+                android:id="@+id/video_pic"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY"
+                RoundedImageView:corner_radius="16"
+                RoundedImageView:corner_loc="3"
+                android:src="@drawable/meishi2"
+                />
+            <ImageView
+                android:id="@+id/iv_popup_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/play_icon_selector"
+                android:layout_centerInParent="true"
+                />
+    </RelativeLayout>
+
+
+    <ImageView
+            android:id="@+id/iv_popup_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/close_icon_selector"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            />
+</com.handgold.pjdc.ui.widget.PopupGameVideoView>

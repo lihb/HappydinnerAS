@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.handgold.pjdc"
+          android:versionCode="1"
+          android:versionName="1.0-SNAPSHOT"
+        >
+    <uses-sdk
+            android:minSdkVersion="16"
+            android:targetSdkVersion="21"/>
+
+    <application
+            android:name="com.handgold.pjdc.base.ApplicationEx"
+            android:allowBackup="true"
+            android:icon="@drawable/logo"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme"
+            android:largeHeap="true"
+            >
+
+        <service
+                android:name="com.baidu.location.f"
+                android:enabled="true"
+                android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" >
+                </action>
+            </intent-filter>
+        </service>
+
+        <activity
+                android:name=".activity.CoverFlowActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="landscape"
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.handgold.pjdc.activity.FoodShowActivity"
+                  android:theme="@style/AppTheme"
+                  android:screenOrientation="landscape"/>
+        <activity android:name="com.handgold.pjdc.activity.PayActivity"
+                  android:theme="@style/AppTheme"
+                  android:screenOrientation="landscape"/>
+        <activity android:name="com.handgold.pjdc.activity.VideoPlayer2Activity"
+                  android:theme="@style/AppTheme"
+                  android:screenOrientation="landscape"/>
+        <activity android:name="com.handgold.pjdc.activity.GameShowActivityNew"
+                  android:theme="@style/AppTheme"
+                  android:screenOrientation="landscape"/>
+        <activity android:name="com.handgold.pjdc.activity.MovieShowActivity"
+                  android:theme="@style/AppTheme"
+                  android:screenOrientation="landscape"/>
+        <activity android:name="com.handgold.pjdc.activity.MovieShowActivityNew"
+                  android:theme="@style/AppTheme"
+                  android:screenOrientation="landscape"/>
+        <activity android:name="com.handgold.pjdc.activity.MapShowActivity"
+                  android:theme="@style/AppTheme"
+                  android:screenOrientation="landscape"/>
+        <activity android:name="com.handgold.pjdc.activity.WebViewActivity"
+                  android:theme="@style/AppTheme"
+                  android:screenOrientation="landscape"/>
+
+        <!--友盟统计-->
+        <meta-data android:value="564a922b67e58e03fd0083dd" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="Channel ID" android:name="com.handgold.pjdc"/>
+        <!--友盟统计-->
+
+        <!--百度地图-->
+        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="qHYChvgVB6c5v464QN2lbRYm" />
+        <!--百度地图-->
+    </application>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!-- 获取设置信息和详情页直接拨打电话需要以下权限  -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+</manifest>

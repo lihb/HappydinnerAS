@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/root_view"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/food_bg"
+        >
+
+    <include android:id="@+id/pay_head"
+             layout="@layout/container_head"
+            />
+    <ImageView
+            android:id="@+id/iv_seperate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/divider_line"
+            android:layout_below="@+id/pay_head"
+            />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_below="@+id/iv_seperate"
+            >
+        <LinearLayout
+                android:id="@+id/left_frag"
+                android:layout_width="@dimen/left_fragment_width"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                >
+
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/right_frag"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                >
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+            android:id="@+id/order_show_view_relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            android:visibility="gone"
+            >
+        <include
+                android:id="@+id/order_show_view"
+                android:layout_width="@dimen/order_view_width"
+                android:layout_height="@dimen/order_view_height"
+                layout="@layout/order_show_view"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/popup_view_relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#c0000000"
+            android:visibility="gone"
+            >
+        <include
+                android:id="@+id/popup_detail_view"
+                android:layout_width="@dimen/detail_view_width"
+                android:layout_height="@dimen/detail_view_height"
+                layout="@layout/popup_menu_detail_view"
+                android:layout_centerInParent="true"
+                />
+
+    </RelativeLayout>
+
+    <include
+            android:id="@+id/shopping_cart_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/shopping_cart_view"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/cartview_left_margin"
+            android:visibility="gone"
+            />
+    <RelativeLayout
+            android:id="@+id/popup_pay_info_relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#c0000000"
+            android:visibility="gone"
+            >
+        <include
+                android:id="@+id/popup_pay_info_view"
+                android:layout_width="@dimen/pay_view_width"
+                android:layout_height="@dimen/pay_view_height"
+                layout="@layout/popup_pay_info_view"
+                android:layout_centerInParent="true"
+                />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/popup_game_video_relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#c0000000"
+            android:visibility="gone"
+            >
+        <include
+                android:id="@+id/popup_game_video_view"
+                android:layout_width="@dimen/game_view_width"
+                android:layout_height="@dimen/game_view_height"
+                layout="@layout/popup_game_video_view"
+                android:layout_centerInParent="true"
+                />
+
+    </RelativeLayout>
+
+</RelativeLayout>
