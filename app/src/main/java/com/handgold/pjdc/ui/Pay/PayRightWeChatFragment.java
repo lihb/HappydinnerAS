@@ -134,7 +134,7 @@ public class PayRightWeChatFragment extends Fragment {
             String nonce_str = WeChatUtil.getRandomStringByLength(32);
             String body = "测试！！";
             String detail = "";
-            String out_trade_no = WeChatUtil.getRandomStringByLength(19) + System.currentTimeMillis();
+            String out_trade_no = (String) ((ApplicationEx) (getActivity()).getApplication()).receiveInternalActivityParam("order_pay_id");
 //            int total_fee = (int) (mOrder.getTotalPrice() * 100);
             int total_fee = (1);
             String spbill_create_ip = WeChatUtil.getLocalIp();
