@@ -38,7 +38,7 @@ public class Constant {
 	public static final String WECHAT_KEY = "d89852607452a741984f28caa4612a49";
 
 	// 回调地址
-	public static final  String NOTIFY_URL = "  http://120.55.162.6/api/pay/wxcallback";
+	public static final  String NOTIFY_URL = "http://120.55.162.6/api/pay/wxcallback";
 
 	// 统一下单 api
 	public static final String UNIFY_PAY_API = "https://api.mch.weixin.qq.com/pay/unifiedorder";

@@ -85,8 +85,8 @@ public interface ApiManager {
      * @param deviceid 设备号
      * @return
      */
-    @POST("order/buyorder")
-    Observable<OrderPayInfo> getBuyOrder(@Body String deviceid);
+    @GET("order/buyorder")
+    Observable<OrderPayInfo> getBuyOrder(@Query("deviceid") String deviceid);
 
 
     /**
