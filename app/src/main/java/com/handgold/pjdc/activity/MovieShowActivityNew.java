@@ -90,7 +90,7 @@ public class MovieShowActivityNew extends FragmentActivity {
 
         //换背景图片
         rootView = (RelativeLayout) findViewById(R.id.root_view);
-//        rootView.setBackgroundResource(R.drawable.moive_bg);
+        rootView.setBackgroundResource(R.drawable.moive_bg);
 
         //viewpager
         mViewPager = (ViewPager) findViewById(R.id.viewpager);

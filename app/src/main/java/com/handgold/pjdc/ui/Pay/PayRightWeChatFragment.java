@@ -3,6 +3,7 @@ package com.handgold.pjdc.ui.Pay;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,11 +15,14 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.handgold.pjdc.R;
+import com.handgold.pjdc.action.ApiManager;
+import com.handgold.pjdc.action.ServiceGenerator;
 import com.handgold.pjdc.action.SingleOkHttpClient;
 import com.handgold.pjdc.activity.PayActivity;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.Constant;
 import com.handgold.pjdc.entitiy.Order;
+import com.handgold.pjdc.entitiy.PayState;
 import com.handgold.pjdc.entitiy.WeChatReqData;
 import com.handgold.pjdc.entitiy.WeChatResData;
 import com.handgold.pjdc.util.CommonUtils;
@@ -27,6 +31,9 @@ import com.umeng.analytics.MobclickAgent;
 import retrofit.*;
 import retrofit.http.Body;
 import retrofit.http.POST;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -262,10 +269,11 @@ public class PayRightWeChatFragment extends Fragment {
                 String code_url = weChatResData.getCode_url();
                 Log.i("PayRightWeChatFragment", "code_url = "+ code_url);
                 Log.i("PayRightWeChatFragment", "trade_type = "+ weChatResData.getTrade_type());
-                Log.i("PayRightWeChatFragment", "prepay_id = "+ weChatResData.getPrepay_id());
+                Log.i("PayRightWeChatFragment", "prepay_id = " + weChatResData.getPrepay_id());
 //                Glide.with(this).load("http://goo.gl/gEgYUd").into(payInfoStep1Img);
                 ((PayActivity) getActivity()).generateQrImg(payInfoStep2Img, code_url);
-
+                // 定时获取支付结果
+                checkResult();
             }else {
                 //获取错误码
                 String errorCode = weChatResData.getErr_code();
@@ -278,6 +286,47 @@ public class PayRightWeChatFragment extends Fragment {
             }
         }
 
+    }
+
+    private void checkResult() {
+        new CountDownTimer(1000 * 5 * 60, 5000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.i("PayRightWeChatFragment", "轮询中.....");
+                ServiceGenerator.createService(ApiManager.class)
+                        .checkresult(((ApplicationEx) (getActivity()).getApplication()).deviceid)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<PayState>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onNext(PayState payState) {
+                                if (payState.result_code == 0) {
+                                    if (payState.state == 0) {
+                                        Log.i("PayRightWeChatFragment", "付款成功....");
+                                        ((PayActivity) getActivity()).checkResult(true);
+                                        cancel();
+                                    }
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void onFinish() {
+                Log.i("PayRightWeChatFragment", "轮询结束");
+                ((PayActivity) getActivity()).checkResult(false);
+            }
+        }.start();
     }
 
 }

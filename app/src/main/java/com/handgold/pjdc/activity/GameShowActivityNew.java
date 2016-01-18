@@ -112,7 +112,7 @@ public class GameShowActivityNew extends FragmentActivity {
 
         //换背景图片
         rootView = (RelativeLayout) findViewById(R.id.root_view);
-//        rootView.setBackgroundResource(R.drawable.game_bg);
+        rootView.setBackgroundResource(R.drawable.game_bg);
 
         //viewpager
         mViewPager = (ViewPager) findViewById(R.id.viewpager);

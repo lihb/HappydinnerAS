@@ -88,8 +88,6 @@ public class PayActivity extends BaseActivity {
                 case R.id.head_left:
                 case R.id.head_left_rlyt:
                     finish();
-//                    mPayInfoRelativeLayout.setVisibility(View.VISIBLE);
-//                    mPopupPayInfoView.updateUI(true);
                     break;
 
                 default:
@@ -129,6 +127,12 @@ public class PayActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+    }
+
+    public void checkResult(boolean success) {
+        mPayInfoRelativeLayout.setVisibility(View.VISIBLE);
+        mPopupPayInfoView.updateUI(success);
+
     }
 
     /**

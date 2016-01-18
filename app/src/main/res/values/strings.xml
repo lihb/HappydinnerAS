@@ -34,5 +34,6 @@
 
     
     <string name="get_wechat_link_fail">获取微信支付链接失败，请稍后重试。</string>
+    <string name="order_success_info">下单成功，请耐心等候的餐点。</string>
 
 </resources>

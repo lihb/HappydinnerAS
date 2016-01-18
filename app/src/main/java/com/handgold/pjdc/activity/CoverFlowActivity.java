@@ -17,6 +17,7 @@ import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.MenuListEntity;
 import com.handgold.pjdc.entitiy.MenuType;
 import com.handgold.pjdc.entitiy.MovieInfo;
+import com.handgold.pjdc.entitiy.RoomTableInfo;
 import com.handgold.pjdc.ui.CoverFlowAdapter;
 
 import org.json.JSONArray;
@@ -113,32 +114,50 @@ public class CoverFlowActivity extends BaseActivity {
                 .subscribe(new Subscriber<MenuListEntity>() {
                     @Override
                     public void onCompleted() {
-                        Log.i("lihb test", "onCompleted");
+                        Log.i("lihb test getMenuList", "onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.i("lihb test", "onError");
+                        Log.i("lihb test getMenuList", "onError");
                         e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(MenuListEntity menuListEntity) {
-                        Log.i("lihb test", "onNext");
+                        Log.i("lihb test getMenuList", "onNext");
                         if (menuListEntity.result_code == 0) {
-                            Log.i("lihb test", "onNext in if()");
+
                             ((ApplicationEx) getApplication()).setInternalActivityParam("allMenuList", menuListEntity.menulist);
 
-                            for (int i = 0; i < menuListEntity.menulist.size(); i++) {
-                                MenuType menuType = menuListEntity.menulist.get(i);
-                                Log.i("lihb test", menuType.typename);
-                                for (int j = 0; j < menuType.items.size(); j++) {
-                                    MenuItemInfo info = menuType.items.get(j);
-                                    Log.i("lihb test", info.getName());
-                                }
-                            }
+                        }
+                    }
+                });
+        ServiceGenerator.createService(ApiManager.class)
+                .getOrderInfo(((ApplicationEx) getApplication()).deviceid)
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<RoomTableInfo>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.i("lihb test getOrderInfo", "onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i("lihb test getOrderInfo", "onError");
+                        e.printStackTrace();
+
+                    }
+
+                    @Override
+                    public void onNext(RoomTableInfo roomTableInfo) {
+                        Log.i("lihb test getOrderInfo", "onNext");
+                        if (roomTableInfo.result_code == 0) {
+                            Log.i("lihb test", "roomTableInfo.table_number = " + roomTableInfo.table_number);
+                            ((ApplicationEx) getApplication()).setInternalActivityParam("table_number", roomTableInfo.table_number);
 
                         }
+
                     }
                 });
 

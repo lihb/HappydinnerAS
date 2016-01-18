@@ -110,7 +110,7 @@ public class GameShowActivity extends FragmentActivity {
 
         //换背景图片
         rootView = (RelativeLayout) findViewById(R.id.root_view);
-//        rootView.setBackgroundResource(R.drawable.game_bg);
+        rootView.setBackgroundResource(R.drawable.game_bg);
     }
 
     private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {

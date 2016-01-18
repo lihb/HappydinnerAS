@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -14,12 +15,18 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 import com.handgold.pjdc.R;
+import com.handgold.pjdc.action.ApiManager;
+import com.handgold.pjdc.action.ServiceGenerator;
 import com.handgold.pjdc.activity.PayActivity;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.common.list.SimpleListWorkerAdapter;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.Order;
+import com.handgold.pjdc.entitiy.OrderPayInfo;
+import com.handgold.pjdc.entitiy.PlaceOrderInfo;
 import com.handgold.pjdc.ui.listworker.OrderListWorker;
 import com.handgold.pjdc.util.CommonUtils;
 
@@ -27,6 +34,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2015/9/29.
@@ -143,13 +154,67 @@ public class OrderShowView extends RelativeLayout {
                 exitView();
             }else {
                 if (mCurState == SUBMIT_STATE) {
-                    mTextOrderNow.setText("确认订单");
+                    mTextOrderNow.setText("结算");
                     mOrder.setStatus(Order.OrderStatus.SUBMITED);
                     mCurState = CONFIRM_STATE;
+                    String deviceid = ((ApplicationEx) (mActivity).getApplication()).deviceid;
+                    ArrayList<MenuItemInfo> dataList = (ArrayList<MenuItemInfo>) mOrder.getMenuList();
+                    Gson gson = new Gson();
+                    String ss = gson.toJson(dataList);
+                    Log.i("----------", ss);
+                    ApiManager.PlaceOrderParas paras = new ApiManager.PlaceOrderParas();
+                    paras.deviceid = deviceid;
+                    paras.menuListJson = ss;
+                    ServiceGenerator.createService(ApiManager.class)
+                            .getPlaceOrder(paras)
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(new Subscriber<PlaceOrderInfo>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onNext(PlaceOrderInfo placeOrderInfo) {
+                                    if (placeOrderInfo.result_code == 0) {
+                                        Log.i("timestamp", placeOrderInfo.timestamp);
+                                        ((ApplicationEx) (mActivity).getApplication()).setInternalActivityParam("timestamp", placeOrderInfo.timestamp);
+                                        CommonUtils.toastText(mActivity, mActivity.getString(R.string.order_success_info));
+                                    }
+                                }
+                            });
                 }else {
-                    mTextOrderNow.setText("立刻下单");
-                    mCurState = SUBMIT_STATE;
-                    //todo 上传参数
+//                    mTextOrderNow.setText("");
+//                    mCurState = SUBMIT_STATE;
+                    ServiceGenerator.createService(ApiManager.class)
+                            .getBuyOrder(((ApplicationEx) (mActivity).getApplication()).deviceid)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<OrderPayInfo>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    e.printStackTrace();
+
+                                }
+
+                                @Override
+                                public void onNext(OrderPayInfo orderPayInfo) {
+                                    if (orderPayInfo.result_code == 0) {
+                                        Log.i("order_pay_id", orderPayInfo.order_pay_id);
+                                        ((ApplicationEx) (mActivity).getApplication()).setInternalActivityParam("order_pay_id", orderPayInfo.order_pay_id);
+                                    }
+                                }
+                            });
                     Intent intent = new Intent(mActivity, PayActivity.class);
                     intent.putExtra("totalPrice", mOrder.getTotalPrice());
                     mActivity.startActivity(intent);
