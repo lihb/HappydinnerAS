@@ -110,6 +110,9 @@ public class MenuItemInfo implements Parcelable, Cloneable {
      * @return
      */
     public float getActualPrice() {
+        if (discount == 0) {
+            discount = 1;
+        }
         return discount * price;
     }
 

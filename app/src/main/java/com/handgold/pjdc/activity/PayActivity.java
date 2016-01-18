@@ -14,6 +14,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.handgold.pjdc.R;
+import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.BaseActivity;
 import com.handgold.pjdc.ui.Pay.PayLeftFragment;
 import com.handgold.pjdc.ui.Pay.PayRightZhiFuBaoFragment;
@@ -132,6 +133,8 @@ public class PayActivity extends BaseActivity {
     public void checkResult(boolean success) {
         mPayInfoRelativeLayout.setVisibility(View.VISIBLE);
         mPopupPayInfoView.updateUI(success);
+        // 付款成功后，清空点菜列表
+        ((ApplicationEx) getApplication()).setInternalActivityParam("order", null);
         finish();
 
     }
