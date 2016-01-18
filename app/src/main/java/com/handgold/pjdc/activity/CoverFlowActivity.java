@@ -106,7 +106,8 @@ public class CoverFlowActivity extends BaseActivity {
 
     private void initMenuData() {
 
-//
+        Log.i("lihb test id = ", ((ApplicationEx) getApplication()).deviceid);
+
         ServiceGenerator.createService(ApiManager.class)
                 .getMenuList(((ApplicationEx) getApplication()).deviceid)
                 .subscribeOn(Schedulers.io())

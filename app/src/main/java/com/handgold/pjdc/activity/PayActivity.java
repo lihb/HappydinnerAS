@@ -132,6 +132,7 @@ public class PayActivity extends BaseActivity {
     public void checkResult(boolean success) {
         mPayInfoRelativeLayout.setVisibility(View.VISIBLE);
         mPopupPayInfoView.updateUI(success);
+        finish();
 
     }
 

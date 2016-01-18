@@ -65,7 +65,7 @@ public class PopupPayInfoView extends RelativeLayout {
             mPayStatusImg.setImageResource(R.drawable.icon_success);
             mPayStatusText.setText("付款成功！");
             mPayStatusText.setTextColor(0xff000000);
-            mPayDescText.setText("请耐心等候您的餐点\n\n     " + DURATION + "S后自动返回");
+            mPayDescText.setText("欢迎下次光临\n\n     " + DURATION + "S后自动返回");
             isRuuning = true;
 //            new Thread(new MyRunnable()).start(); // 法1：使用线程+handler实现倒计时
 //            new CountDownTimer(6000, 1000){       // 法2：使用CountDownTimer实现倒计时

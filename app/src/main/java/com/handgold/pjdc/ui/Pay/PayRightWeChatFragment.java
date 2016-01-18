@@ -316,6 +316,7 @@ public class PayRightWeChatFragment extends Fragment {
                                         ((PayActivity) getActivity()).checkResult(true);
                                         // 支付成功，退出轮询
                                         cancel();
+
                                     }
                                 }
                             }

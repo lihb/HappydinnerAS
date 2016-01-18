@@ -92,7 +92,7 @@ public class GameShowActivityNew extends FragmentActivity {
             initData();
         }
 
-        initFragmentAndDot(MovieTypeEnum.HOT.ordinal());
+        initFragmentAndDot(GameTypeEnum.RECOMMEND.ordinal());
 
 
     }
