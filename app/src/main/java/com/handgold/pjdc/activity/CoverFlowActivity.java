@@ -38,7 +38,7 @@ public class CoverFlowActivity extends BaseActivity {
     private CoverFlowAdapter mAdapter;
 //    private HashMap<String, ArrayList> mData = new HashMap<>();
     private ArrayList<CoverFlowEntity> mData = new ArrayList<CoverFlowEntity>(0);
-    private SortedMap<Integer, List<MenuItemInfo>> sortedMenuMap;
+    private ArrayList<MenuType> allMenuList;
     private SortedMap<Integer, List<GameInfo>> sortedGameMap;
     private SortedMap<Integer, List<MovieInfo>> sortedMovieMap;
 
@@ -71,7 +71,7 @@ public class CoverFlowActivity extends BaseActivity {
                 } else if (position == 2) {
                     Intent intent = new Intent(CoverFlowActivity.this, com.handgold.pjdc.activity.FoodShowActivity.class);
                     startActivity(intent);
-                }else if (position == 0) {
+                } else if (position == 0) {
                     Intent intent = new Intent(CoverFlowActivity.this, com.handgold.pjdc.activity.MapShowActivity.class);
                     startActivity(intent);
                 }
@@ -92,9 +92,9 @@ public class CoverFlowActivity extends BaseActivity {
         });
 
         // 获取菜品数据
-        sortedMenuMap = (SortedMap) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allMenuList");
-        if (sortedMenuMap == null) {
-            sortedMenuMap = new TreeMap<Integer, List<MenuItemInfo>>();
+        allMenuList = (ArrayList) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allMenuList");
+        if (allMenuList == null) {
+            allMenuList = new ArrayList<>();
             initMenuData();
         }
         Configuration config = getResources().getConfiguration();
@@ -129,7 +129,7 @@ public class CoverFlowActivity extends BaseActivity {
                         if (menuListEntity.result_code == 0) {
 
                             ((ApplicationEx) getApplication()).setInternalActivityParam("allMenuList", menuListEntity.menulist);
-
+                            allMenuList.addAll(menuListEntity.menulist);
                         }
                     }
                 });

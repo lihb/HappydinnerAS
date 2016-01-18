@@ -6,19 +6,28 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.handgold.pjdc.R;
+import com.handgold.pjdc.action.ApiManager;
+import com.handgold.pjdc.action.ServiceGenerator;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.MovieTypeEnum;
 import com.handgold.pjdc.entitiy.MovieInfo;
+import com.handgold.pjdc.entitiy.MovieListEntity;
+import com.handgold.pjdc.entitiy.MovieType;
 import com.handgold.pjdc.ui.Movie.MovieFragment;
 import com.handgold.pjdc.ui.widget.HeadView;
 import com.handgold.pjdc.util.DeviceUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.*;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2015/11/3.
@@ -27,9 +36,7 @@ public class MovieShowActivityNew extends FragmentActivity {
 
     private HeadView headView;
 
-    private SortedMap<Integer, List<MovieInfo>> sortedMovieDataMap;
-
-
+    private ArrayList<MovieType> allMovieList;
 
     private RelativeLayout rootView = null;
 
@@ -65,14 +72,13 @@ public class MovieShowActivityNew extends FragmentActivity {
         initView();
 
 
-        // 获取游戏数据
-        sortedMovieDataMap = (SortedMap) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allMovieList");
-        if (sortedMovieDataMap == null) {
-            sortedMovieDataMap = new TreeMap<Integer, List<MovieInfo>>();
+        // 获取电影数据
+        allMovieList = (ArrayList<MovieType>) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allMovieList");
+        if (allMovieList == null || allMovieList.isEmpty()) {
+            allMovieList = new ArrayList<>();
             initData();
         }
 
-        initFragmentAndDot(MovieTypeEnum.HOT.ordinal());
     }
 
     private void initView() {
@@ -109,7 +115,7 @@ public class MovieShowActivityNew extends FragmentActivity {
         tabItem4.setText(getString(R.string.cartoon_movie));
         tabItem5.setText(getString(R.string.fiction_movie));
 
-        textArray = new TextView[]{null, tabItem1, tabItem2, tabItem3, tabItem4, tabItem5};
+        textArray = new TextView[]{tabItem1, tabItem2, tabItem3, tabItem4, tabItem5};
 
         tabItem1.setSelected(true);
 
@@ -128,43 +134,30 @@ public class MovieShowActivityNew extends FragmentActivity {
 
 
     private void initData() {
-        List<MovieInfo> movieInfoList = new ArrayList<MovieInfo>();
-        for (int i = 0; i < 60; i++) {
-            MovieInfo movieInfo = new MovieInfo("电影" + (i+1), "http://www.dddd.com", (i / 12 + 1));
-            movieInfoList.add(movieInfo);
+        ServiceGenerator.createService(ApiManager.class)
+                .getMovieList(((ApplicationEx) getApplication()).deviceid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<MovieListEntity>() {
+                    @Override
+                    public void onCompleted() {
 
-        }
-        /**
-         * 比较器：给menu按照type排序用
-         */
-        Comparator<MovieInfo> comparator = new Comparator<MovieInfo>() {
-            @Override
-            public int compare(MovieInfo lhs, MovieInfo rhs) {
+                    }
 
-                return lhs.getType() - rhs.getType();
-            }
-        };
-        Collections.sort(movieInfoList, comparator);
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
 
-        List<MovieInfo> tmpList = new ArrayList<MovieInfo>();
+                    @Override
+                    public void onNext(MovieListEntity movieListEntity) {
+                        ((ApplicationEx) getApplication()).setInternalActivityParam("allMovieList",
+                                movieListEntity.movielist);
+                        allMovieList.addAll(movieListEntity.movielist);
+                        initFragmentAndDot(MovieTypeEnum.HOT.ordinal());
 
-        int oldKey = movieInfoList.get(0).getType();
-
-        for (int i = 0; i < movieInfoList.size(); i++) {
-            MovieInfo movieItemData = movieInfoList.get(i);
-            int newKey = movieItemData.getType();
-            if (newKey == oldKey) {
-                tmpList.add(movieItemData);
-            } else {
-                sortedMovieDataMap.put(oldKey, tmpList);
-                tmpList = new ArrayList<MovieInfo>();
-                tmpList.add(movieItemData);
-                oldKey = newKey;
-            }
-        }
-        sortedMovieDataMap.put(oldKey, tmpList); // 处理最后一组数据
-
-        ((ApplicationEx) getApplication()).setInternalActivityParam("allMovieList", sortedMovieDataMap);
+                    }
+                });
     }
 
     private void initFragmentAndDot(int type) {
@@ -174,7 +167,7 @@ public class MovieShowActivityNew extends FragmentActivity {
         fragmentList = new ArrayList<>();
         ArrayList<MovieInfo> dataList = new ArrayList<MovieInfo>();
         //初始化右边fragment的数据
-        dataList.addAll(sortedMovieDataMap.get(type));
+        dataList.addAll(allMovieList.get(type).items);
         int count = dataList.size() / MAX_ITE_IN_PER_FRAGEMNT;
         if (dataList.size() % MAX_ITE_IN_PER_FRAGEMNT != 0) {
             count++;
@@ -275,7 +268,7 @@ public class MovieShowActivityNew extends FragmentActivity {
      * @param whichType
      */
     private void setSelectType(int whichType) {
-        for (int i = 1; i < textArray.length; i++) {
+        for (int i = 0; i < textArray.length; i++) {
             if (whichType == i) {
                 textArray[i].setSelected(true);
             }else {

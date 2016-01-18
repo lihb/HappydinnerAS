@@ -92,7 +92,7 @@ public class FoodRightAdapter  extends BaseAdapter {
 
 
         Glide.with(mContext)
-                .load(menu.getImgUrl())
+                .load(menu.imgUrl)
                 .placeholder(R.drawable.fijitribe)
                 .into(viewholder.menuNameIv);
 

@@ -81,7 +81,7 @@ public class MovieShowActivity extends FragmentActivity {
 
         List<MovieInfo> movieInfoList = new ArrayList<MovieInfo>();
         for (int i = 0; i < 30; i++) {
-            MovieInfo movieInfo = new MovieInfo("电影" + (i+1), "http://www.dddd.com", (i / 6 + 1));
+            MovieInfo movieInfo = new MovieInfo("电影" + (i + 1), "http://www.dddd.com", (i / 6 + 1), "");
             movieInfoList.add(movieInfo);
 
         }
@@ -92,18 +92,18 @@ public class MovieShowActivity extends FragmentActivity {
             @Override
             public int compare(MovieInfo lhs, MovieInfo rhs) {
 
-                return lhs.getType() - rhs.getType();
+                return lhs.getPlaytype() - rhs.getPlaytype();
             }
         };
         Collections.sort(movieInfoList, comparator);
 
         List<MovieInfo> tmpList = new ArrayList<MovieInfo>();
 
-        int oldKey = movieInfoList.get(0).getType();
+        int oldKey = movieInfoList.get(0).getPlaytype();
 
         for (int i = 0; i < movieInfoList.size(); i++) {
             MovieInfo movieItemData = movieInfoList.get(i);
-            int newKey = movieItemData.getType();
+            int newKey = movieItemData.getPlaytype();
             if (newKey == oldKey) {
                 tmpList.add(movieItemData);
             } else {

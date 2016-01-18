@@ -38,8 +38,8 @@ public class MovieFragment extends Fragment{
 //            ((ViewGroup)view).getChildAt(0).setSelected(true);
             MovieInfo movie = (MovieInfo) parent.getAdapter().getItem(position);
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
-            movie.setMovieUrl("http://www.iqiyi.com/v_19rrkdlco0.html");
-            intent.putExtra("url", movie.getMovieUrl());
+//            movie.setImgUrl("http://www.iqiyi.com/v_19rrkdlco0.html");
+            intent.putExtra("url", movie.downloadUrl);
 //            intent.putExtra("title", movie.getName());
             getActivity().startActivity(intent);
         }

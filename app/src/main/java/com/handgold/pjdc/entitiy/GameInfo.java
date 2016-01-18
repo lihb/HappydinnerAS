@@ -70,7 +70,7 @@ public class GameInfo extends BaseEntity implements Parcelable{
         try {
             name = jobj.optString("name");
             picUrl = jobj.optString("picUrl");
-            type = jobj.optInt("type");
+            type = jobj.optInt("playtype");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "GameInfo json init exception!");
@@ -83,7 +83,7 @@ public class GameInfo extends BaseEntity implements Parcelable{
             JSONObject jobj = new JSONObject(jsonInfo);
             name = jobj.optString("name");
             picUrl = jobj.optString("picUrl");
-            type = jobj.optInt("type");
+            type = jobj.optInt("playtype");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "GameInfo json init exception!");
@@ -96,7 +96,7 @@ public class GameInfo extends BaseEntity implements Parcelable{
             JSONObject jobj = new JSONObject();
             jobj.put("name", name);
             jobj.put("picUrl", picUrl);
-            jobj.put("type", type);
+            jobj.put("playtype", type);
             str = jobj.toString();
         } catch (JSONException e) {
             // TODO Auto-generated catch block

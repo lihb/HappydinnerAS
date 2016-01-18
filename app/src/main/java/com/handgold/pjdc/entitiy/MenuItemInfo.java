@@ -37,7 +37,7 @@ public class MenuItemInfo implements Parcelable, Cloneable {
 //    private int cooked; // 0--未上菜；1-－已上菜
 
     // 菜品所属分类
-//    private int type;
+//    private int playtype;
 
     // 该菜品被点了几份
     public int count = 0 ;
@@ -73,7 +73,7 @@ public class MenuItemInfo implements Parcelable, Cloneable {
 
        /* if (Float.compare(menu.discount, discount) != 0) return false;
         if (Float.compare(menu.price, price) != 0) return false;
-        if (type != menu.type) return false;
+        if (playtype != menu.playtype) return false;
         if (!imgUrl.equals(menu.imgUrl)) return false;
         if (!info.equals(menu.info)) return false;
         if (!video.equals(menu.video)) return false;*/
@@ -89,11 +89,11 @@ public class MenuItemInfo implements Parcelable, Cloneable {
         result = 31 * result + (price != +0.0f ? Float.floatToIntBits(price) : 0);
         result = 31 * result + info.hashCode();
         result = 31 * result + (discount != +0.0f ? Float.floatToIntBits(discount) : 0);
-        result = 31 * result + type;*/
+        result = 31 * result + playtype;*/
         return result;
     }
 
-    public MenuItemInfo(String name, String imgUrl, String video, float price, String info, float discount/*, int cooked, int type, String restaurantName*/) {
+    public MenuItemInfo(String name, String imgUrl, String video, float price, String info, float discount/*, int cooked, int playtype, String restaurantName*/) {
         this.name = name;
         this.imgUrl = imgUrl;
         this.video = video;
@@ -101,7 +101,7 @@ public class MenuItemInfo implements Parcelable, Cloneable {
         this.info = info;
         this.discount = discount;
 //        this.cooked = cooked;
-//        this.type = type;
+//        this.playtype = playtype;
 //        this.restaurantName = restaurantName;
     }
 
@@ -170,12 +170,12 @@ public class MenuItemInfo implements Parcelable, Cloneable {
 //        this.cooked = cooked;
 //    }
 //
-//    public int getType() {
-//        return type;
+//    public int getPlaytype() {
+//        return playtype;
 //    }
 //
-//    public void setType(int type) {
-//        this.type = type;
+//    public void setPlaytype(int playtype) {
+//        this.playtype = playtype;
 //    }
 
     public int getCount() {
@@ -208,7 +208,7 @@ public class MenuItemInfo implements Parcelable, Cloneable {
         dest.writeString(info);
         dest.writeFloat(discount);
 //        dest.writeInt(cooked);
-//        dest.writeInt(type);
+//        dest.writeInt(playtype);
         dest.writeInt(count);
     }
 
@@ -222,7 +222,7 @@ public class MenuItemInfo implements Parcelable, Cloneable {
             menu.setInfo(source.readString());
             menu.setDiscount(source.readFloat());
 //            menu.setCooked(source.readInt());
-//            menu.setType(source.readInt());
+//            menu.setPlaytype(source.readInt());
             menu.setCount(source.readInt());
             return menu;
         }

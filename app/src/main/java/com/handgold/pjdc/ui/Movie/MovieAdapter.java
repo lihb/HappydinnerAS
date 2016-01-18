@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.entitiy.MovieInfo;
 
@@ -65,15 +67,12 @@ public class MovieAdapter extends BaseAdapter {
 
         final MovieInfo movieInfo = (MovieInfo) getItem(position);
 
-        int[] picIds = new int[]{
-                R.drawable.pic_moive_dashengguilai, R.drawable.pic_moive_diezhongdie5,
-                R.drawable.pic_moive_gangjiong, R.drawable.pic_moive_gundanba_zhongniujun,
-                R.drawable.pic_moive_jianbingxia, R.drawable.pic_moive_padingdunxiong,
-                R.drawable.pic_moive_suduyujiqing7, R.drawable.pic_moive_toulaotegongdui,
-                R.drawable.pic_moive_xialuote, R.drawable.pic_moive_xiaowangzi,
-                R.drawable.pic_moive_xinniangzuozhan, R.drawable.pic_moive_zhuoyaoji};
-        int id = new Random().nextInt(picIds.length);
-        viewholder.itemImg.setImageResource(picIds[id]);
+
+        Glide.with(mContext)
+                .load(movieInfo.imgUrl)
+                .placeholder(R.drawable.fijitribe)
+                .into(viewholder.itemImg);
+
         viewholder.itemName.setText(movieInfo.getName());
         return convertView;
     }

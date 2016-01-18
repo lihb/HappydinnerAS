@@ -39,8 +39,8 @@ public class MovieRightFragmentNew extends Fragment {
 
             MovieInfo movie = (MovieInfo) parent.getAdapter().getItem(position);
             Intent intent = new Intent(getActivity(), VideoPlayer2Activity.class);
-            movie.setMovieUrl("http://download.cloud.189.cn/v5/downloadFile.action?downloadRequest=1_266BEB5F2F53474145C6EBE33E9A75D592251F2581CFE66ED934BC80674F070BA6790DA91C37DD2867779B6A435B6E040ED7928D6EFEB456A463C8E6238E8DA431473E7443FCC8025B64223A6700BF64EDD9FFDFEEA7447A59FC024F4CE7979319CFCCF6F79641E0E10945F7D23B60F7557901BF94E0BF88DFACD44EF40A4A4D0E77B882");
-            intent.putExtra("videoUrl", movie.getMovieUrl());
+            movie.setImgUrl("http://download.cloud.189.cn/v5/downloadFile.action?downloadRequest=1_266BEB5F2F53474145C6EBE33E9A75D592251F2581CFE66ED934BC80674F070BA6790DA91C37DD2867779B6A435B6E040ED7928D6EFEB456A463C8E6238E8DA431473E7443FCC8025B64223A6700BF64EDD9FFDFEEA7447A59FC024F4CE7979319CFCCF6F79641E0E10945F7D23B60F7557901BF94E0BF88DFACD44EF40A4A4D0E77B882");
+            intent.putExtra("videoUrl", movie.getImgUrl());
             intent.putExtra("fileName", movie.getName());
             getActivity().startActivity(intent);
         }

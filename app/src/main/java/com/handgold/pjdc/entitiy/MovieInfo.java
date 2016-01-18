@@ -9,51 +9,66 @@ import org.json.JSONObject;
 /**
  * Created by Administrator on 2015/11/17.
  */
-public class MovieInfo  extends BaseEntity implements Parcelable {
+public class MovieInfo implements Parcelable {
     private final String TAG = "MovieInfo";
     /**
      * 影片名字
      */
-    private String name;
+    public String name;
 
     /**
      * 影片url
      */
-    private String movieUrl;
+    public String imgUrl;
 
     /**
      * 影片所属分类
      */
-    private int type;
+    public int playtype;
+
+
+    /**
+     * 下载地址
+     */
+    public String downloadUrl;
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setMovieUrl(String movieUrl) {
-        this.movieUrl = movieUrl;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setPlaytype(int playtype) {
+        this.playtype = playtype;
     }
 
-    public int getType() {
-        return type;
+    public int getPlaytype() {
+        return playtype;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getMovieUrl() {
-        return movieUrl;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public MovieInfo(String name, String picUrl, int type) {
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
+
+    public MovieInfo(String name, String picUrl, int type, String downloadUrl) {
         this.name = name;
-        this.movieUrl = picUrl;
-        this.type = type;
+        this.imgUrl = picUrl;
+        this.playtype = type;
+        this.downloadUrl = downloadUrl;
     }
 
 
@@ -61,8 +76,9 @@ public class MovieInfo  extends BaseEntity implements Parcelable {
         // TODO Auto-generated constructor stub
         try {
             name = jobj.optString("name");
-            movieUrl = jobj.optString("movieUrl");
-            type = jobj.optInt("type");
+            imgUrl = jobj.optString("imgUrl");
+            downloadUrl = jobj.optString("downloadUrl");
+            playtype = jobj.optInt("playtype");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "MovieInfo json init exception!");
@@ -74,8 +90,9 @@ public class MovieInfo  extends BaseEntity implements Parcelable {
         try {
             JSONObject jobj = new JSONObject(jsonInfo);
             name = jobj.optString("name");
-            movieUrl = jobj.optString("movieUrl");
-            type = jobj.optInt("type");
+            imgUrl = jobj.optString("imgUrl");
+            downloadUrl = jobj.optString("downloadUrl");
+            playtype = jobj.optInt("playtype");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "MovieInfo json init exception!");
@@ -87,8 +104,9 @@ public class MovieInfo  extends BaseEntity implements Parcelable {
         try {
             JSONObject jobj = new JSONObject();
             jobj.put("name", name);
-            jobj.put("movieUrl", movieUrl);
-            jobj.put("type", type);
+            jobj.put("imgUrl", imgUrl);
+            jobj.put("playtype", playtype);
+            jobj.put("downloadUrl", downloadUrl);
             str = jobj.toString();
         } catch (JSONException e) {
             // TODO Auto-generated catch block
@@ -105,19 +123,21 @@ public class MovieInfo  extends BaseEntity implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeString(movieUrl);
-        dest.writeInt(type);
+        dest.writeString(imgUrl);
+        dest.writeInt(playtype);
+        dest.writeString(downloadUrl);
 
     }
     public static final Creator<MovieInfo> CREATOR = new Creator<MovieInfo>() {
         @Override
         public MovieInfo createFromParcel(Parcel source) {
-            MovieInfo gameInfo = new MovieInfo(source.readString());
-            gameInfo.setName(source.readString());
-            gameInfo.setMovieUrl(source.readString());
-            gameInfo.setType(source.readInt());
+            MovieInfo movieInfo = new MovieInfo(source.readString());
+            movieInfo.setName(source.readString());
+            movieInfo.setImgUrl(source.readString());
+            movieInfo.setPlaytype(source.readInt());
+            movieInfo.setDownloadUrl(source.readString());
 
-            return gameInfo;
+            return movieInfo;
         }
 
         @Override

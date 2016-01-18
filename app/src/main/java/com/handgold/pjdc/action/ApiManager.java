@@ -1,8 +1,10 @@
 package com.handgold.pjdc.action;
 
+import com.handgold.pjdc.entitiy.GameListEntity;
 import com.handgold.pjdc.entitiy.GameType;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.MenuListEntity;
+import com.handgold.pjdc.entitiy.MovieListEntity;
 import com.handgold.pjdc.entitiy.MovieType;
 import com.handgold.pjdc.entitiy.OrderPayInfo;
 import com.handgold.pjdc.entitiy.PayState;
@@ -40,7 +42,7 @@ public interface ApiManager {
      * @return
      */
     @GET("movie/list")
-    Observable<List<MovieType>> getMovieList(@Query("restaurantId") String restaurantId);
+    Observable<MovieListEntity> getMovieList(@Query("restaurantId") String restaurantId);
 
 
     /**
@@ -49,7 +51,7 @@ public interface ApiManager {
      * @return
      */
     @GET("game/list")
-    Observable<List<GameType>> getGameList(@Query("restaurantId") String restaurantId);
+    Observable<GameListEntity> getGameList(@Query("restaurantId") String restaurantId);
 
 
     /**
