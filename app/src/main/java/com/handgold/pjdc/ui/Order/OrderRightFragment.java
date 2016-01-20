@@ -71,9 +71,9 @@ public class OrderRightFragment extends android.support.v4.app.Fragment {
             int type = (Integer) it.next() - 1;
             if (type == MenuTypeEnum.RECOMMEND.ordinal()) {
                 titleList.add("主厨推荐");
-            } else if (type == MenuTypeEnum.MEALSET.ordinal()) {
+            }/* else if (type == MenuTypeEnum.MEALSET.ordinal()) {
                 titleList.add("套餐");
-            } else if (type == MenuTypeEnum.DRINK.ordinal()) {
+            }*/ else if (type == MenuTypeEnum.DRINK.ordinal()) {
                 titleList.add("小吃");
             } else {
                 titleList.add("其他");

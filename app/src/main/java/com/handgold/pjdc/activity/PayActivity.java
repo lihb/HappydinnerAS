@@ -17,6 +17,7 @@ import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.BaseActivity;
 import com.handgold.pjdc.ui.Pay.PayLeftFragment;
+import com.handgold.pjdc.ui.Pay.PayRightWeChatFragment;
 import com.handgold.pjdc.ui.Pay.PayRightZhiFuBaoFragment;
 import com.handgold.pjdc.ui.widget.HeadView;
 import com.handgold.pjdc.ui.widget.PopupPayInfoView;
@@ -41,7 +42,9 @@ public class PayActivity extends BaseActivity {
 
     private FragmentTransaction mTransaction;
 
-    private PayRightZhiFuBaoFragment payRightZhiFuBaoFragment;
+//    private PayRightZhiFuBaoFragment payRightZhiFuBaoFragment;
+
+    private PayRightWeChatFragment payRightWeChatFragment;
 
     private PayLeftFragment payLeftFragment;
 
@@ -105,7 +108,7 @@ public class PayActivity extends BaseActivity {
             mTransaction.replace(R.id.left_frag, payLeftFragment, "pay_left_frag");
         }
 
-        if (payRightZhiFuBaoFragment == null) {
+       /* if (payRightZhiFuBaoFragment == null) {
             payRightZhiFuBaoFragment = new PayRightZhiFuBaoFragment();
             Intent intent = getIntent();
             float price = intent.getFloatExtra("totalPrice", 0f);
@@ -113,6 +116,16 @@ public class PayActivity extends BaseActivity {
             bundle.putFloat("price", price);
             payRightZhiFuBaoFragment.setArguments(bundle);
             mTransaction.replace(R.id.right_frag, payRightZhiFuBaoFragment, "pay_right_zhifubao_frag");
+        }*/
+
+        if (payRightWeChatFragment == null) {
+            payRightWeChatFragment = new PayRightWeChatFragment();
+            Intent intent = getIntent();
+            float price = intent.getFloatExtra("totalPrice", 0f);
+            Bundle bundle = new Bundle();
+            bundle.putFloat("price", price);
+            payRightWeChatFragment.setArguments(bundle);
+            mTransaction.replace(R.id.right_frag, payRightWeChatFragment, "pay_right_wechat_frag");
         }
         mTransaction.commit();
 

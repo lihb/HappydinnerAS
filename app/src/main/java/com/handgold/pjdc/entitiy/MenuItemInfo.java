@@ -10,6 +10,7 @@ import android.os.Parcelable;
  imgUrl						string			菜品图片
  video						string 			菜品介绍视频
  info						string			菜品介绍文字
+ price						float			菜品价格
  discount					float			折扣信息
 
  */
@@ -25,7 +26,7 @@ public class MenuItemInfo implements Parcelable, Cloneable {
     public String video;
 
     // 菜品价格
-    private float price;
+    public float price;
 
     // 菜品介绍
     public String info;

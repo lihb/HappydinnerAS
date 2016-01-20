@@ -70,14 +70,17 @@ public class PayLeftFragment extends Fragment {
 
         wechatImg.setImageResource(R.drawable.icon_wechat);
         wechatText.setText("微信");
+        // 隐藏支付宝模块
+        zhifubaoLayout.setVisibility(View.GONE);
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        zhifubaoLayout.setSelected(true);
-        zhifubaoLayout.setOnClickListener(mOnclickListener);
+//        zhifubaoLayout.setSelected(true);
+        wechatLayout.setSelected(true);
+//        zhifubaoLayout.setOnClickListener(mOnclickListener);
         wechatLayout.setOnClickListener(mOnclickListener);
         mFragmentManager = getFragmentManager();
     }

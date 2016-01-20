@@ -5,5 +5,5 @@ package com.handgold.pjdc.base;
  * 菜品类型
  */
 public enum MenuTypeEnum {
-    NOTHING,DRINK,SNACK,PRI_FOOD,MEALSET, RECOMMEND
+    NOTHING,DRINK,SNACK,PRI_FOOD,/*MEALSET,*/ RECOMMEND
 }
