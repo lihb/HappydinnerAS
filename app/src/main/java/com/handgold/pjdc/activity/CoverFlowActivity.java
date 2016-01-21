@@ -11,6 +11,7 @@ import com.handgold.pjdc.action.ApiManager;
 import com.handgold.pjdc.action.ServiceGenerator;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.BaseActivity;
+import com.handgold.pjdc.base.Constant;
 import com.handgold.pjdc.entitiy.CoverFlowEntity;
 import com.handgold.pjdc.entitiy.GameInfo;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
@@ -106,10 +107,10 @@ public class CoverFlowActivity extends BaseActivity {
 
     private void initMenuData() {
 
-        Log.i("lihb test id = ", ((ApplicationEx) getApplication()).deviceid);
+        Log.i("lihb test id = ", Constant.deviceid);
 
         ServiceGenerator.createService(ApiManager.class)
-                .getMenuList(((ApplicationEx) getApplication()).deviceid)
+                .getMenuList(Constant.deviceid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<MenuListEntity>() {
@@ -135,7 +136,7 @@ public class CoverFlowActivity extends BaseActivity {
                     }
                 });
         ServiceGenerator.createService(ApiManager.class)
-                .getOrderInfo(((ApplicationEx) getApplication()).deviceid)
+                .getOrderInfo(Constant.deviceid)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<RoomTableInfo>() {
                     @Override

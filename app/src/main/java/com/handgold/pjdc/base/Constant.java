@@ -1,6 +1,8 @@
 package com.handgold.pjdc.base;
 
 
+import android.content.Context;
+
 /**
  * @author Administrator
  *
@@ -74,6 +76,15 @@ public class Constant {
 		public static final int SVR_RES_NO_RESPONSE = -1;
 
 	}
+
+
+	public static String deviceid;
+
+
+	public static final String CLOSE_PAY = "com.pjdc.push.close.payActivity";
+
+	public static final String CLOSE_MENU = "com.pjdc.push.close.foodActivity";
+
 
 
 

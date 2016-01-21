@@ -1,17 +1,23 @@
 package com.handgold.pjdc.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.ApplicationEx;
-import com.handgold.pjdc.base.MenuTypeEnum;
+import com.handgold.pjdc.base.Constant;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.MenuType;
 import com.handgold.pjdc.ui.Menu.FoodLeftFragment;
 import com.handgold.pjdc.ui.Menu.FoodRightFragment;
+import com.handgold.pjdc.ui.Pay.PayRightWeChatFragment;
 import com.handgold.pjdc.ui.VideoPlayerFragment;
 import com.handgold.pjdc.ui.widget.HeadView;
 import com.handgold.pjdc.ui.widget.OrderShowView;
@@ -19,8 +25,6 @@ import com.handgold.pjdc.ui.widget.PopupMenuDetailView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedMap;
 
 /**
  * Created by lihb on 15/5/16.
@@ -43,6 +47,8 @@ public class FoodShowActivity extends FragmentActivity {
 
     private PopupMenuDetailView mPopupMenuDetailView = null;
 
+    boolean firstReceive = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // 去除title
@@ -63,6 +69,8 @@ public class FoodShowActivity extends FragmentActivity {
         allMenuList = (ArrayList<MenuType>) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allMenuList");
 
         initFragment();
+
+        registerBroadcastReceiver();
 
 
     }
@@ -140,5 +148,43 @@ public class FoodShowActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unRegisterBroadcastReceiver();
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Constant.CLOSE_PAY)) {
+                if (firstReceive) {
+                    firstReceive = false;
+                    Log.i("lihb  test-----  ", "菜品页面接受到广播,退出订单页面，清空购物车");
+                    if (mOrderShowView.isVisible()) {
+                        mOrderShowView.exitView();
+                    }
+                    if (foodRightFragment != null) {
+                        foodRightFragment.emptyShopCart();
+                    }
+                }
+
+//                abortBroadcast();
+//                finish();
+
+            }
+        }
+    };
+
+    private void registerBroadcastReceiver() {
+        IntentFilter intentFilter = new IntentFilter(Constant.CLOSE_PAY);
+        registerReceiver(mBroadcastReceiver, intentFilter);
+    }
+
+    private void unRegisterBroadcastReceiver() {
+        unregisterReceiver(mBroadcastReceiver);
     }
 }

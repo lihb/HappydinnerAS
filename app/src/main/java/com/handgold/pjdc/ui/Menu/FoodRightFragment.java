@@ -260,6 +260,11 @@ public class FoodRightFragment extends Fragment {
         mOrderShowView.setTextOrderPrice(CommonUtils.round(mOrder.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
     }
 
+    public void emptyShopCart() {
+        mShoppingCardView.setTextCount(0);
+        mShoppingCardView.setTextPrice(0.0f);
+    }
+
     /************************添加到购物车动画*******************************************/
 
     private void doAnim(int[] start_location){

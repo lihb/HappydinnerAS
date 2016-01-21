@@ -14,6 +14,7 @@ import com.handgold.pjdc.R;
 import com.handgold.pjdc.action.ApiManager;
 import com.handgold.pjdc.action.ServiceGenerator;
 import com.handgold.pjdc.base.ApplicationEx;
+import com.handgold.pjdc.base.Constant;
 import com.handgold.pjdc.base.MovieTypeEnum;
 import com.handgold.pjdc.entitiy.MovieInfo;
 import com.handgold.pjdc.entitiy.MovieListEntity;
@@ -135,7 +136,7 @@ public class MovieShowActivityNew extends FragmentActivity {
 
     private void initData() {
         ServiceGenerator.createService(ApiManager.class)
-                .getMovieList(((ApplicationEx) getApplication()).deviceid)
+                .getMovieList(Constant.deviceid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<MovieListEntity>() {

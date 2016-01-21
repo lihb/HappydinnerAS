@@ -34,7 +34,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:paddingLeft="15dp"
-            android:text="请耐心等候您的餐点\n     5S后自动返回"
+        android:text="欢迎下次光临\n5S后自动返回"
             android:textColor="#80000000"
             android:textSize="16sp"
             />

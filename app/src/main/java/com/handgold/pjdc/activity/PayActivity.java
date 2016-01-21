@@ -2,10 +2,14 @@ package com.handgold.pjdc.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,12 +20,16 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.BaseActivity;
+import com.handgold.pjdc.base.Constant;
+import com.handgold.pjdc.entitiy.MenuItemInfo;
+import com.handgold.pjdc.entitiy.Order;
 import com.handgold.pjdc.ui.Pay.PayLeftFragment;
 import com.handgold.pjdc.ui.Pay.PayRightWeChatFragment;
-import com.handgold.pjdc.ui.Pay.PayRightZhiFuBaoFragment;
 import com.handgold.pjdc.ui.widget.HeadView;
 import com.handgold.pjdc.ui.widget.PopupPayInfoView;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.List;
 
 /**
  * 类说明：
@@ -54,6 +62,9 @@ public class PayActivity extends BaseActivity {
 
     private BitMatrix mBitMatrix = null;
 
+    boolean firstReceive = true;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -62,6 +73,8 @@ public class PayActivity extends BaseActivity {
         initView();
         mFragmentManager = getFragmentManager();
         initFragment();
+
+        registerBroadcastReceiver();
 
     }
 
@@ -143,12 +156,19 @@ public class PayActivity extends BaseActivity {
         MobclickAgent.onResume(this);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (payRightWeChatFragment != null) {
+            payRightWeChatFragment.stopCheckResult();
+        }
+        unRegisterBroadcastReceiver();
+    }
+
     public void checkResult(boolean success) {
         mPayInfoRelativeLayout.setVisibility(View.VISIBLE);
         mPopupPayInfoView.updateUI(success);
-        // 付款成功后，清空点菜列表
-        ((ApplicationEx) getApplication()).setInternalActivityParam("order", null);
-        finish();
+
 
     }
 
@@ -186,6 +206,38 @@ public class PayActivity extends BaseActivity {
             }
         }
         return bmp;
+    }
+
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Constant.CLOSE_PAY)) {
+                if (firstReceive) {
+                    firstReceive = false;
+                    Log.i("lihb  test-----  ", "付款页面接受到广播，退出页面，清空订单数据和菜品数量信息");
+                    // 付款成功后，清空点菜列表和菜品的数量信息
+                    Order order = (Order) ((ApplicationEx) getApplication()).receiveInternalActivityParam("order");
+                    List<MenuItemInfo> menuItemInfoList = order.getMenuList();
+                    for (int i = 0; i < menuItemInfoList.size(); i++) {
+                        MenuItemInfo info = menuItemInfoList.get(i);
+                        info.count = 0;
+                    }
+                    ((ApplicationEx) getApplication()).setInternalActivityParam("order", null);
+                    finish();
+                }
+            }
+        }
+    };
+
+    private void registerBroadcastReceiver() {
+        IntentFilter intentFilter = new IntentFilter(Constant.CLOSE_PAY);
+        registerReceiver(mBroadcastReceiver, intentFilter);
+    }
+
+    private void unRegisterBroadcastReceiver() {
+        unregisterReceiver(mBroadcastReceiver);
     }
 
 }

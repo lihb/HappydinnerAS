@@ -22,6 +22,7 @@ import com.handgold.pjdc.action.ApiManager;
 import com.handgold.pjdc.action.ServiceGenerator;
 import com.handgold.pjdc.activity.PayActivity;
 import com.handgold.pjdc.base.ApplicationEx;
+import com.handgold.pjdc.base.Constant;
 import com.handgold.pjdc.common.list.SimpleListWorkerAdapter;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.Order;
@@ -157,7 +158,7 @@ public class OrderShowView extends RelativeLayout {
                     mTextOrderNow.setText("结算");
                     mOrder.setStatus(Order.OrderStatus.SUBMITED);
                     mCurState = CONFIRM_STATE;
-                    String deviceid = ((ApplicationEx) (mActivity).getApplication()).deviceid;
+                    String deviceid = (Constant.deviceid);
                     ArrayList<MenuItemInfo> dataList = (ArrayList<MenuItemInfo>) mOrder.getMenuList();
                     Gson gson = new Gson();
                     String ss = gson.toJson(dataList);
@@ -192,7 +193,7 @@ public class OrderShowView extends RelativeLayout {
 //                    mTextOrderNow.setText("");
 //                    mCurState = SUBMIT_STATE;
                     ServiceGenerator.createService(ApiManager.class)
-                            .getBuyOrder(((ApplicationEx) (mActivity).getApplication()).deviceid)
+                            .getBuyOrder(Constant.deviceid)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Subscriber<OrderPayInfo>() {

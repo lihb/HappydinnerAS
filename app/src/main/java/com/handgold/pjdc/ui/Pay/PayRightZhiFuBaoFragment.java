@@ -36,11 +36,11 @@ public class PayRightZhiFuBaoFragment extends Fragment {
     @InjectView(R.id.pay_choice_tv)
     TextView payChoiceTv;
 
-    @InjectView(R.id.pay_info_step1_img)
-    ImageView payInfoStep1Img;
-
-    @InjectView(R.id.pay_info_step1_tv)
-    TextView payInfoStep1Tv;
+//    @InjectView(R.id.pay_info_step1_img)
+//    ImageView payInfoStep1Img;
+//
+//    @InjectView(R.id.pay_info_step1_tv)
+//    TextView payInfoStep1Tv;
 
     @InjectView(R.id.pay_info_step2_img)
     ImageView payInfoStep2Img;
@@ -66,8 +66,8 @@ public class PayRightZhiFuBaoFragment extends Fragment {
         float temp = CommonUtils.round(price, 2, BigDecimal.ROUND_HALF_UP);
         payPriceTv.setText("金额：" + temp + "元");
         payChoiceTv.setText("支付宝支付");
-        payInfoStep1Tv.setText("1.打开手机支付宝应用\n     点击扫一扫功能");
-        payInfoStep2Tv.setText("2.扫描该二维码，成功后\n     按照提示输入密码");
+//        payInfoStep1Tv.setText("1.打开手机支付宝应用\n     点击扫一扫功能");
+        payInfoStep2Tv.setText("扫描该二维码，成功后\n     按照提示输入密码");
 
         return view;
     }

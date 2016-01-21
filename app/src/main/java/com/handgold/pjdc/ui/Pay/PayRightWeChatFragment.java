@@ -66,11 +66,11 @@ public class PayRightWeChatFragment extends Fragment {
     @InjectView(R.id.pay_choice_tv)
     TextView payChoiceTv;
 
-    @InjectView(R.id.pay_info_step1_img)
-    ImageView payInfoStep1Img;
+//    @InjectView(R.id.pay_info_step1_img)
+//    ImageView payInfoStep1Img;
 
-    @InjectView(R.id.pay_info_step1_tv)
-    TextView payInfoStep1Tv;
+//    @InjectView(R.id.pay_info_step1_tv)
+//    TextView payInfoStep1Tv;
 
     @InjectView(R.id.pay_info_step2_img)
     ImageView payInfoStep2Img;
@@ -79,6 +79,8 @@ public class PayRightWeChatFragment extends Fragment {
     TextView payInfoStep2Tv;
 
     private Order mOrder = null;
+
+    private CountDownTimer mCountDownTimer = null;
 
     /**
      * 微信的获取二维码链接接口
@@ -91,6 +93,51 @@ public class PayRightWeChatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCountDownTimer = new CountDownTimer(1000 * 5 * 60, 5000) {
+            int i = 0;
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                Log.i("PayRightWeChatFragment", "第" + (++i) + "次，轮询付款结果中.....");
+                ServiceGenerator.createService(ApiManager.class)
+                        .checkresult(Constant.deviceid)
+//                        .checkresult("5555")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<PayState>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onNext(PayState payState) {
+                                if (payState.result_code == 0) {
+                                    if (payState.state == 0) {
+                                        Log.i("PayRightWeChatFragment", "付款成功....");
+                                        ((PayActivity) getActivity()).checkResult(true);
+                                        // 支付成功，退出轮询
+                                        Log.e("PayRightWeChatFragment", "付款成功，停止轮询");
+                                        cancel();
+
+                                    }
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void onFinish() {
+                Log.i("PayRightWeChatFragment", "轮询结束");
+                ((PayActivity) getActivity()).checkResult(false);
+            }
+        };
     }
 
     @Nullable
@@ -104,17 +151,22 @@ public class PayRightWeChatFragment extends Fragment {
         float temp = CommonUtils.round(price, 2, BigDecimal.ROUND_HALF_UP);
         payPriceTv.setText("金额：" + temp + "元");
         payChoiceTv.setText("微信支付");
-        payInfoStep1Tv.setText("1.打开手机微信应用\n   点击扫一扫功能");
-        payInfoStep2Tv.setText("2.扫描该二维码，成功后\n     按照提示输入密码");
+//        payInfoStep1Tv.setText("1.打开手机微信应用\n   点击扫一扫功能");
+        payInfoStep2Tv.setText("扫描该二维码，成功后\n     按照提示输入密码");
         return view;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //获取二维码
+        generateAndPostData();
+    }
 
     public void onResume() {
         super.onResume();
         Log.i("PayRightWeChatFragment", "onResume");
-        //获取二维码
-        generateAndPostData();
+
         MobclickAgent.onPageStart("PayRightWeChatFragment"); //统计页面
     }
 
@@ -123,7 +175,7 @@ public class PayRightWeChatFragment extends Fragment {
         MobclickAgent.onPageEnd("PayRightWeChatFragment");
     }
 
-    private void generateAndPostData() {
+    public void generateAndPostData() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         //获取订单数据
         mOrder = (Order) ((ApplicationEx) (getActivity()).getApplication()).receiveInternalActivityParam("order");
@@ -273,7 +325,7 @@ public class PayRightWeChatFragment extends Fragment {
 //                Glide.with(this).load("http://goo.gl/gEgYUd").into(payInfoStep1Img);
                 ((PayActivity) getActivity()).generateQrImg(payInfoStep2Img, code_url);
                 // 定时获取支付结果
-                checkResult();
+                startheckResult();
             }else {
                 //获取错误码
                 String errorCode = weChatResData.getErr_code();
@@ -288,47 +340,18 @@ public class PayRightWeChatFragment extends Fragment {
 
     }
 
-    private void checkResult() {
-        new CountDownTimer(1000 * 5 * 60, 5000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                Log.i("PayRightWeChatFragment", "轮询中.....");
-                ServiceGenerator.createService(ApiManager.class)
-                        .checkresult(((ApplicationEx) (getActivity()).getApplication()).deviceid)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<PayState>() {
-                            @Override
-                            public void onCompleted() {
+    private void startheckResult() {
+        if (mCountDownTimer != null) {
+            mCountDownTimer.start();
+            Log.e("PayRightWeChatFragment", "开始轮询");
+        }
+    }
 
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                e.printStackTrace();
-                            }
-
-                            @Override
-                            public void onNext(PayState payState) {
-                                if (payState.result_code == 0) {
-                                    if (payState.state == 0) {
-                                        Log.i("PayRightWeChatFragment", "付款成功....");
-                                        ((PayActivity) getActivity()).checkResult(true);
-                                        // 支付成功，退出轮询
-                                        cancel();
-
-                                    }
-                                }
-                            }
-                        });
-            }
-
-            @Override
-            public void onFinish() {
-                Log.i("PayRightWeChatFragment", "轮询结束");
-                ((PayActivity) getActivity()).checkResult(false);
-            }
-        }.start();
+    public void stopCheckResult() {
+        if (mCountDownTimer != null) {
+            Log.e("PayRightWeChatFragment", "退出该页面，停止轮询");
+            mCountDownTimer.cancel();
+        }
     }
 
 }

@@ -23,7 +23,7 @@ public class ApplicationEx extends Application {
 
     public RequestQueue gRequestQueue = null;
 
-    public String deviceid;
+
 
     public ApplicationEx(){
 
@@ -35,7 +35,7 @@ public class ApplicationEx extends Application {
 
         final TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
-        deviceid = tm.getDeviceId();
+        Constant.deviceid = tm.getDeviceId();
 
         instance = this;
         //volley

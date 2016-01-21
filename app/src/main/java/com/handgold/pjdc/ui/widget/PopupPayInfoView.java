@@ -1,13 +1,16 @@
 package com.handgold.pjdc.ui.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.handgold.pjdc.R;
+import com.handgold.pjdc.base.Constant;
 
 /**
  * Created by Administrator on 2015/10/26.
@@ -65,7 +68,7 @@ public class PopupPayInfoView extends RelativeLayout {
             mPayStatusImg.setImageResource(R.drawable.icon_success);
             mPayStatusText.setText("付款成功！");
             mPayStatusText.setTextColor(0xff000000);
-            mPayDescText.setText("欢迎下次光临\n\n     " + DURATION + "S后自动返回");
+            mPayDescText.setText("欢迎下次光临\n\n" + DURATION + "S后自动返回");
             isRuuning = true;
 //            new Thread(new MyRunnable()).start(); // 法1：使用线程+handler实现倒计时
 //            new CountDownTimer(6000, 1000){       // 法2：使用CountDownTimer实现倒计时
@@ -94,7 +97,7 @@ public class PopupPayInfoView extends RelativeLayout {
         @Override
         public void run() {
             if (count > 1) {
-                mPayDescText.setText("请耐心等候您的餐点\n\n     " + (--count) + "S后自动返回");
+                mPayDescText.setText("欢迎下次光临\n\n" + (--count) + "S后自动返回");
             }else {
                 exitView();
             }
@@ -106,6 +109,9 @@ public class PopupPayInfoView extends RelativeLayout {
         ViewGroup parent = (ViewGroup) getParent();
         if (parent != null) {
             parent.setVisibility(GONE);
+            Intent intent = new Intent(Constant.CLOSE_PAY);
+            getContext().sendBroadcast(intent);
+            Log.i("lihb  test-----  ", "付款成功，发送广播，退出页面");
         }
     }
 
@@ -114,7 +120,7 @@ public class PopupPayInfoView extends RelativeLayout {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what > 0) {
-                mPayDescText.setText("请耐心等候您的餐点\n\n     " + msg.what + "S后自动返回");
+                mPayDescText.setText("欢迎下次光临\n\n" + msg.what + "S后自动返回");
                 sendEmptyMessageDelayed(--msg.what, 1000);
             } else {
                 isRuuning = false;
