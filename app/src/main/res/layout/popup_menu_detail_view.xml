@@ -35,7 +35,7 @@
                 android:scaleType="fitXY"
                 RoundedImageView:corner_radius="16"
                 RoundedImageView:corner_loc="3"
-                android:src="@drawable/meishi2"
+                    android:src="@drawable/meishi1"
                 />
             <ImageView
                 android:id="@+id/iv_popup_play"
