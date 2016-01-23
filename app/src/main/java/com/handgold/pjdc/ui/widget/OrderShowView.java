@@ -82,10 +82,23 @@ public class OrderShowView extends RelativeLayout {
         this.mActivity = activity;
     }
 
-    private static final int SUBMIT_STATE = 1;
-    private static final int CONFIRM_STATE = 2;
+    public static final int SUBMIT_STATE = 1;
+    public static final int CONFIRM_STATE = 2;
 
-    private int mCurState = 1;
+    private int mCurState = SUBMIT_STATE;
+
+    public int getCurState() {
+        return mCurState;
+    }
+
+    public void setCurState(int curState) {
+        this.mCurState = curState;
+        if (curState == SUBMIT_STATE) {
+            mTextOrderNow.setText("立刻下单");
+        } else {
+            mTextOrderNow.setText("结算");
+        }
+    }
 
     @Override
     protected void onFinishInflate() {

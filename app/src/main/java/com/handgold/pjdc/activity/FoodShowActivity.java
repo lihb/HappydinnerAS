@@ -1,9 +1,5 @@
 package com.handgold.pjdc.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -11,14 +7,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import com.handgold.pjdc.R;
-import com.handgold.pjdc.base.ApplicationEx;
-import com.handgold.pjdc.base.Constant;
 import com.handgold.pjdc.base.DataManager;
+import com.handgold.pjdc.base.RxBus;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
-import com.handgold.pjdc.entitiy.MenuType;
 import com.handgold.pjdc.ui.Menu.FoodLeftFragment;
 import com.handgold.pjdc.ui.Menu.FoodRightFragment;
-import com.handgold.pjdc.ui.Pay.PayRightWeChatFragment;
 import com.handgold.pjdc.ui.VideoPlayerFragment;
 import com.handgold.pjdc.ui.widget.HeadView;
 import com.handgold.pjdc.ui.widget.OrderShowView;
@@ -26,6 +19,9 @@ import com.handgold.pjdc.ui.widget.PopupMenuDetailView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
+
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * Created by lihb on 15/5/16.
@@ -46,7 +42,7 @@ public class FoodShowActivity extends FragmentActivity {
 
     private PopupMenuDetailView mPopupMenuDetailView = null;
 
-    boolean firstReceive = true;
+    private Subscription rxSubscription = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,8 +62,30 @@ public class FoodShowActivity extends FragmentActivity {
 
         initFragment();
 
-        registerBroadcastReceiver();
-
+        rxSubscription = RxBus.getDefault().toObserverable(String.class)
+                .subscribe(
+                        new Action1<String>() {
+                            @Override
+                            public void call(String s) {
+                                if (s.equals("success")) {
+                                    Log.i("lihb  test-----  ", "菜品页面接受到事件,退出订单页面，清空购物车");
+                                    if (mOrderShowView.isVisible()) {
+                                        mOrderShowView.exitView();
+                                        mOrderShowView.setCurState(OrderShowView.SUBMIT_STATE);
+                                    }
+                                    if (foodRightFragment != null) {
+                                        foodRightFragment.emptyShopCart();
+                                    }
+//                                       RxBus.getDefault().complete();
+                                }
+                            }
+                        },
+                        new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                Log.e("lihb  test-----  ", "菜品页面接受到事件,发生错误！！");
+                            }
+                        });
 
     }
 
@@ -149,38 +167,9 @@ public class FoodShowActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unRegisterBroadcastReceiver();
-    }
-
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(Constant.CLOSE_PAY)) {
-                if (firstReceive) {
-                    firstReceive = false;
-                    Log.i("lihb  test-----  ", "菜品页面接受到广播,退出订单页面，清空购物车");
-                    if (mOrderShowView.isVisible()) {
-                        mOrderShowView.exitView();
-                    }
-                    if (foodRightFragment != null) {
-                        foodRightFragment.emptyShopCart();
-                    }
-                }
-
-//                abortBroadcast();
-//                finish();
-
-            }
+        if (!rxSubscription.isUnsubscribed()) {
+            rxSubscription.unsubscribe();
         }
-    };
-
-    private void registerBroadcastReceiver() {
-        IntentFilter intentFilter = new IntentFilter(Constant.CLOSE_PAY);
-        registerReceiver(mBroadcastReceiver, intentFilter);
     }
 
-    private void unRegisterBroadcastReceiver() {
-        unregisterReceiver(mBroadcastReceiver);
-    }
 }

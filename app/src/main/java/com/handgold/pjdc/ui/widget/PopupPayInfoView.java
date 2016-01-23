@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.Constant;
+import com.handgold.pjdc.base.RxBus;
 
 /**
  * Created by Administrator on 2015/10/26.
@@ -30,6 +31,8 @@ public class PopupPayInfoView extends RelativeLayout {
      */
     private boolean isSuccess = true;
     private boolean isRuuning = true;
+    private boolean isExited = false;
+
 
     public boolean isSuccess() {
         return isSuccess;
@@ -107,11 +110,12 @@ public class PopupPayInfoView extends RelativeLayout {
 
     public void exitView() {
         ViewGroup parent = (ViewGroup) getParent();
-        if (parent != null) {
+        if (parent != null && !isExited) {
+            isExited = true;
             parent.setVisibility(GONE);
-            Intent intent = new Intent(Constant.CLOSE_PAY);
-            getContext().sendBroadcast(intent);
-            Log.i("lihb  test-----  ", "付款成功，发送广播，退出页面");
+            RxBus.getDefault().post("success");
+            removeCallbacks(mRunnable);
+            Log.i("lihb  test-----  ", "付款成功，发送消息，退出页面");
         }
     }
 

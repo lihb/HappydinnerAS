@@ -22,6 +22,7 @@ import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.BaseActivity;
 import com.handgold.pjdc.base.Constant;
 import com.handgold.pjdc.base.DataManager;
+import com.handgold.pjdc.base.RxBus;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.Order;
 import com.handgold.pjdc.ui.Pay.PayLeftFragment;
@@ -31,6 +32,9 @@ import com.handgold.pjdc.ui.widget.PopupPayInfoView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
+
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * 类说明：
@@ -63,7 +67,7 @@ public class PayActivity extends BaseActivity {
 
     private BitMatrix mBitMatrix = null;
 
-    boolean firstReceive = true;
+    private Subscription rxSubscription = null;
 
 
     @Override
@@ -75,8 +79,31 @@ public class PayActivity extends BaseActivity {
         mFragmentManager = getFragmentManager();
         initFragment();
 
-        registerBroadcastReceiver();
-
+        rxSubscription = RxBus.getDefault().toObserverable(String.class)
+                .subscribe(
+                        new Action1<String>() {
+                            @Override
+                            public void call(String s) {
+                                Log.i("lihb  test-----  ", "付款页面接受到事件");
+                                if (s.equals("success")) {
+                                    Log.i("lihb  test-----  ", "付款页面接受到事件，退出页面，清空订单数据和菜品数量信息");
+                                    // 付款成功后，清空点菜列表和菜品的数量信息
+                                    List<MenuItemInfo> menuItemInfoList = DataManager.order.getMenuList();
+                                    for (int i = 0; i < menuItemInfoList.size(); i++) {
+                                        MenuItemInfo info = menuItemInfoList.get(i);
+                                        info.count = 0;
+                                    }
+                                    DataManager.order.clear();
+                                    finish();
+                                }
+                            }
+                        },
+                        new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                Log.e("lihb  test-----  ", "付款页面接受到事件,发生错误！！");
+                            }
+                        });
     }
 
     private void initView() {
@@ -163,14 +190,16 @@ public class PayActivity extends BaseActivity {
         if (payRightWeChatFragment != null) {
             payRightWeChatFragment.stopCheckResult();
         }
-        unRegisterBroadcastReceiver();
+        if (!rxSubscription.isUnsubscribed()) {
+            rxSubscription.unsubscribe();
+        }
+        mPayInfoRelativeLayout = null;
+        mPopupPayInfoView = null;
     }
 
     public void checkResult(boolean success) {
         mPayInfoRelativeLayout.setVisibility(View.VISIBLE);
         mPopupPayInfoView.updateUI(success);
-
-
     }
 
     /**
@@ -209,35 +238,5 @@ public class PayActivity extends BaseActivity {
         return bmp;
     }
 
-
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(Constant.CLOSE_PAY)) {
-                if (firstReceive) {
-                    firstReceive = false;
-                    Log.i("lihb  test-----  ", "付款页面接受到广播，退出页面，清空订单数据和菜品数量信息");
-                    // 付款成功后，清空点菜列表和菜品的数量信息
-                    List<MenuItemInfo> menuItemInfoList = DataManager.order.getMenuList();
-                    for (int i = 0; i < menuItemInfoList.size(); i++) {
-                        MenuItemInfo info = menuItemInfoList.get(i);
-                        info.count = 0;
-                    }
-                    DataManager.order.clear();
-                    finish();
-                }
-            }
-        }
-    };
-
-    private void registerBroadcastReceiver() {
-        IntentFilter intentFilter = new IntentFilter(Constant.CLOSE_PAY);
-        registerReceiver(mBroadcastReceiver, intentFilter);
-    }
-
-    private void unRegisterBroadcastReceiver() {
-        unregisterReceiver(mBroadcastReceiver);
-    }
 
 }
