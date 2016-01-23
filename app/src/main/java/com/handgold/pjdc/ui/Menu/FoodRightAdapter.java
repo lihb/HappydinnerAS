@@ -88,18 +88,15 @@ public class FoodRightAdapter  extends BaseAdapter {
 
         final MenuItemInfo menu = (MenuItemInfo) getItem(position);
 
-        showSubOper(viewholder, menu.getCount(), OPER_NONE);
-
-
         Glide.with(mContext)
                 .load(menu.imgUrl)
-                .placeholder(R.drawable.fijitribe)
                 .into(viewholder.menuNameIv);
 
         viewholder.menuNameTitle.setText(menu.getName());
         viewholder.menuNamePrice.setText("¥" + menu.getPrice());
         viewholder.menuCount.setText("" + menu.getCount());
 
+        showSubOper(viewholder, menu.getCount(), OPER_NONE);
         //增加数目
         final ViewHolder tempViewholder = viewholder;
         viewholder.imageViewAdd.setOnClickListener(new View.OnClickListener() {
