@@ -12,9 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.handgold.pjdc.R;
+import com.handgold.pjdc.action.ApiManager;
+import com.handgold.pjdc.action.ServiceGenerator;
 import com.handgold.pjdc.base.ApplicationEx;
+import com.handgold.pjdc.base.Constant;
+import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.base.GameTypeEnum;
+import com.handgold.pjdc.base.MovieTypeEnum;
 import com.handgold.pjdc.entitiy.GameInfo;
+import com.handgold.pjdc.entitiy.GameListEntity;
+import com.handgold.pjdc.entitiy.MovieListEntity;
 import com.handgold.pjdc.ui.Game.GameFragment;
 import com.handgold.pjdc.ui.widget.HeadView;
 import com.handgold.pjdc.ui.widget.PopupGameVideoView;
@@ -23,14 +30,16 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.*;
 
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by Administrator on 2015/11/3.
  */
 public class GameShowActivity extends FragmentActivity {
 
     private HeadView headView;
-
-    private SortedMap<Integer, List<GameInfo>> sortedGameDataMap;
 
     private RelativeLayout mPopupGameVideoRelativeLayout;
 
@@ -85,13 +94,13 @@ public class GameShowActivity extends FragmentActivity {
 
 
         // 获取游戏数据
-        sortedGameDataMap = (SortedMap) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allGameList");
-        if (sortedGameDataMap == null) {
-            sortedGameDataMap = new TreeMap<Integer, List<GameInfo>>();
+
+        if (DataManager.gameTypeList.isEmpty()) {
             initData();
+        } else {
+            initFragmentAndDot(GameTypeEnum.RECOMMEND.ordinal());
         }
 
-        initFragmentAndDot(GameTypeEnum.RECOMMEND.ordinal());
 
 
     }
@@ -130,7 +139,7 @@ public class GameShowActivity extends FragmentActivity {
         tabItem4.setText(getString(R.string.shoot_game));
         tabItem5.setText(getString(R.string.puzzle_game));
 
-        textArray = new TextView[]{null, tabItem1, tabItem2, tabItem3, tabItem4, tabItem5};
+        textArray = new TextView[]{tabItem1, tabItem2, tabItem3, tabItem4, tabItem5};
         for (int i = 1; i < textArray.length; i++) {
             textArray[i].setBackgroundResource(R.drawable.game_tab_selector);
         }
@@ -172,43 +181,28 @@ public class GameShowActivity extends FragmentActivity {
     };
 
     private void initData() {
-        List<GameInfo> movieInfoList = new ArrayList<GameInfo>();
-        for (int i = 0; i < 60; i++) {
-            GameInfo gameInfo = new GameInfo("游戏" + (i+1), "http://www.dddd.com", (i / 12 + 1));
-            movieInfoList.add(gameInfo);
+        ServiceGenerator.createService(ApiManager.class)
+                .getGameList(Constant.deviceid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GameListEntity>() {
+                    @Override
+                    public void onCompleted() {
 
-        }
-        /**
-         * 比较器：给menu按照type排序用
-         */
-        Comparator<GameInfo> comparator = new Comparator<GameInfo>() {
-            @Override
-            public int compare(GameInfo lhs, GameInfo rhs) {
+                    }
 
-                return lhs.getType() - rhs.getType();
-            }
-        };
-        Collections.sort(movieInfoList, comparator);
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
 
-        List<GameInfo> tmpList = new ArrayList<GameInfo>();
+                    @Override
+                    public void onNext(GameListEntity gameListEntity) {
+                        DataManager.gameTypeList.addAll(gameListEntity.gamelist);
+                        initFragmentAndDot(GameTypeEnum.RECOMMEND.ordinal());
 
-        int oldKey = movieInfoList.get(0).getType();
-
-        for (int i = 0; i < movieInfoList.size(); i++) {
-            GameInfo movieItemData = movieInfoList.get(i);
-            int newKey = movieItemData.getType();
-            if (newKey == oldKey) {
-                tmpList.add(movieItemData);
-            } else {
-                sortedGameDataMap.put(oldKey, tmpList);
-                tmpList = new ArrayList<GameInfo>();
-                tmpList.add(movieItemData);
-                oldKey = newKey;
-            }
-        }
-        sortedGameDataMap.put(oldKey, tmpList); // 处理最后一组数据
-
-        ((ApplicationEx) getApplication()).setInternalActivityParam("allGameList", sortedGameDataMap);
+                    }
+                });
     }
 
     private void initFragmentAndDot(int type) {
@@ -218,7 +212,7 @@ public class GameShowActivity extends FragmentActivity {
         fragmentList = new ArrayList<>();
         ArrayList<GameInfo> dataList = new ArrayList<GameInfo>();
         //初始化右边fragment的数据
-        dataList.addAll(sortedGameDataMap.get(type));
+        dataList.addAll(DataManager.gameTypeList.get(type).items);
         int count = dataList.size() / MAX_ITE_IN_PER_FRAGEMNT;
         if (dataList.size() % MAX_ITE_IN_PER_FRAGEMNT != 0) {
             count++;
@@ -319,7 +313,7 @@ public class GameShowActivity extends FragmentActivity {
      * @param whichType
      */
     private void setSelectType(int whichType) {
-        for (int i = 1; i < textArray.length; i++) {
+        for (int i = 0; i < textArray.length; i++) {
             if (whichType == i) {
                 textArray[i].setSelected(true);
             }else {

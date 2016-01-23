@@ -5,5 +5,5 @@ package com.handgold.pjdc.base;
  * 菜品类型
  */
 public enum GameTypeEnum {
-    NOTHING,RECOMMEND,RELAX,CARD, SHOOT, PUZZLE
+    RECOMMEND, RELAX, CARD, SHOOT, PUZZLE
 }

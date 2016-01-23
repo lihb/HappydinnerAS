@@ -15,62 +15,84 @@ import org.json.JSONObject;
  * packageName			string			游戏包名
  * downloadUrl			string			下载地址
  */
-public class GameInfo extends BaseEntity implements Parcelable{
+public class GameInfo implements Parcelable {
     private final String TAG = "GameInfo";
     /**
      * 游戏名字
      */
-    private String name;
+    public String name;
 
     /**
      * 游戏图片url
      */
-    private String picUrl;
+    public String imgUrl;
 
-    /**
-     * 游戏所属分类
-     */
-    private int type;
+    public String launchInfo;
 
+    public String packageName;
+
+    public String downloadUrl;
+
+
+    public String getLaunchInfo() {
+        return launchInfo;
+    }
+
+    public void setLaunchInfo(String launchInfo) {
+        this.launchInfo = launchInfo;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
 
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getType() {
-        return type;
-    }
 
     public String getName() {
         return name;
     }
 
-    public String getPicUrl() {
-        return picUrl;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public GameInfo(String name, String picUrl, int type) {
+    public GameInfo(String name, String imgUrl, String launchInfo, String packageName, String downloadUrl) {
         this.name = name;
-        this.picUrl = picUrl;
-        this.type = type;
+        this.imgUrl = imgUrl;
+        this.launchInfo = launchInfo;
+        this.packageName = packageName;
+        this.downloadUrl = downloadUrl;
     }
-
 
     public GameInfo(JSONObject jobj) {
         // TODO Auto-generated constructor stub
         try {
             name = jobj.optString("name");
-            picUrl = jobj.optString("picUrl");
-            type = jobj.optInt("playtype");
+            imgUrl = jobj.optString("imgUrl");
+            launchInfo = jobj.optString("launchInfo");
+            packageName = jobj.optString("packageName");
+            downloadUrl = jobj.optString("downloadUrl");
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "GameInfo json init exception!");
@@ -82,8 +104,10 @@ public class GameInfo extends BaseEntity implements Parcelable{
         try {
             JSONObject jobj = new JSONObject(jsonInfo);
             name = jobj.optString("name");
-            picUrl = jobj.optString("picUrl");
-            type = jobj.optInt("playtype");
+            imgUrl = jobj.optString("imgUrl");
+            launchInfo = jobj.optString("launchInfo");
+            packageName = jobj.optString("packageName");
+            downloadUrl = jobj.optString("downloadUrl");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "GameInfo json init exception!");
@@ -95,8 +119,10 @@ public class GameInfo extends BaseEntity implements Parcelable{
         try {
             JSONObject jobj = new JSONObject();
             jobj.put("name", name);
-            jobj.put("picUrl", picUrl);
-            jobj.put("playtype", type);
+            jobj.put("imgUrl", imgUrl);
+            jobj.put("launchInfo", launchInfo);
+            jobj.put("packageName", packageName);
+            jobj.put("downloadUrl", downloadUrl);
             str = jobj.toString();
         } catch (JSONException e) {
             // TODO Auto-generated catch block
@@ -113,8 +139,10 @@ public class GameInfo extends BaseEntity implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeString(picUrl);
-        dest.writeInt(type);
+        dest.writeString(imgUrl);
+        dest.writeString(launchInfo);
+        dest.writeString(packageName);
+        dest.writeString(downloadUrl);
 
     }
     public static final Parcelable.Creator<GameInfo> CREATOR = new Creator<GameInfo>() {
@@ -122,8 +150,10 @@ public class GameInfo extends BaseEntity implements Parcelable{
         public GameInfo createFromParcel(Parcel source) {
             GameInfo gameInfo = new GameInfo(source.readString());
             gameInfo.setName(source.readString());
-            gameInfo.setPicUrl(source.readString());
-            gameInfo.setType(source.readInt());
+            gameInfo.setImgUrl(source.readString());
+            gameInfo.setLaunchInfo(source.readString());
+            gameInfo.setPackageName(source.readString());
+            gameInfo.setDownloadUrl(source.readString());
 
             return gameInfo;
         }

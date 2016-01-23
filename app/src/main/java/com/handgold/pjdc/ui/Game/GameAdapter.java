@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.entitiy.GameInfo;
 
@@ -65,13 +67,10 @@ public class GameAdapter extends BaseAdapter {
 
         final GameInfo gameInfo = (GameInfo) getItem(position);
 
-        int[] picIds = new int[]{
-                R.drawable.pic_game_baoweiluobo, R.drawable.pic_game_buyudaren,
-                R.drawable.pic_game_ditiepaoku, R.drawable.pic_game_doudizhu,
-                R.drawable.pic_game_kaixinxiaoxiaole, R.drawable.pic_game_majiang,
-                R.drawable.pic_game_shenmiaotaowang,R.drawable.pic_game_shuiguorenzhe,};
-        int id = new Random().nextInt(picIds.length);
-        viewholder.itemImg.setImageResource(picIds[id]);
+        Glide.with(mContext)
+                .load(gameInfo.imgUrl)
+                .placeholder(R.drawable.pic_game_baoweiluobo)
+                .into(viewholder.itemImg);
 
         if (position == 0) {
             viewholder.itemName.setText("保卫萝卜");

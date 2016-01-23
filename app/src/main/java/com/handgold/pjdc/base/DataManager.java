@@ -1,5 +1,6 @@
 package com.handgold.pjdc.base;
 
+import com.handgold.pjdc.entitiy.GameType;
 import com.handgold.pjdc.entitiy.MenuType;
 import com.handgold.pjdc.entitiy.MovieType;
 import com.handgold.pjdc.entitiy.Order;
@@ -16,7 +17,7 @@ public class DataManager {
 
     public static List<MovieType> movieTypeList = new ArrayList<>();
 
-    public static List<MovieType> gameTypeList = new ArrayList<>();
+    public static List<GameType> gameTypeList = new ArrayList<>();
 
     public static Order order = new Order();
 
