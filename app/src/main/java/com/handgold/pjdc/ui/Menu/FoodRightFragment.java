@@ -64,7 +64,10 @@ public class FoodRightFragment extends Fragment {
                 if (x < location[0] || x > location[0] + subView.getWidth() ||
                         y < location[1] || y > location[1] + subView.getHeight()) {
                     if (subView instanceof OrderShowView) {
-                        ((OrderShowView)subView).exitView();
+                        OrderShowView orderShowView = (OrderShowView) subView;
+                        if (orderShowView.getCurState() == OrderShowView.SUBMIT_STATE) { // 未提交订单，才能关闭页面，提交后，不能关闭页面。
+                            orderShowView.exitView();
+                        }
                     }/*else if(subView instanceof PopupMenuDetailView){//菜品介绍页面，点击遮罩不关闭页面
                         ((PopupMenuDetailView)subView).exitView();
                     }*/

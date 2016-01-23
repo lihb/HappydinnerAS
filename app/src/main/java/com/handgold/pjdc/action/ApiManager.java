@@ -70,7 +70,7 @@ public interface ApiManager {
     }
 
     /**
-     * 根据设备号读取已下单的清单列表以及其他基本信息
+     * 下单或加单，提交点菜数据
      *
      * @param placeOrderParas
      * @return
@@ -80,7 +80,7 @@ public interface ApiManager {
 
 
     /**
-     * 根据设备号读取已下单的清单列表以及其他基本信息
+     * 发起结算，获取支付订单号
      *
      * @param deviceid 设备号
      * @return
@@ -90,7 +90,7 @@ public interface ApiManager {
 
 
     /**
-     * 根据设备号读取已下单的清单列表以及其他基本信息
+     * 获取支付结果
      *
      * @param deviceid 设备号
      * @return

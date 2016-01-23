@@ -15,6 +15,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.handgold.pjdc.R;
@@ -95,8 +96,12 @@ public class OrderShowView extends RelativeLayout {
         this.mCurState = curState;
         if (curState == SUBMIT_STATE) {
             mTextOrderNow.setText("立刻下单");
+            mListWorker.setCurState(SUBMIT_STATE);
+            mListAdapter.notifyDataSetChanged();
         } else {
             mTextOrderNow.setText("结算");
+            mListWorker.setCurState(CONFIRM_STATE);
+            mListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -154,12 +159,17 @@ public class OrderShowView extends RelativeLayout {
                 setData(DataManager.order.getMenuList());
                 exitView();
             }else  if (v == mTextCancel) {
+                setCurState(SUBMIT_STATE);
                 exitView();
             }else {
                 if (mCurState == SUBMIT_STATE) {
                     mTextOrderNow.setText("结算");
                     DataManager.order.setStatus(Order.OrderStatus.SUBMITED);
                     mCurState = CONFIRM_STATE;
+                    mListWorker.setCurState(CONFIRM_STATE);
+                    mListAdapter.notifyDataSetChanged();
+                    Toast.makeText(getContext(), getContext().getString(R.string.order_success_info), Toast.LENGTH_SHORT).show();
+
                     String deviceid = (Constant.deviceid);
                     ArrayList<MenuItemInfo> dataList = (ArrayList<MenuItemInfo>) DataManager.order.getMenuList();
                     Gson gson = new Gson();
@@ -187,7 +197,6 @@ public class OrderShowView extends RelativeLayout {
                                     if (placeOrderInfo.result_code == 0) {
                                         Log.i("timestamp", placeOrderInfo.timestamp);
                                         DataManager.timestamp = placeOrderInfo.timestamp;
-                                        CommonUtils.toastText(mActivity, mActivity.getString(R.string.order_success_info));
                                     }
                                 }
                             });

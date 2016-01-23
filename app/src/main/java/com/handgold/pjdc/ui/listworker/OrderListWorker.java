@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.common.list.AbstractListWorker;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
+import com.handgold.pjdc.ui.widget.OrderShowView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,19 @@ public class OrderListWorker extends AbstractListWorker {
 
     private List<MenuItemInfo> mDataList;
     private OnListWorkerListener mOnListWorkerListener;
+
+    public static final int SUBMIT_STATE = 1;
+    public static final int CONFIRM_STATE = 2;
+
+    private int mCurState = SUBMIT_STATE;
+
+    public int getCurState() {
+        return mCurState;
+    }
+
+    public void setCurState(int curState) {
+        this.mCurState = curState;
+    }
 
     public OrderListWorker(Context mContext, List<MenuItemInfo> dataList, OnListWorkerListener mOnListWorkerListener) {
         this.mContext = mContext;
@@ -109,6 +123,14 @@ public class OrderListWorker extends AbstractListWorker {
             holder.order_item_name.setText(menu.getName());
             holder.order_item_price.setText("¥" + menu.getPrice());
             holder.order_item_count.setText("" + menu.getCount());
+
+            if (OrderShowView.SUBMIT_STATE == mCurState) {
+                holder.order_item_add.setVisibility(View.VISIBLE);
+                holder.order_item_sub.setVisibility(View.VISIBLE);
+            } else {
+                holder.order_item_add.setVisibility(View.INVISIBLE);
+                holder.order_item_sub.setVisibility(View.INVISIBLE);
+            }
 
             holder.order_item_add.setOnClickListener(new View.OnClickListener() {
                 @Override
