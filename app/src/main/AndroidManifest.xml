@@ -50,9 +50,6 @@
         <activity android:name="com.handgold.pjdc.activity.GameShowActivityNew"
                   android:theme="@style/AppTheme"
                   android:screenOrientation="landscape"/>
-        <activity android:name="com.handgold.pjdc.activity.MovieShowActivity"
-                  android:theme="@style/AppTheme"
-                  android:screenOrientation="landscape"/>
         <activity android:name="com.handgold.pjdc.activity.MovieShowActivityNew"
                   android:theme="@style/AppTheme"
                   android:screenOrientation="landscape"/>
