@@ -21,6 +21,7 @@ import com.handgold.pjdc.action.SingleOkHttpClient;
 import com.handgold.pjdc.activity.PayActivity;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.Constant;
+import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.entitiy.Order;
 import com.handgold.pjdc.entitiy.PayState;
 import com.handgold.pjdc.entitiy.WeChatReqData;
@@ -77,8 +78,6 @@ public class PayRightWeChatFragment extends Fragment {
 
     @InjectView(R.id.pay_info_step2_tv)
     TextView payInfoStep2Tv;
-
-    private Order mOrder = null;
 
     private CountDownTimer mCountDownTimer = null;
 
@@ -178,15 +177,15 @@ public class PayRightWeChatFragment extends Fragment {
     public void generateAndPostData() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         //获取订单数据
-        mOrder = (Order) ((ApplicationEx) (getActivity()).getApplication()).receiveInternalActivityParam("order");
-        if (mOrder != null) {
+        if (!DataManager.order.getMenuList().isEmpty()) {
             String appid = Constant.APP_ID;
             String mch_id = Constant.MCH_ID;
             String device_info = "WEB";
             String nonce_str = WeChatUtil.getRandomStringByLength(32);
             String body = "测试！！";
             String detail = "";
-            String out_trade_no = (String) ((ApplicationEx) (getActivity()).getApplication()).receiveInternalActivityParam("order_pay_id");
+
+            String out_trade_no = DataManager.order_pay_id;
 //            int total_fee = (int) (mOrder.getTotalPrice() * 100);
             int total_fee = (1);
             String spbill_create_ip = WeChatUtil.getLocalIp();
@@ -322,7 +321,6 @@ public class PayRightWeChatFragment extends Fragment {
                 Log.i("PayRightWeChatFragment", "code_url = "+ code_url);
                 Log.i("PayRightWeChatFragment", "trade_type = "+ weChatResData.getTrade_type());
                 Log.i("PayRightWeChatFragment", "prepay_id = " + weChatResData.getPrepay_id());
-//                Glide.with(this).load("http://goo.gl/gEgYUd").into(payInfoStep1Img);
                 ((PayActivity) getActivity()).generateQrImg(payInfoStep2Img, code_url);
                 // 定时获取支付结果
                 startheckResult();

@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.ApplicationEx;
+import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.base.MenuTypeEnum;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.MenuType;
@@ -48,7 +49,6 @@ public class FoodLeftFragment extends Fragment {
     RelativeLayout relativeFoodLeft;
     @InjectView(R.id.linearlayout_recommend)
     LinearLayout linearlayoutRecommend;
-    private ArrayList<MenuType> allMenuList;
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mTransaction;
@@ -73,7 +73,6 @@ public class FoodLeftFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mFragmentManager = getFragmentManager();
-        allMenuList = (ArrayList) ((ApplicationEx) getActivity().getApplication()).receiveInternalActivityParam("allMenuList");
         linearlayoutDrink.setOnClickListener(mOnclickListener);
         linearlayoutSnack.setOnClickListener(mOnclickListener);
         linearlayoutFood.setOnClickListener(mOnclickListener);
@@ -110,18 +109,18 @@ public class FoodLeftFragment extends Fragment {
             ArrayList<MenuItemInfo> dataList = new ArrayList<>();
             if (v == linearlayoutDrink) {
                 dataList.clear();
-                List<MenuItemInfo> collection = allMenuList.get(1).items;
+                List<MenuItemInfo> collection = DataManager.menuTypelist.get(1).items;
                 dataList.addAll(collection);
                 setSelectType(MenuTypeEnum.DRINK.ordinal());
 
             } else if (v == linearlayoutSnack) {
                 dataList.clear();
-                List<MenuItemInfo> collection = allMenuList.get(2).items;
+                List<MenuItemInfo> collection = DataManager.menuTypelist.get(2).items;
                 dataList.addAll(collection);
                 setSelectType(MenuTypeEnum.SNACK.ordinal());
             } else if (v == linearlayoutFood) {
                 dataList.clear();
-                List<MenuItemInfo> collection = allMenuList.get(3).items;
+                List<MenuItemInfo> collection = DataManager.menuTypelist.get(3).items;
                 dataList.addAll(collection);
                 setSelectType(MenuTypeEnum.PRI_FOOD.ordinal());
             } /*else if (v == linearlayoutSetmeal) {
@@ -132,7 +131,7 @@ public class FoodLeftFragment extends Fragment {
             }*/
             else if (v == linearlayoutRecommend) {
                 dataList.clear();
-                List<MenuItemInfo> collection = allMenuList.get(0).items;
+                List<MenuItemInfo> collection = DataManager.menuTypelist.get(0).items;
                 dataList.addAll(collection);
                 setSelectType(MenuTypeEnum.RECOMMEND.ordinal());
             }

@@ -6,36 +6,34 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.handgold.pjdc.R;
-import com.handgold.pjdc.base.ApplicationEx;
-import com.handgold.pjdc.base.GameTypeEnum;
+import com.handgold.pjdc.action.ApiManager;
+import com.handgold.pjdc.action.ServiceGenerator;
+import com.handgold.pjdc.base.Constant;
+import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.base.MovieTypeEnum;
-import com.handgold.pjdc.entitiy.GameInfo;
-import com.handgold.pjdc.ui.Game.GameFragment;
+import com.handgold.pjdc.entitiy.MovieInfo;
+import com.handgold.pjdc.entitiy.MovieListEntity;
+import com.handgold.pjdc.ui.Movie.MovieFragment;
 import com.handgold.pjdc.ui.widget.HeadView;
-import com.handgold.pjdc.ui.widget.PopupGameVideoView;
 import com.handgold.pjdc.util.DeviceUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.*;
 
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by Administrator on 2015/11/3.
  */
-public class GameShowActivityNew extends FragmentActivity {
+public class MovieShowActivity extends FragmentActivity {
 
     private HeadView headView;
-
-    private SortedMap<Integer, List<GameInfo>> sortedGameDataMap;
-
-    private RelativeLayout mPopupGameVideoRelativeLayout;
-
-    private PopupGameVideoView mPopupGameVideoView;
 
     private RelativeLayout rootView = null;
 
@@ -60,23 +58,9 @@ public class GameShowActivityNew extends FragmentActivity {
 
     private TextView[] textArray;
 
-    private PopupGameVideoView.OnPopGameVideoViewListener mListener = new PopupGameVideoView.OnPopGameVideoViewListener(){
-
-        @Override
-        public void onCloseBtnEvent(Map<String, String> map_value, int curPos) {
-            MobclickAgent.onEventValue(GameShowActivityNew.this, "game_video_close_event", map_value, curPos);
-            Log.i("GameShowActivity", "onCloseBtnEvent");
-        }
-
-        @Override
-        public void onVideoCompletion(Map<String, String> map) {
-            MobclickAgent.onEvent(GameShowActivityNew.this, "game_video_completion_event", map);
-            Log.i("GameShowActivity", "onVideoCompletion");
-        }
-    };
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_moive_game);
@@ -84,16 +68,11 @@ public class GameShowActivityNew extends FragmentActivity {
         // 初始化界面
         initView();
 
-
-        // 获取游戏数据
-        sortedGameDataMap = (SortedMap) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allGameList");
-        if (sortedGameDataMap == null) {
-            sortedGameDataMap = new TreeMap<Integer, List<GameInfo>>();
+        if (DataManager.movieTypeList.isEmpty()) {
             initData();
+        } else {
+            initFragmentAndDot(MovieTypeEnum.HOT.ordinal());
         }
-
-        initFragmentAndDot(GameTypeEnum.RECOMMEND.ordinal());
-
 
     }
 
@@ -102,7 +81,7 @@ public class GameShowActivityNew extends FragmentActivity {
         headView.h_left_tv.setText("返回");
         headView.h_title.setVisibility(View.GONE);
         headView.h_title_img.setVisibility(View.VISIBLE);
-        headView.h_title_img.setBackgroundResource(R.drawable.top_game);
+        headView.h_title_img.setBackgroundResource(R.drawable.newest_moive);
         headView.h_right_tv_llyt.setVisibility(View.VISIBLE);
         headView.h_right_tv.setText("当前位置：68桌");
         headView.h_right_tv.setTextColor(0x33ffffff);
@@ -112,7 +91,7 @@ public class GameShowActivityNew extends FragmentActivity {
 
         //换背景图片
         rootView = (RelativeLayout) findViewById(R.id.root_view);
-        rootView.setBackgroundResource(R.drawable.game_bg);
+        rootView.setBackgroundResource(R.drawable.moive_bg);
 
         //viewpager
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -125,16 +104,13 @@ public class GameShowActivityNew extends FragmentActivity {
         tabItem4 = (TextView) tabLayout.findViewById(R.id.content_title_item4);
         tabItem5 = (TextView) tabLayout.findViewById(R.id.content_title_item5);
 
-        tabItem1.setText(getString(R.string.recomend_game));
-        tabItem2.setText(getString(R.string.relax_game));
-        tabItem3.setText(getString(R.string.card_game));
-        tabItem4.setText(getString(R.string.shoot_game));
-        tabItem5.setText(getString(R.string.puzzle_game));
+        tabItem1.setText(getString(R.string.hot_moive));
+        tabItem2.setText(getString(R.string.love_moive));
+        tabItem3.setText(getString(R.string.comedy_moive));
+        tabItem4.setText(getString(R.string.cartoon_movie));
+        tabItem5.setText(getString(R.string.fiction_movie));
 
-        textArray = new TextView[]{null, tabItem1, tabItem2, tabItem3, tabItem4, tabItem5};
-        for (int i = 1; i < textArray.length; i++) {
-            textArray[i].setBackgroundResource(R.drawable.game_tab_selector);
-        }
+        textArray = new TextView[]{tabItem1, tabItem2, tabItem3, tabItem4, tabItem5};
 
         tabItem1.setSelected(true);
 
@@ -147,69 +123,34 @@ public class GameShowActivityNew extends FragmentActivity {
         dotLayout = (LinearLayout) findViewById(R.id.dot_ll);
 
         callServiceImg = (ImageView) findViewById(R.id.image_call_service);
-        callServiceImg.setImageResource(R.drawable.game_call_service_selector);
         callServiceImg.setOnClickListener(mOnClickListener);
-
-        // 广告视频(暂时屏蔽 2015-12-12)
-//        mPopupGameVideoRelativeLayout = (RelativeLayout) findViewById(R.id.popup_game_video_relativeLayout);
-//        mPopupGameVideoRelativeLayout.setOnTouchListener(mOnTouchListener);
-//
-//        mPopupGameVideoView = (PopupGameVideoView) findViewById(R.id.popup_game_video_view);
-//        int width = DeviceUtils.getScreenWidth(this) / 2;
-//        int height = DeviceUtils.getScreenHeight(this) / 2;
-//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
-//        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-//        mPopupGameVideoView.setLayoutParams(params);
-//        mPopupGameVideoView.setOnPopGameVideoViewListener(mListener);
-//        mPopupGameVideoRelativeLayout.setVisibility(View.VISIBLE);
     }
 
-    private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            // 屏蔽在该页面之下的页面的点击事件
-            return true;
-        }
-    };
+
 
     private void initData() {
-        List<GameInfo> movieInfoList = new ArrayList<GameInfo>();
-        for (int i = 0; i < 60; i++) {
-            GameInfo gameInfo = new GameInfo("游戏" + (i+1), "http://www.dddd.com", (i / 12 + 1));
-            movieInfoList.add(gameInfo);
+        ServiceGenerator.createService(ApiManager.class)
+                .getMovieList(Constant.deviceid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<MovieListEntity>() {
+                    @Override
+                    public void onCompleted() {
 
-        }
-        /**
-         * 比较器：给menu按照type排序用
-         */
-        Comparator<GameInfo> comparator = new Comparator<GameInfo>() {
-            @Override
-            public int compare(GameInfo lhs, GameInfo rhs) {
+                    }
 
-                return lhs.getType() - rhs.getType();
-            }
-        };
-        Collections.sort(movieInfoList, comparator);
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
 
-        List<GameInfo> tmpList = new ArrayList<GameInfo>();
+                    @Override
+                    public void onNext(MovieListEntity movieListEntity) {
+                        DataManager.movieTypeList.addAll(movieListEntity.movielist);
+                        initFragmentAndDot(MovieTypeEnum.HOT.ordinal());
 
-        int oldKey = movieInfoList.get(0).getType();
-
-        for (int i = 0; i < movieInfoList.size(); i++) {
-            GameInfo movieItemData = movieInfoList.get(i);
-            int newKey = movieItemData.getType();
-            if (newKey == oldKey) {
-                tmpList.add(movieItemData);
-            } else {
-                sortedGameDataMap.put(oldKey, tmpList);
-                tmpList = new ArrayList<GameInfo>();
-                tmpList.add(movieItemData);
-                oldKey = newKey;
-            }
-        }
-        sortedGameDataMap.put(oldKey, tmpList); // 处理最后一组数据
-
-        ((ApplicationEx) getApplication()).setInternalActivityParam("allGameList", sortedGameDataMap);
+                    }
+                });
     }
 
     private void initFragmentAndDot(int type) {
@@ -217,24 +158,24 @@ public class GameShowActivityNew extends FragmentActivity {
         dotLayout.removeAllViews();
 
         fragmentList = new ArrayList<>();
-        ArrayList<GameInfo> dataList = new ArrayList<GameInfo>();
-        //初始化右边fragment的数据
-        dataList.addAll(sortedGameDataMap.get(type));
+        ArrayList<MovieInfo> dataList = new ArrayList<MovieInfo>();
+        //初始化fragment的数据
+        dataList.addAll(DataManager.movieTypeList.get(type).items);
         int count = dataList.size() / MAX_ITE_IN_PER_FRAGEMNT;
         if (dataList.size() % MAX_ITE_IN_PER_FRAGEMNT != 0) {
             count++;
         }
         for (int i = 0; i < count; i++) {
             Bundle bundle = new Bundle();
-            ArrayList<GameInfo> subDataList = new ArrayList<GameInfo>();
+            ArrayList<MovieInfo> subDataList = new ArrayList<MovieInfo>();
             for (int j = 0, size = dataList.size();j < MAX_ITE_IN_PER_FRAGEMNT && (j + i * MAX_ITE_IN_PER_FRAGEMNT < size); j++) {
-                GameInfo gameInfo = dataList.get(j + i * MAX_ITE_IN_PER_FRAGEMNT);
-                subDataList.add(gameInfo);
+                MovieInfo movieInfo = dataList.get(j + i * MAX_ITE_IN_PER_FRAGEMNT);
+                subDataList.add(movieInfo);
             }
             bundle.putParcelableArrayList("dataList", subDataList);
-            GameFragment gameFragment = new GameFragment();
-            gameFragment.setArguments(bundle);
-            fragmentList.add(gameFragment);
+            MovieFragment movieFragment = new MovieFragment();
+            movieFragment.setArguments(bundle);
+            fragmentList.add(movieFragment);
 
             //构造圆点
             ImageView dot = new ImageView(this);
@@ -286,27 +227,27 @@ public class GameShowActivityNew extends FragmentActivity {
                     finish();
                     break;
                 case R.id.content_title_item1:
-                    initFragmentAndDot(GameTypeEnum.RECOMMEND.ordinal());
-                    setSelectType(GameTypeEnum.RECOMMEND.ordinal());
+                    initFragmentAndDot(MovieTypeEnum.HOT.ordinal());
+                    setSelectType(MovieTypeEnum.HOT.ordinal());
                     break;
                 case R.id.content_title_item2:
-                    initFragmentAndDot(GameTypeEnum.RELAX.ordinal());
-                    setSelectType(GameTypeEnum.RELAX.ordinal());
+                    initFragmentAndDot(MovieTypeEnum.LOVE.ordinal());
+                    setSelectType(MovieTypeEnum.LOVE.ordinal());
                     break;
                 case R.id.content_title_item3:
-                    initFragmentAndDot(GameTypeEnum.CARD.ordinal());
-                    setSelectType(GameTypeEnum.CARD.ordinal());
+                    initFragmentAndDot(MovieTypeEnum.COMEDY.ordinal());
+                    setSelectType(MovieTypeEnum.COMEDY.ordinal());
                     break;
                 case R.id.content_title_item4:
-                    initFragmentAndDot(GameTypeEnum.SHOOT.ordinal());
-                    setSelectType(GameTypeEnum.SHOOT.ordinal());
+                    initFragmentAndDot(MovieTypeEnum.CARTOON.ordinal());
+                    setSelectType(MovieTypeEnum.CARTOON.ordinal());
                     break;
                 case R.id.content_title_item5:
-                    initFragmentAndDot(GameTypeEnum.PUZZLE.ordinal());
-                    setSelectType(GameTypeEnum.PUZZLE.ordinal());
+                    initFragmentAndDot(MovieTypeEnum.SCIENCE_FICTION.ordinal());
+                    setSelectType(MovieTypeEnum.SCIENCE_FICTION.ordinal());
                     break;
                 case R.id.image_call_service:
-                    Toast.makeText(GameShowActivityNew.this, "服务员正赶过来，请稍后。", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MovieShowActivity.this, "服务员正赶过来，请稍后。", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;
@@ -320,7 +261,7 @@ public class GameShowActivityNew extends FragmentActivity {
      * @param whichType
      */
     private void setSelectType(int whichType) {
-        for (int i = 1; i < textArray.length; i++) {
+        for (int i = 0; i < textArray.length; i++) {
             if (whichType == i) {
                 textArray[i].setSelected(true);
             }else {

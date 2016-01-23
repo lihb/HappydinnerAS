@@ -21,6 +21,7 @@ import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.BaseActivity;
 import com.handgold.pjdc.base.Constant;
+import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.Order;
 import com.handgold.pjdc.ui.Pay.PayLeftFragment;
@@ -218,13 +219,12 @@ public class PayActivity extends BaseActivity {
                     firstReceive = false;
                     Log.i("lihb  test-----  ", "付款页面接受到广播，退出页面，清空订单数据和菜品数量信息");
                     // 付款成功后，清空点菜列表和菜品的数量信息
-                    Order order = (Order) ((ApplicationEx) getApplication()).receiveInternalActivityParam("order");
-                    List<MenuItemInfo> menuItemInfoList = order.getMenuList();
+                    List<MenuItemInfo> menuItemInfoList = DataManager.order.getMenuList();
                     for (int i = 0; i < menuItemInfoList.size(); i++) {
                         MenuItemInfo info = menuItemInfoList.get(i);
                         info.count = 0;
                     }
-                    ((ApplicationEx) getApplication()).setInternalActivityParam("order", null);
+                    DataManager.order.clear();
                     finish();
                 }
             }

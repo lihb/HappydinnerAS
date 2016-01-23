@@ -23,6 +23,7 @@ import com.handgold.pjdc.action.ServiceGenerator;
 import com.handgold.pjdc.activity.PayActivity;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.Constant;
+import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.common.list.SimpleListWorkerAdapter;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.Order;
@@ -56,8 +57,6 @@ public class OrderShowView extends RelativeLayout {
     private TextView mTextOrderNow = null;
 
     private ListView mListView = null;
-
-    private Order mOrder = null;
 
     private Activity mActivity = null;
 
@@ -109,27 +108,17 @@ public class OrderShowView extends RelativeLayout {
 
     public void initData() {
         mCurState = SUBMIT_STATE;
-        //获取订单数据
-        mOrder = (Order) ((ApplicationEx)(mActivity).getApplication()).receiveInternalActivityParam("order");
-        if (mOrder == null) {
-            mOrder = new Order();
-            mOrder.setOrderId(UUID.randomUUID().toString());
-            mOrder.setMenuList(new ArrayList<MenuItemInfo>());
-            mOrder.setStatus(Order.OrderStatus.NOTSUBMIT);
-            ((ApplicationEx) (mActivity).getApplication()).setInternalActivityParam("order", mOrder);
-        }
-
-        setTextOrderCount(mOrder.getSize());
-        setTextOrderPrice(CommonUtils.round(mOrder.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
+        setTextOrderCount(DataManager.order.getSize());
+        setTextOrderPrice(CommonUtils.round(DataManager.order.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
 
         // 配置listworker
         if (mListWorker == null) {
-            mListWorker = new OrderListWorker(mActivity, mOrder.getMenuList(), new OrderListWorkerCallBack());
+            mListWorker = new OrderListWorker(mActivity, DataManager.order.getMenuList(), new OrderListWorkerCallBack());
             mListAdapter = new SimpleListWorkerAdapter(mListWorker);
             mListView.setAdapter(mListAdapter);
             mListView.setOnItemClickListener(mListWorker);
         } else {
-            mListWorker.setData(mOrder.getMenuList());
+            mListWorker.setData(DataManager.order.getMenuList());
             mListAdapter.notifyDataSetChanged();
         }
     }
@@ -146,20 +135,20 @@ public class OrderShowView extends RelativeLayout {
         @Override
         public void onClick(View v) {
             if (v == mTextDelAll) {
-                mOrder.clear();
-                setTextOrderCount(mOrder.getSize());
-                setTextOrderPrice(CommonUtils.round(mOrder.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
-                setData(mOrder.getMenuList());
+                DataManager.order.clear();
+                setTextOrderCount(DataManager.order.getSize());
+                setTextOrderPrice(CommonUtils.round(DataManager.order.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
+                setData(DataManager.order.getMenuList());
                 exitView();
             }else  if (v == mTextCancel) {
                 exitView();
             }else {
                 if (mCurState == SUBMIT_STATE) {
                     mTextOrderNow.setText("结算");
-                    mOrder.setStatus(Order.OrderStatus.SUBMITED);
+                    DataManager.order.setStatus(Order.OrderStatus.SUBMITED);
                     mCurState = CONFIRM_STATE;
                     String deviceid = (Constant.deviceid);
-                    ArrayList<MenuItemInfo> dataList = (ArrayList<MenuItemInfo>) mOrder.getMenuList();
+                    ArrayList<MenuItemInfo> dataList = (ArrayList<MenuItemInfo>) DataManager.order.getMenuList();
                     Gson gson = new Gson();
                     String ss = gson.toJson(dataList);
                     Log.i("----------", ss);
@@ -184,7 +173,7 @@ public class OrderShowView extends RelativeLayout {
                                 public void onNext(PlaceOrderInfo placeOrderInfo) {
                                     if (placeOrderInfo.result_code == 0) {
                                         Log.i("timestamp", placeOrderInfo.timestamp);
-                                        ((ApplicationEx) (mActivity).getApplication()).setInternalActivityParam("timestamp", placeOrderInfo.timestamp);
+                                        DataManager.timestamp = placeOrderInfo.timestamp;
                                         CommonUtils.toastText(mActivity, mActivity.getString(R.string.order_success_info));
                                     }
                                 }
@@ -212,14 +201,15 @@ public class OrderShowView extends RelativeLayout {
                                 public void onNext(OrderPayInfo orderPayInfo) {
                                     if (orderPayInfo.result_code == 0) {
                                         Log.i("order_pay_id", orderPayInfo.order_pay_id);
-                                        ((ApplicationEx) (mActivity).getApplication()).setInternalActivityParam("order_pay_id", orderPayInfo.order_pay_id);
+                                        DataManager.order_pay_id = orderPayInfo.order_pay_id;
+                                        Intent intent = new Intent(mActivity, PayActivity.class);
+                                        intent.putExtra("totalPrice", DataManager.order.getTotalPrice());
+                                        mActivity.startActivity(intent);
                                     }
                                 }
                             });
-                    Intent intent = new Intent(mActivity, PayActivity.class);
-                    intent.putExtra("totalPrice", mOrder.getTotalPrice());
-                    mActivity.startActivity(intent);
                 }
+
             }
         }
     };
@@ -245,7 +235,7 @@ public class OrderShowView extends RelativeLayout {
         }
         startAnimation(orderShowViewHideAnimation());
         if (mOnOrderViewListener != null) {
-            mOnOrderViewListener.onBackToFoodFrag(mOrder);
+            mOnOrderViewListener.onBackToFoodFrag(DataManager.order);
         }
     }
 
@@ -299,18 +289,18 @@ public class OrderShowView extends RelativeLayout {
         @Override
         public void onAddMenuClicked(Object itemData) {
             MenuItemInfo menu = (MenuItemInfo) itemData;
-            mOrder.addMenu(menu);
-            setTextOrderCount(mOrder.getSize());
-            setTextOrderPrice(CommonUtils.round(mOrder.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
+            DataManager.order.addMenu(menu);
+            setTextOrderCount(DataManager.order.getSize());
+            setTextOrderPrice(CommonUtils.round(DataManager.order.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
             mListAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void onSubMenuClicked(Object itemData) {
             MenuItemInfo menu = (MenuItemInfo) itemData;
-            mOrder.delMenu(menu);
-            setTextOrderCount(mOrder.getSize());
-            setTextOrderPrice(CommonUtils.round(mOrder.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
+            DataManager.order.delMenu(menu);
+            setTextOrderCount(DataManager.order.getSize());
+            setTextOrderPrice(CommonUtils.round(DataManager.order.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
             mListAdapter.notifyDataSetChanged();
         }
 

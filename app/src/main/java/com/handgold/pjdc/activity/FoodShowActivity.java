@@ -13,6 +13,7 @@ import android.view.View;
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.Constant;
+import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.MenuType;
 import com.handgold.pjdc.ui.Menu.FoodLeftFragment;
@@ -30,8 +31,6 @@ import java.util.ArrayList;
  * Created by lihb on 15/5/16.
  */
 public class FoodShowActivity extends FragmentActivity {
-
-    private ArrayList<MenuType> allMenuList;
 
     private HeadView headView;
 
@@ -64,9 +63,6 @@ public class FoodShowActivity extends FragmentActivity {
         mFragmentManager = getSupportFragmentManager();
         // 初始化界面
         initView();
-
-        // 获取菜品数据
-        allMenuList = (ArrayList<MenuType>) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allMenuList");
 
         initFragment();
 
@@ -103,7 +99,7 @@ public class FoodShowActivity extends FragmentActivity {
             Bundle bundle = new Bundle();
             ArrayList<MenuItemInfo> dataList = new ArrayList<MenuItemInfo>();
             //初始化右边fragment的数据
-            dataList.addAll(allMenuList.get(0).items);
+            dataList.addAll(DataManager.menuTypelist.get(0).items);
             bundle.putParcelableArrayList("dataList", dataList);
             foodRightFragment = new FoodRightFragment();
             foodRightFragment.setArguments(bundle);

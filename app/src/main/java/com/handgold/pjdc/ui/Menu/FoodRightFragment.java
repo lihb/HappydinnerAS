@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.ApplicationEx;
+import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.Order;
 import com.handgold.pjdc.ui.widget.AddToShopCartAnimation;
@@ -50,8 +51,6 @@ public class FoodRightFragment extends Fragment {
     private ArrayList<MenuItemInfo> mDataList;
 
     private FoodRightAdapter mAdapter;
-
-    private Order mOrder;
 
     private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
         @Override
@@ -145,15 +144,6 @@ public class FoodRightFragment extends Fragment {
             mAdapter.notifyDataSetChanged();
         }
 
-        //获取订单数据
-        mOrder = (Order) ((ApplicationEx)(getActivity()).getApplication()).receiveInternalActivityParam("order");
-        if (mOrder == null) {
-            mOrder = new Order();
-            mOrder.setOrderId(UUID.randomUUID().toString());
-            mOrder.setMenuList(new ArrayList<MenuItemInfo>());
-            mOrder.setStatus(Order.OrderStatus.NOTSUBMIT);
-            ((ApplicationEx) (getActivity()).getApplication()).setInternalActivityParam("order", mOrder);
-        }
         updateView();
     }
 
@@ -162,7 +152,7 @@ public class FoodRightFragment extends Fragment {
        @Override
        public void onClick(View v) {
            if (v == mShoppingCardView) {
-               if (mOrder.getSize() <= 0) {
+               if (DataManager.order.getSize() <= 0) {
                    ObjectAnimator animator = ObjectAnimator.ofFloat(mShoppingCardView, "translationX", 0, 30, -30, 30, -30,20, -20, 10, -10, 0);
                    animator.setDuration(500);
                    animator.start();
@@ -172,7 +162,7 @@ public class FoodRightFragment extends Fragment {
                        return;
                    }
                    mOrderShowViewRelativeLayout.setVisibility(View.VISIBLE);
-                   mOrderShowView.setData(mOrder.getMenuList());
+                   mOrderShowView.setData(DataManager.order.getMenuList());
                    mOrderShowView.startAnimation(orderShowViewAnimation());
                }
            }
@@ -207,7 +197,7 @@ public class FoodRightFragment extends Fragment {
         @Override
         public void onAddMenuClicked(Object itemData, View v) {
             MenuItemInfo menu = (MenuItemInfo) itemData;
-            mOrder.addMenu(menu);
+            DataManager.order.addMenu(menu);
             int[] startLocation = new int[2];
             v.getLocationInWindow(startLocation);
             doAnim(startLocation);
@@ -217,7 +207,7 @@ public class FoodRightFragment extends Fragment {
         @Override
         public void onSubMenuClicked(Object itemData) {
             MenuItemInfo menu = (MenuItemInfo) itemData;
-            mOrder.delMenu(menu);
+            DataManager.order.delMenu(menu);
             updateView();
         }
 
@@ -239,9 +229,9 @@ public class FoodRightFragment extends Fragment {
                 @Override
                 public void onDataChanged(MenuItemInfo menu, int operation) {
                     if (operation == PopupMenuDetailView.OPERATION_ADD) {
-                        mOrder.addMenu(menu);
+                        DataManager.order.addMenu(menu);
                     }else if (operation == PopupMenuDetailView.OPERATION_SUB){
-                        mOrder.delMenu(menu);
+                        DataManager.order.delMenu(menu);
                     }
                     updateView();
                     mAdapter.notifyDataSetChanged();
@@ -254,10 +244,10 @@ public class FoodRightFragment extends Fragment {
      * 更新购物车和订单页面的菜品个数和总价数据
      */
     private void updateView() {
-        mShoppingCardView.setTextCount(mOrder.getSize());
-        mShoppingCardView.setTextPrice(CommonUtils.round(mOrder.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
-        mOrderShowView.setTextOrderCount(mOrder.getSize());
-        mOrderShowView.setTextOrderPrice(CommonUtils.round(mOrder.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
+        mShoppingCardView.setTextCount(DataManager.order.getSize());
+        mShoppingCardView.setTextPrice(CommonUtils.round(DataManager.order.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
+        mOrderShowView.setTextOrderCount(DataManager.order.getSize());
+        mOrderShowView.setTextOrderPrice(CommonUtils.round(DataManager.order.getTotalPrice(), 1, BigDecimal.ROUND_HALF_UP));
     }
 
     public void emptyShopCart() {

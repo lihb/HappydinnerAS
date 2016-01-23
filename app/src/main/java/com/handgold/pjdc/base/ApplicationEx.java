@@ -83,7 +83,6 @@ public class ApplicationEx extends Application {
     public Object receiveInternalActivityParam(String key) {
         return mActivityParamsMap.get(key);
     }
-
     public Executor getMainExecutor() {
         return mMainExecutor;
     }

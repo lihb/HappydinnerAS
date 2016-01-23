@@ -21,7 +21,7 @@ public class Order implements Parcelable {
 
     private String orderId;
 
-    private ArrayList<MenuItemInfo> menuList;
+    private ArrayList<MenuItemInfo> menuList = new ArrayList<>();
 
     private OrderStatus  status;
 

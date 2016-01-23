@@ -12,17 +12,14 @@ import com.handgold.pjdc.action.ServiceGenerator;
 import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.BaseActivity;
 import com.handgold.pjdc.base.Constant;
+import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.entitiy.CoverFlowEntity;
 import com.handgold.pjdc.entitiy.GameInfo;
-import com.handgold.pjdc.entitiy.MenuItemInfo;
 import com.handgold.pjdc.entitiy.MenuListEntity;
 import com.handgold.pjdc.entitiy.MenuType;
 import com.handgold.pjdc.entitiy.MovieInfo;
 import com.handgold.pjdc.entitiy.RoomTableInfo;
 import com.handgold.pjdc.ui.CoverFlowAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import rx.Subscriber;
@@ -39,7 +36,6 @@ public class CoverFlowActivity extends BaseActivity {
     private CoverFlowAdapter mAdapter;
 //    private HashMap<String, ArrayList> mData = new HashMap<>();
     private ArrayList<CoverFlowEntity> mData = new ArrayList<CoverFlowEntity>(0);
-    private ArrayList<MenuType> allMenuList;
     private SortedMap<Integer, List<GameInfo>> sortedGameMap;
     private SortedMap<Integer, List<MovieInfo>> sortedMovieMap;
 
@@ -64,10 +60,10 @@ public class CoverFlowActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 1) {
-                    Intent intent = new Intent(CoverFlowActivity.this, com.handgold.pjdc.activity.GameShowActivityNew.class);
+                    Intent intent = new Intent(CoverFlowActivity.this, GameShowActivity.class);
                     startActivity(intent);
                 } else if (position == 3) {
-                    Intent intent = new Intent(CoverFlowActivity.this, com.handgold.pjdc.activity.MovieShowActivityNew.class);
+                    Intent intent = new Intent(CoverFlowActivity.this, MovieShowActivity.class);
                     startActivity(intent);
                 } else if (position == 2) {
                     Intent intent = new Intent(CoverFlowActivity.this, com.handgold.pjdc.activity.FoodShowActivity.class);
@@ -93,9 +89,12 @@ public class CoverFlowActivity extends BaseActivity {
         });
 
         // 获取菜品数据
-        allMenuList = (ArrayList) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allMenuList");
-        if (allMenuList == null) {
-            allMenuList = new ArrayList<>();
+//        allMenuList = (ArrayList) ((ApplicationEx) getApplication()).receiveInternalActivityParam("allMenuList");
+//        if (allMenuList == null) {
+//            allMenuList = new ArrayList<>();
+//            initMenuData();
+//        }
+        if (DataManager.menuTypelist.isEmpty()) {
             initMenuData();
         }
         Configuration config = getResources().getConfiguration();
@@ -129,9 +128,7 @@ public class CoverFlowActivity extends BaseActivity {
                     public void onNext(MenuListEntity menuListEntity) {
                         Log.i("lihb test getMenuList", "onNext");
                         if (menuListEntity.result_code == 0) {
-
-                            ((ApplicationEx) getApplication()).setInternalActivityParam("allMenuList", menuListEntity.menulist);
-                            allMenuList.addAll(menuListEntity.menulist);
+                            DataManager.menuTypelist.addAll(menuListEntity.menulist);
                         }
                     }
                 });
@@ -156,8 +153,7 @@ public class CoverFlowActivity extends BaseActivity {
                         Log.i("lihb test getOrderInfo", "onNext");
                         if (roomTableInfo.result_code == 0) {
                             Log.i("lihb test", "roomTableInfo.table_number = " + roomTableInfo.table_number);
-                            ((ApplicationEx) getApplication()).setInternalActivityParam("table_number", roomTableInfo.table_number);
-
+                            DataManager.table_number = roomTableInfo.table_number;
                         }
 
                     }

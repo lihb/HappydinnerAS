@@ -10,7 +10,6 @@
             android:layout_height="@dimen/movie_item_height"
             android:layout_centerHorizontal="true"
             android:scaleType="fitXY"
-            android:src="@drawable/pic_moive_xiaowangzi"
             />
     <TextView
             android:id="@+id/item_name_text"

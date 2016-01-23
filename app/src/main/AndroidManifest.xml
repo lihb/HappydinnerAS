@@ -47,10 +47,12 @@
         <activity android:name="com.handgold.pjdc.activity.VideoPlayer2Activity"
                   android:theme="@style/AppTheme"
                   android:screenOrientation="landscape"/>
-        <activity android:name="com.handgold.pjdc.activity.GameShowActivityNew"
+        <activity
+            android:name=".activity.GameShowActivity"
                   android:theme="@style/AppTheme"
                   android:screenOrientation="landscape"/>
-        <activity android:name="com.handgold.pjdc.activity.MovieShowActivityNew"
+        <activity
+            android:name=".activity.MovieShowActivity"
                   android:theme="@style/AppTheme"
                   android:screenOrientation="landscape"/>
         <activity android:name="com.handgold.pjdc.activity.MapShowActivity"
