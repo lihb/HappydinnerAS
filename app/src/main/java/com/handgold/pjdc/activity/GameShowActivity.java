@@ -140,7 +140,7 @@ public class GameShowActivity extends FragmentActivity {
         tabItem5.setText(getString(R.string.puzzle_game));
 
         textArray = new TextView[]{tabItem1, tabItem2, tabItem3, tabItem4, tabItem5};
-        for (int i = 1; i < textArray.length; i++) {
+        for (int i = 0; i < textArray.length; i++) {
             textArray[i].setBackgroundResource(R.drawable.game_tab_selector);
         }
 
