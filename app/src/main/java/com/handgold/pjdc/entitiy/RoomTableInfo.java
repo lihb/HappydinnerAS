@@ -5,5 +5,5 @@ package com.handgold.pjdc.entitiy;
  */
 public class RoomTableInfo extends BaseEntity {
 
-    public String table_number;
+    public int table_number;
 }

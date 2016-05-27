@@ -25,7 +25,7 @@ public class DataManager {
     public static String timestamp = "";
 
     // 桌号
-    public static String table_number = "";
+    public static int table_number = -100;
 
     // 订单号
     public static String order_pay_id = "";

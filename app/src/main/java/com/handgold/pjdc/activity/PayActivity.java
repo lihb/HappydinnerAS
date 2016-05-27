@@ -2,10 +2,7 @@ package com.handgold.pjdc.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,17 +11,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.handgold.pjdc.R;
-import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.BaseActivity;
-import com.handgold.pjdc.base.Constant;
 import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.base.RxBus;
 import com.handgold.pjdc.entitiy.MenuItemInfo;
-import com.handgold.pjdc.entitiy.Order;
 import com.handgold.pjdc.ui.Pay.PayLeftFragment;
 import com.handgold.pjdc.ui.Pay.PayRightWeChatFragment;
 import com.handgold.pjdc.ui.widget.HeadView;
@@ -210,7 +205,7 @@ public class PayActivity extends BaseActivity {
     public void generateQrImg(ImageView imageView, String url) {
         try {
             QRCodeWriter writer = new QRCodeWriter();
-            mBitMatrix = writer.encode(url, BarcodeFormat.QR_CODE, imageView.getLayoutParams().height, imageView.getLayoutParams().width);
+            mBitMatrix = writer.encode(url, BarcodeFormat.QR_CODE, imageView.getLayoutParams().width, imageView.getLayoutParams().height);
         } catch (Exception e) {
             e.printStackTrace();
         }

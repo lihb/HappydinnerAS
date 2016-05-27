@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.action.ApiManager;
 import com.handgold.pjdc.action.ServiceGenerator;
@@ -16,17 +17,18 @@ import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.entitiy.CoverFlowEntity;
 import com.handgold.pjdc.entitiy.GameInfo;
 import com.handgold.pjdc.entitiy.MenuListEntity;
-import com.handgold.pjdc.entitiy.MenuType;
 import com.handgold.pjdc.entitiy.MovieInfo;
 import com.handgold.pjdc.entitiy.RoomTableInfo;
 import com.handgold.pjdc.ui.CoverFlowAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedMap;
 
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import java.util.*;
 
 
 public class CoverFlowActivity extends BaseActivity {
@@ -121,6 +123,7 @@ public class CoverFlowActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         Log.i("lihb test getMenuList", "onError");
+                        DataManager.menuTypelist.clear();
                         e.printStackTrace();
                     }
 
@@ -144,6 +147,7 @@ public class CoverFlowActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         Log.i("lihb test getOrderInfo", "onError");
+                        DataManager.table_number = -100;
                         e.printStackTrace();
 
                     }

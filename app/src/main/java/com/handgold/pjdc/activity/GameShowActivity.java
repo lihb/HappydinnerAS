@@ -10,25 +10,29 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.action.ApiManager;
 import com.handgold.pjdc.action.ServiceGenerator;
-import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.Constant;
 import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.base.GameTypeEnum;
-import com.handgold.pjdc.base.MovieTypeEnum;
 import com.handgold.pjdc.entitiy.GameInfo;
 import com.handgold.pjdc.entitiy.GameListEntity;
-import com.handgold.pjdc.entitiy.MovieListEntity;
 import com.handgold.pjdc.ui.Game.GameFragment;
 import com.handgold.pjdc.ui.widget.HeadView;
 import com.handgold.pjdc.ui.widget.PopupGameVideoView;
 import com.handgold.pjdc.util.DeviceUtils;
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -39,6 +43,7 @@ import rx.schedulers.Schedulers;
  */
 public class GameShowActivity extends FragmentActivity {
 
+    private static final String TAG = "GameShowActivity";
     private HeadView headView;
 
     private RelativeLayout mPopupGameVideoRelativeLayout;
@@ -194,6 +199,11 @@ public class GameShowActivity extends FragmentActivity {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        if(DataManager.gameTypeList.isEmpty()) {
+                            Log.i(TAG, "没有游戏数据");
+                            Toast.makeText(GameShowActivity.this, R.string.no_game_data,Toast.LENGTH_SHORT).show();
+                            DataManager.gameTypeList.clear();
+                        }
                     }
 
                     @Override
@@ -208,7 +218,9 @@ public class GameShowActivity extends FragmentActivity {
     private void initFragmentAndDot(int type) {
         //构造前，先清除原来的圆点
         dotLayout.removeAllViews();
-
+        if(DataManager.gameTypeList.isEmpty()) {
+            return;
+        }
         fragmentList = new ArrayList<>();
         ArrayList<GameInfo> dataList = new ArrayList<GameInfo>();
         //初始化右边fragment的数据

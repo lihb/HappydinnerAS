@@ -2,4 +2,7 @@
 <resources>
     <string name="get_wechat_link_fail">获取微信支付链接失败</string>
     <string name="order_success_info">下单成功，请耐心等候的餐点。</string>
+    <string name="no_menu_data">菜品页面暂时没有数据哦~</string>
+    <string name="no_game_data">游戏页面暂时没有数据哦~</string>
+    <string name="no_movie_data">电影页面暂时没有数据哦~</string>
 </resources>

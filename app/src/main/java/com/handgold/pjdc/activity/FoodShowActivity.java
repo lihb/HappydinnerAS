@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.base.DataManager;
 import com.handgold.pjdc.base.RxBus;
@@ -106,6 +108,11 @@ public class FoodShowActivity extends FragmentActivity {
     }
 
     private void initFragment() {
+        if(DataManager.menuTypelist.isEmpty()) {
+            Log.i("lihb  test-----  ", "没有菜品数据");
+            Toast.makeText(FoodShowActivity.this, R.string.no_menu_data,Toast.LENGTH_SHORT).show();
+            return;
+        }
         mTransaction = mFragmentManager.beginTransaction();
         if (foodLeftFragment == null) {
             foodLeftFragment = new FoodLeftFragment();

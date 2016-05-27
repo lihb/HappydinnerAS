@@ -6,9 +6,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.action.ApiManager;
 import com.handgold.pjdc.action.ServiceGenerator;
@@ -22,7 +28,8 @@ import com.handgold.pjdc.ui.widget.HeadView;
 import com.handgold.pjdc.util.DeviceUtils;
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,6 +40,7 @@ import rx.schedulers.Schedulers;
  */
 public class MovieShowActivity extends FragmentActivity {
 
+    private static final String TAG = "MovieShowActivity";
     private HeadView headView;
 
     private RelativeLayout rootView = null;
@@ -142,6 +150,11 @@ public class MovieShowActivity extends FragmentActivity {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        if(DataManager.movieTypeList.isEmpty()) {
+                            Log.i(TAG, "没有电影数据");
+                            Toast.makeText(MovieShowActivity.this, R.string.no_movie_data,Toast.LENGTH_SHORT).show();
+                            DataManager.movieTypeList.clear();
+                        }
                     }
 
                     @Override
@@ -156,7 +169,9 @@ public class MovieShowActivity extends FragmentActivity {
     private void initFragmentAndDot(int type) {
         //构造前，先清除原来的圆点
         dotLayout.removeAllViews();
-
+        if(DataManager.movieTypeList.isEmpty()) {
+            return;
+        }
         fragmentList = new ArrayList<>();
         ArrayList<MovieInfo> dataList = new ArrayList<MovieInfo>();
         //初始化fragment的数据
