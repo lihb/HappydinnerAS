@@ -12,29 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+
 import com.handgold.pjdc.R;
 import com.handgold.pjdc.action.ApiManager;
 import com.handgold.pjdc.action.ServiceGenerator;
 import com.handgold.pjdc.action.SingleOkHttpClient;
 import com.handgold.pjdc.activity.PayActivity;
-import com.handgold.pjdc.base.ApplicationEx;
 import com.handgold.pjdc.base.Constant;
 import com.handgold.pjdc.base.DataManager;
-import com.handgold.pjdc.entitiy.Order;
 import com.handgold.pjdc.entitiy.PayState;
 import com.handgold.pjdc.entitiy.WeChatReqData;
 import com.handgold.pjdc.entitiy.WeChatResData;
 import com.handgold.pjdc.util.CommonUtils;
 import com.handgold.pjdc.util.WeChatUtil;
 import com.umeng.analytics.MobclickAgent;
-import retrofit.*;
-import retrofit.http.Body;
-import retrofit.http.POST;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -46,6 +37,19 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
+import retrofit.SimpleXmlConverterFactory;
+import retrofit.http.Body;
+import retrofit.http.POST;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 类说明：
@@ -323,7 +327,7 @@ public class PayRightWeChatFragment extends Fragment {
                 Log.i("PayRightWeChatFragment", "prepay_id = " + weChatResData.getPrepay_id());
                 ((PayActivity) getActivity()).generateQrImg(payInfoStep2Img, code_url);
                 // 定时获取支付结果
-                startheckResult();
+                startCheckResult();
             }else {
                 //获取错误码
                 String errorCode = weChatResData.getErr_code();
@@ -338,7 +342,7 @@ public class PayRightWeChatFragment extends Fragment {
 
     }
 
-    private void startheckResult() {
+    private void startCheckResult() {
         if (mCountDownTimer != null) {
             mCountDownTimer.start();
             Log.e("PayRightWeChatFragment", "开始轮询");
