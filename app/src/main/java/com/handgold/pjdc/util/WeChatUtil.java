@@ -1,21 +1,42 @@
 package com.handgold.pjdc.util;
 
 import android.util.Log;
+
 import com.handgold.pjdc.base.Constant;
 import com.thoughtworks.xstream.XStream;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.*;
-import java.lang.reflect.Field;
-import java.net.*;
-import java.util.*;
 
 /**
  * Created by Administrator on 2015/12/28.
@@ -36,7 +57,7 @@ public class WeChatUtil {
 
         Collections.sort(infoIds, new Comparator<Map.Entry<String, String>>() {
             public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
-                return (o1.getKey()).toString().compareTo(o2.getKey());
+                return (o1.getKey()).compareTo(o2.getKey());
             }
         });
 
